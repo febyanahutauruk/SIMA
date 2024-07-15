@@ -1,4 +1,4 @@
-# sima_mobile
+# sima
 
 A new Flutter project.
 
