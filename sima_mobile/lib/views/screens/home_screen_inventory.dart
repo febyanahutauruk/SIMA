@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sima/views/screens/welcome_screen.dart';
 
-void main(){
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: HomeScreenInventory(),
-  ));
-}
+// void main(){
+//   runApp(MaterialApp(
+//     debugShowCheckedModeBanner: false,
+//     home: HomeScreenInventory(),
+//   ));
+// }
 
 class HomeScreenInventory extends StatelessWidget {
   @override

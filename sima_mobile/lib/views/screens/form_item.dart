@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-void main() {
-  runApp(MaterialApp(
-    home: InputItemScreen(),
-    debugShowCheckedModeBanner: false,
-  ));
-}
+// void main() {
+//   runApp(MaterialApp(
+//     home: InputItemScreen(),
+//     debugShowCheckedModeBanner: false,
+//   ));
+// }
 
 class InputItemScreen extends StatefulWidget {
   const InputItemScreen({super.key});

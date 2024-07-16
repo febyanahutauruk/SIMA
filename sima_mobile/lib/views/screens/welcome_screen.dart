@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:sima/views/screens/home_screen.dart';
+import 'package:sima/views/widgets/icon_home.dart';
 
 
-void main() {
-  runApp(MaterialApp(
-    home: new WelcomeScreen(),
-    debugShowCheckedModeBanner: false,
-    routes: <String,WidgetBuilder>{
-      '/WelcomeScreen' : (BuildContext context) => new WelcomeScreen(),
-      '/HomeScreen' : (BuildContext context) => new HomeScreen(),
-      '/Inventory' : (BuildContext context) => new HomeScreenInventory(),
-    }
-  ));
-}
+// void main() {
+//   runApp(MaterialApp(
+//     home: new WelcomeScreen(),
+//     debugShowCheckedModeBanner: false,
+//     routes: <String,WidgetBuilder>{
+//       '/WelcomeScreen' : (BuildContext context) => new WelcomeScreen(),
+//       '/HomeScreen' : (BuildContext context) => new HomeScreen(),
+//       '/Inventory' : (BuildContext context) => new HomeScreenInventory(),
+//     }
+//   ));
+// }
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -23,6 +24,18 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  _gotohome() async {
+  await Future.delayed(Duration(milliseconds: 1500), () {
+      Navigator.pushNamed(context, '/HomeScreen');
+  }
+    );
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    _gotohome();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -204,50 +217,43 @@ class HomeScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Column(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.people),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/manageUsers');
-                      },
-                    ),
-                    Text('Master Data Asset'),
-                  ],
-                ),
-                Column(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.business),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/manageAssets');
-                      },
-                    ),
-                    Text('Barcode Asset'),
-                  ],
-                ),
-                Column(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.category),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/manageCategories');
-                      },
-                    ),
-                    Text('Master Data Inventory'),
-                  ],
-                ),
-                Column(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.history),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/inventoryHistory');
-                      },
-                    ),
-                    Text('Inventory History'),
-                  ],
-                ),
+                IconHomeWidget(routename: '/WelcomeScreen', lable: 'Manage Data Asset', icons: Icons.people),
+                IconHomeWidget(routename: '/manageAssets', lable: 'Barcode Assets', icons: Icons.business),
+                IconHomeWidget(routename: '/manageCategories', lable: 'Barcode Assets', icons: Icons.category),
+                IconHomeWidget(routename: '/inventoryHistory', lable: 'Barcode Assets', icons: Icons.history),
+                // Column(
+                //   children: [
+                //     IconButton(
+                //       icon: Icon(Icons.business),
+                //       onPressed: () {
+                //         Navigator.pushNamed(context, '/manageAssets');
+                //       },
+                //     ),
+                //     Text('Barcode Asset'),
+                //   ],
+                // ),
+                // Column(
+                //   children: [
+                //     IconButton(
+                //       icon: Icon(Icons.category),
+                //       onPressed: () {
+                //         Navigator.pushNamed(context, '/manageCategories');
+                //       },
+                //     ),
+                //     Text('Master Data Inventory'),
+                //   ],
+                // ),
+                // Column(
+                //   children: [
+                //     IconButton(
+                //       icon: Icon(Icons.history),
+                //       onPressed: () {
+                //         Navigator.pushNamed(context, '/inventoryHistory');
+                //       },
+                //     ),
+                //     Text('Inventory History'),
+                //   ],
+                // ),
               ],
             ),
           ],

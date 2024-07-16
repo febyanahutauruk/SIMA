@@ -47,13 +47,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/image/logo-lg-transparant 2.png
-    - assets/image/gudang123.jpg
-    - assets/image/pertaminaPTK.jpg
-    - assets/image/gudang PTK.jpg
-    - assets/image/printer.png
-    - assets/image/printer.jpg
-    - assets/image/tv.jpg
-    - assets/image/sofa merah.png
-    - assets/image/image.png
-    - assets/image/Product pic.png
+    - assets/image/
+    - assets/icons/

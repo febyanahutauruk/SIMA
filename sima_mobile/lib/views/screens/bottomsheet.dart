@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
-class BottomSheetExample extends StatefulWidget {
-  const BottomSheetExample({super.key});
-
-  @override
-  State<BottomSheetExample> createState() => _BottomSheetExampleState();
+void main() {
+  runApp(MaterialApp(
+    home: BottomSheet(),
+    debugShowCheckedModeBanner: false,
+  ));
 }
 
-class _BottomSheetExampleState extends State<BottomSheetExample> {
+class BottomSheet extends StatefulWidget {
+  const BottomSheet({super.key});
+
+  @override
+  State<BottomSheet> createState() => _BottomSheetExampleState();
+}
+
+class _BottomSheetExampleState extends State<BottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +29,8 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
               context: context,
               builder: (BuildContext context) {
                 return SizedBox(
-                  height: 200,
+                  width: 419,
+                  height: 352,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[

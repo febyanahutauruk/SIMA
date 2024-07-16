@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: ItemScreen(),
-  ));
-}
+// void main() {
+//   runApp(MaterialApp(
+//     home: ItemScreen(),
+//   ));
+// }
 class ItemScreen extends StatelessWidget {
   final List<Map<String, String>> items = List.generate(5, (index) {
     return {

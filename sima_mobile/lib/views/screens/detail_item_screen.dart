@@ -1,11 +1,11 @@
 import "package:flutter/material.dart";
 
-void main() {
-  runApp(MaterialApp(
-    home: DetailItemScreen(),
-    debugShowCheckedModeBanner: false,
-  ));
-}
+// void main() {
+//   runApp(MaterialApp(
+//     home: DetailItemScreen(),
+//     debugShowCheckedModeBanner: false,
+//   ));
+// }
 
 class DetailItemScreen extends StatefulWidget {
   const DetailItemScreen({super.key});
