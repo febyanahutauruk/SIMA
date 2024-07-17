@@ -217,10 +217,10 @@ class HomeScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                IconHomeWidget(routename: '/WelcomeScreen', lable: 'Manage Data Asset', icons: Icons.people),
+                IconHomeWidget(routename: '/WelcomeScreen', lable: 'Master Data Asset', icons: Icons.people),
                 IconHomeWidget(routename: '/manageAssets', lable: 'Barcode Assets', icons: Icons.business),
-                IconHomeWidget(routename: '/manageCategories', lable: 'Barcode Assets', icons: Icons.category),
-                IconHomeWidget(routename: '/inventoryHistory', lable: 'Barcode Assets', icons: Icons.history),
+                IconHomeWidget(routename: '/manageCategories', lable: 'Master Datca Inventory', icons: Icons.category),
+                IconHomeWidget(routename: '/inventoryHistory', lable: 'History Inventory', icons: Icons.history),
                 // Column(
                 //   children: [
                 //     IconButton(

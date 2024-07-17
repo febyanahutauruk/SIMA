@@ -1,4 +1,3 @@
-// main.dart
 import 'package:flutter/material.dart';
 import 'package:sima/views/screens/home_screen_inventory.dart';
 import 'package:sima/views/screens/welcome_screen.dart';
