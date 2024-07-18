@@ -4,17 +4,18 @@ import 'package:flutter/material.dart';
 //   runApp(InventoryManagementApp());
 // }
 
-class InventoryManagementApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomeScreen(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
+// class InventoryManagementApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: ItemListScreen(),
+//       debugShowCheckedModeBanner: false,
+//     );
+//   }
+// }
 
-class HomeScreen extends StatelessWidget {
+class TransactionList extends StatelessWidget {
+  static const String routename = "/ListItem";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sima/views/screens/welcome_screen.dart';
+import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
+import 'package:sima/views/welcome_screen.dart';
 
 // void main(){
 //   runApp(MaterialApp(
@@ -96,10 +97,10 @@ class HomeScreenInventory extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _buildFeatureItem(Icons.list, 'Daftar Barang'),
-                  _buildFeatureItem(Icons.map, 'Maps'),
-                  _buildFeatureItem(Icons.history, 'History'),
-                  _buildFeatureItem(Icons.save, 'Item'),
+                  _buildFeatureItem(Icons.list, 'Daftar Barang', context, ''),
+                  _buildFeatureItem(Icons.map, 'Maps', context,  '/Maps'),
+                  _buildFeatureItem(Icons.history, 'History', context, '/History'),
+                  _buildFeatureItem(Icons.save, 'Item', context, '/ItemListScreen'),
                 ],
               ),
             ],
@@ -129,17 +130,23 @@ class HomeScreenInventory extends StatelessWidget {
     );
   }
 
-  Widget _buildFeatureItem(IconData icon, String label) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: Colors.teal,
-          child: Icon(icon, color: Colors.white, size: 30),
-        ),
-        SizedBox(height: 4),
-        Text(label),
-      ],
+  Widget _buildFeatureItem(IconData icon, String label, BuildContext context, String routename) {
+    return GestureDetector(
+      onTap: () {
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => ItemListScreen()));
+        Navigator.pushNamed(context, '$routename');
+      },
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.teal,
+            child: Icon(icon, color: Colors.white, size: 30),
+          ),
+          SizedBox(height: 4),
+          Text(label),
+        ],
+      ),
     );
   }
 }

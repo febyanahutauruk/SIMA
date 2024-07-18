@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:sima/views/screens/home_screen.dart';
 import 'package:sima/views/widgets/icon_home.dart';
 
 
@@ -214,47 +213,51 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconHomeWidget(routename: '/WelcomeScreen', lable: 'Master Data Asset', icons: Icons.people),
-                IconHomeWidget(routename: '/manageAssets', lable: 'Barcode Assets', icons: Icons.business),
-                IconHomeWidget(routename: '/manageCategories', lable: 'Master Datca Inventory', icons: Icons.category),
-                IconHomeWidget(routename: '/inventoryHistory', lable: 'History Inventory', icons: Icons.history),
-                // Column(
-                //   children: [
-                //     IconButton(
-                //       icon: Icon(Icons.business),
-                //       onPressed: () {
-                //         Navigator.pushNamed(context, '/manageAssets');
-                //       },
-                //     ),
-                //     Text('Barcode Asset'),
-                //   ],
-                // ),
-                // Column(
-                //   children: [
-                //     IconButton(
-                //       icon: Icon(Icons.category),
-                //       onPressed: () {
-                //         Navigator.pushNamed(context, '/manageCategories');
-                //       },
-                //     ),
-                //     Text('Master Data Inventory'),
-                //   ],
-                // ),
-                // Column(
-                //   children: [
-                //     IconButton(
-                //       icon: Icon(Icons.history),
-                //       onPressed: () {
-                //         Navigator.pushNamed(context, '/inventoryHistory');
-                //       },
-                //     ),
-                //     Text('Inventory History'),
-                //   ],
-                // ),
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(width: 12),
+                  IconHomeWidget(routename: '/WelcomeScreen', lable: 'Master Data Asset', icons: 'assets.png'),
+                  IconHomeWidget(routename: '/manageAssets', lable: 'Barcode Assets', icons: 'qr.png'),
+                  IconHomeWidget(routename: '/manageCategories', lable: 'Master Data Inventory', icons: 'dataBarang.png'),
+                  IconHomeWidget(routename: '/inventoryHistory', lable: 'History Inventory', icons: 'history.png'),
+                  // Column(
+                  //   children: [
+                  //     IconButton(
+                  //       icon: Icon(Icons.business),
+                  //       onPressed: () {
+                  //         Navigator.pushNamed(context, '/manageAssets');
+                  //       },
+                  //     ),
+                  //     Text('Barcode Asset'),
+                  //   ],
+                  // ),
+                  // Column(
+                  //   children: [
+                  //     IconButton(
+                  //       icon: Icon(Icons.category),
+                  //       onPressed: () {
+                  //         Navigator.pushNamed(context, '/manageCategories');
+                  //       },
+                  //     ),
+                  //     Text('Master Data Inventory'),
+                  //   ],
+                  // ),
+                  // Column(
+                  //   children: [
+                  //     IconButton(
+                  //       icon: Icon(Icons.history),
+                  //       onPressed: () {
+                  //         Navigator.pushNamed(context, '/inventoryHistory');
+                  //       },
+                  //     ),
+                  //     Text('Inventory History'),
+                  //   ],
+                  // ),
+                ],
+              ),
             ),
           ],
         ),

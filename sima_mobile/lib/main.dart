@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sima/views/screens/home_screen_inventory.dart';
-import 'package:sima/views/screens/welcome_screen.dart';
+import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
+import 'package:sima/views/Inventory/home_screen_inventory.dart';
+import 'package:sima/views/welcome_screen.dart';
 
 
 void main() {
@@ -20,6 +21,11 @@ class InventoryManagementApp extends StatelessWidget {
       '/WelcomeScreen' : (BuildContext context) => new WelcomeScreen(),
       '/HomeScreen' : (BuildContext context) => new HomeScreen(),
       '/Inventory' : (BuildContext context) => new HomeScreenInventory(),
+      '/ItemListScreen' : (BuildContext context) => new ItemListScreen(),
+      // ItemListScreen.routename : (BuildContext context) =>  ItemListScreen(),
+      
+
+
     }
     );
   }
