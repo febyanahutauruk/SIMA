@@ -1,14 +1,12 @@
-import 'dart:ui';
-
-// import 'package:belajar_provider/CONFIG/mycolors.dart';
-// import 'package:belajar_provider/widgets/item_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:sima/controllers/items/item_controller.dart';
 import 'package:sima/models/item/item_pagination_model.dart';
 import 'package:sima/views/widgets/ItemCard.dart';
+
+
+
+
 
 class ItemListScreen extends StatefulWidget {
   const ItemListScreen({super.key});
@@ -17,7 +15,33 @@ class ItemListScreen extends StatefulWidget {
   State<ItemListScreen> createState() => _ItemListScreenState();
 }
 
-class _ItemListScreenState extends State<ItemListScreen> {
+ class _ItemListScreenState extends State<ItemListScreen> {
+  final ScrollController _scrollController = ScrollController();
+  scrollListener() {
+    if (_scrollController.position.pixels == 
+        _scrollController.position.maxScrollExtent) {
+      print("...");
+      final itemP = context.read<ItemController>();
+      itemP.param = itemP.param.copyWith(
+        offset: itemP.items.length,
+        );
+        itemP.loadMore();
+    }
+  }
+
+  @override
+  void initState() {
+    context.read<ItemController>().getPaginationItem();
+    _scrollController.addListener(scrollListener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

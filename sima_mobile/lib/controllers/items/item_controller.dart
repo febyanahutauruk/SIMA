@@ -7,25 +7,38 @@ import 'package:flutter/material.dart';
 class ItemController with ChangeNotifier {
   ItemService service = ItemService();
   List<ItemPaginationModel> _items = [];
-  int _offset = 0;
-  int _limit = 0;
-  bool _isLoading = false;
+  bool _isLoading = true;
   bool _isNext = true;
+  ItemPaginationParamModel param = 
+    ItemPaginationParamModel (limit: 2, offset: 0);
 
-
-  List<ItemPaginationModel> get Items => _items;
+  List<ItemPaginationModel> get items => _items;
+  bool get isNext => _isNext;
   bool get isLoading => _isLoading;
 
-  Future<void> getPaginationItem(ItemPaginationParamModel param) async {
-  if (_isNext && !_isLoading) {
-    ItemPaginationResponseModels responseModel =
-      await service.getPaginationItem(param);
-
-    _offset = _items.length;
+  Future<void> getPaginationItem() async {
+    _isLoading = true;
+    ItemPaginationResponseModels responseModel = await service 
+    .getPaginationItem(ItemPaginationParamModel(limit:2, offset: 0));
+    
+    _items = responseModel.data;
     _isNext = responseModel.isNext;
+    _isLoading = false;
+
+      notifyListeners();
+
   }
 
-  notifyListeners();
+  Future <void> loadMore() async {
+    print("limit ${param.limit}");
+    //param = param.copyWith(limit = 2, offset = _items.length);
+    ItemPaginationResponseModels responseModels =
+    await service.getPaginationItem(param);
+
+    _items = [..._items, ...responseModels.data];
+    _isNext = responseModels.isNext;
+
+    notifyListeners();
+    }
 
   }
-}

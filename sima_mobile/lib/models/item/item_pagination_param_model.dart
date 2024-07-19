@@ -11,21 +11,38 @@ String itemPaginationParamModelToJson(ItemPaginationParamModel data) => json.enc
 class ItemPaginationParamModel {
     int limit;
     int offset;
-    String columnIndex;
-    String sortDirection;
-    String code;
-    String name;
-    String categoryName;
+    String? columnIndex;
+    String? sortDirection;
+    String? code;
+    String? name;
+    String? categoryName;
 
     ItemPaginationParamModel({
         required this.limit,
         required this.offset,
-        required this.columnIndex,
-        required this.sortDirection,
-        required this.code,
-        required this.name,
-        required this.categoryName,
+        this.columnIndex,
+        this.sortDirection,
+        this.code,
+        this.name,
+        this.categoryName,
     });
+
+    ItemPaginationParamModel copyWith({
+      int? limit,
+      int? offset,
+      String? columnIndex,
+      String? sortDirection,
+      String? code,
+      String? name,
+      String? categoryName,
+    }) {
+      return ItemPaginationParamModel(
+        limit: limit ?? this.limit, 
+        offset: offset ?? this.offset, 
+        code: code ?? this.code, 
+        name: name ?? this.name, 
+        categoryName: categoryName ?? this.categoryName);
+    }
 
     factory ItemPaginationParamModel.fromJson(Map<String, dynamic> json) => ItemPaginationParamModel(
         limit: json["limit"],
@@ -46,4 +63,5 @@ class ItemPaginationParamModel {
         "name": name,
         "categoryName": categoryName,
     };
+    
 }
