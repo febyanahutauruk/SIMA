@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sima/views/Inventory/MasterData/ItemCard.dart';
+import 'package:sima/models/item/item_pagination_model.dart';
+import 'package:sima/views/widgets/ItemCard.dart';
 
 class ItemListScreen extends StatefulWidget {
   const ItemListScreen({super.key});
@@ -26,7 +27,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
           "Item",
           style: TextStyle(color: Colors.teal),
         ),
-        backgroundColor: Colors.amber,
+        backgroundColor: Color(0xFFB5D9DA),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -98,12 +99,34 @@ class _ItemListScreenState extends State<ItemListScreen> {
               const SizedBox(
                 height: 20,
               ),
-              ItemCard(),
-              ItemCard(),
-              ItemCard(),
-              ItemCard(),
-              ItemCard(),
-              ItemCard(),
+
+              ItemCard(
+                model: ItemPaginationModel(
+                  code: "123099",
+                  name: "meja",
+                  categoryName: "furniture",
+                  description: "meja",
+                  id: 0 ,
+                )
+              ),
+              ItemCard(
+                model: ItemPaginationModel(
+                  code: "647599",
+                  name: "meja",
+                  categoryName: "furniture",
+                  description: "meja",
+                  id: 0 ,
+                )
+              ),
+              ItemCard(
+                model: ItemPaginationModel(
+                  code: "123456",
+                  name: "meja",
+                  categoryName: "furniture",
+                  description: "meja",
+                  id: 0 ,
+                )
+              ),
             ],
           ),
         ),

@@ -97,7 +97,7 @@ class HomeScreenInventory extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _buildFeatureItem(Icons.list, 'Daftar Barang', context, ''),
+                  _buildFeatureItem(Icons.list, 'Daftar Barang', context, '/TransactionList'),
                   _buildFeatureItem(Icons.map, 'Maps', context,  '/Maps'),
                   _buildFeatureItem(Icons.history, 'History', context, '/History'),
                   _buildFeatureItem(Icons.save, 'Item', context, '/ItemListScreen'),

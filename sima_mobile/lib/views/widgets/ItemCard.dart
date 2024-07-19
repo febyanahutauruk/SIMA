@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sima/models/item/item_pagination_model.dart';
+import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
 
 class ItemCard extends StatelessWidget {
-  const ItemCard({super.key});
+  final ItemPaginationModel model;
+  const ItemCard({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +19,14 @@ class ItemCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Nama Barang",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text("KD1234"),
+                  Text(model.name),
                 ],
               ),
               const Spacer(),
@@ -38,21 +41,21 @@ class ItemCard extends StatelessWidget {
             ],
           ),
           const Divider(),
-          const Text(
-            "Kategori    :",
+          Text(
+            "Kode Barang    :",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          const Text("Furnitur"),
+          Text(model.code),
           const Text(
-            "Deskripsi  :",
+            "Kategori  :",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          const Text("Furnitur Kantor"),
+          Text(model.categoryName),
           const Text(
-            "Quantity   :",
+            "Deskripsi   :",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          const Text("60"),
+          Text(model.description),
           Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

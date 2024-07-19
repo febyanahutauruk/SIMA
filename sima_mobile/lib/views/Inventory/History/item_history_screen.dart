@@ -1,19 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HistoryScreen(),
-    );
-  }
-}
-
 class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -24,7 +10,8 @@ class HistoryScreen extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
           onPressed: () {},
         ),
-        title: Text('History'),
+        title: Text('History', 
+        style: TextStyle(color: Colors.teal),),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
