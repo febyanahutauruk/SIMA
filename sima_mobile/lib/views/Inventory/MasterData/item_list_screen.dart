@@ -15,6 +15,8 @@ class ItemListScreen extends StatefulWidget {
   State<ItemListScreen> createState() => _ItemListScreenState();
 }
 
+
+
  class _ItemListScreenState extends State<ItemListScreen> {
   final ScrollController _scrollController = ScrollController();
   scrollListener() {
@@ -29,6 +31,7 @@ class ItemListScreen extends StatefulWidget {
     }
   }
 
+  
   @override
   void initState() {
     context.read<ItemController>().getPaginationItem();
@@ -53,13 +56,28 @@ class ItemListScreen extends StatefulWidget {
         ),
         backgroundColor: Color(0xFFB5D9DA),
       ),
-      body: SingleChildScrollView(
+      body: Consumer<ItemController>(
+        builder: (BuildContext context, value, Widget? child) {
+          if (value.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+            );
+
+            } else{
+              print("cek data ${value.items.length}");
+              return SingleChildScrollView(
+                controller: _scrollController,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TextField(
+              TextField(
+                onSubmitted: (v){
+                  final itemP = context.read<ItemController>();
+                  itemP.param =itemP.param.copyWith(limit: 10, offset: 0, name: v);
+                  itemP.searchItems();
+                },              
                 decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search),
                     hintText: "Search....",
@@ -124,37 +142,22 @@ class ItemListScreen extends StatefulWidget {
                 height: 20,
               ),
 
-              ItemCard(
-                model: ItemPaginationModel(
-                  code: "123099",
-                  name: "meja",
-                  categoryName: "furniture",
-                  description: "meja",
-                  id: 0 ,
-                )
+              Column(children: value.items.map((e) {
+                return ItemCard(model: e);
+              }).toList(),
               ),
-              ItemCard(
-                model: ItemPaginationModel(
-                  code: "647599",
-                  name: "meja",
-                  categoryName: "furniture",
-                  description: "meja",
-                  id: 0 ,
-                )
-              ),
-              ItemCard(
-                model: ItemPaginationModel(
-                  code: "123456",
-                  name: "meja",
-                  categoryName: "furniture",
-                  description: "meja",
-                  id: 0 ,
-                )
-              ),
+
+              if (value.isNext)
+              const Center(child: CircularProgressIndicator(),
+              )
             ],
           ),
         ),
-      ),
+      );
+    }
+        },
+    ),
     );
   }
-}
+ }
+

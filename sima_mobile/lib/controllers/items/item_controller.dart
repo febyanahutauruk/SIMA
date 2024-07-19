@@ -18,8 +18,9 @@ class ItemController with ChangeNotifier {
 
   Future<void> getPaginationItem() async {
     _isLoading = true;
+    param = ItemPaginationParamModel (limit: 2, offset: 0);
     ItemPaginationResponseModels responseModel = await service 
-    .getPaginationItem(ItemPaginationParamModel(limit:2, offset: 0));
+    .getPaginationItem(param);
     
     _items = responseModel.data;
     _isNext = responseModel.isNext;
@@ -32,13 +33,26 @@ class ItemController with ChangeNotifier {
   Future <void> loadMore() async {
     print("limit ${param.limit}");
     //param = param.copyWith(limit = 2, offset = _items.length);
-    ItemPaginationResponseModels responseModels =
+    ItemPaginationResponseModels responseModel =
     await service.getPaginationItem(param);
 
-    _items = [..._items, ...responseModels.data];
-    _isNext = responseModels.isNext;
+    _items = [..._items, ...responseModel.data];
+    _isNext = responseModel.isNext;
 
     notifyListeners();
     }
 
+
+  Future<void> searchItems() async {
+    _isLoading = true;
+    ItemPaginationResponseModels responseModel = await service 
+      .getPaginationItem(param);
+    
+    _items = responseModel.data;
+    _isNext = responseModel.isNext;
+    _isLoading = false;
+
+      notifyListeners();
+
   }
+}
