@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sima/controllers/items/item_controller.dart';
 import 'package:sima/views/Inventory/History/item_history_screen.dart';
 import 'package:sima/views/Inventory/Maps/maps_screen.dart';
 import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
@@ -15,7 +17,12 @@ class InventoryManagementApp extends StatelessWidget {
   const InventoryManagementApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create:(_) => ItemController())
+      ],
+
+      child: MaterialApp(
         home: WelcomeScreen(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(primarySwatch: Colors.teal),
@@ -29,10 +36,10 @@ class InventoryManagementApp extends StatelessWidget {
       '/TransactionList' : (BuildContext context) => new TransactionList(),
       '/Maps' : (BuildContext context) => new MapScreen(),
       // ItemListScreen.routename : (BuildContext context) =>  ItemListScreen(),
-      
 
 
     }
+    )
     );
   }
 }

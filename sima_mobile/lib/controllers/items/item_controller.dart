@@ -20,8 +20,10 @@ class ItemController with ChangeNotifier {
     _isLoading = true;
     param = ItemPaginationParamModel (limit: 2, offset: 0);
     ItemPaginationResponseModels responseModel = await service 
-    .getPaginationItem(param);
+        .getPaginationItem(param);
     
+    print(responseModel);
+
     _items = responseModel.data;
     _isNext = responseModel.isNext;
     _isLoading = false;

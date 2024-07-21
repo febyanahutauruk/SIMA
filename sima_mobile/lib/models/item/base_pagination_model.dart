@@ -18,7 +18,7 @@ class ItemPaginationResponseModels {
     });
 
     factory ItemPaginationResponseModels.fromJson(Map<String, dynamic> json) => ItemPaginationResponseModels(
-        data: List<ItemPaginationModel>.from(json["data"].map((x) => ItemPaginationResponseModels.fromJson(x))),
+        data: List<ItemPaginationModel>.from(json["data"].map((x) => ItemPaginationModel.fromJson(x))),
         offset: json["offset"],
         isNext: json["isNext"],
     );

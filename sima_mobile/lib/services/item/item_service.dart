@@ -17,11 +17,18 @@ class ItemService{
       url,
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(param.toJson())
+
     );
+    print (response.statusCode);
+    print (response.body);
 
     if(response.statusCode == 200){
       var jsonResponse = json.decode(response.body) as Map<String, dynamic>;
-      return ItemPaginationResponseModels.fromJson(jsonResponse);
+      var result = ItemPaginationResponseModels.fromJson(jsonResponse);
+      print("cek result : $result");
+      print("cek result2 : $result.data");
+      return result;
+
     }
 
     return ItemPaginationResponseModels(data: [], 

@@ -33,12 +33,12 @@ class ItemPaginationModel {
     });
 
     factory ItemPaginationModel.fromJson(Map<String, dynamic> json) => ItemPaginationModel(
-        code: json["code"],
-        name: json["name"],
-        description: json["description"],
+        code: json["code"] ??"",
+        name: json["name"] ??"",
+        description: json["description"] ??"",
         // image: json["image"],
-        categoryName: json["categoryName"],
-        id: json["id"],
+        categoryName: json["categoryName"] ??"",
+        id: json["id"] ??"",
         // createdDate: DateTime.parse(json["createdDate"]),
         // createdDateFormat: json["createdDateFormat"],
         // createdBy: json["createdBy"],
