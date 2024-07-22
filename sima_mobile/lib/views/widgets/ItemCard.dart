@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sima/models/item/item_pagination_model.dart';
-import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
 
 class ItemCard extends StatelessWidget {
   final ItemPaginationModel model;
@@ -22,7 +21,7 @@ class ItemCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Nama Barang",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -41,7 +40,7 @@ class ItemCard extends StatelessWidget {
             ],
           ),
           const Divider(),
-          Text(
+          const Text(
             "Kode Barang    :",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
@@ -56,23 +55,23 @@ class ItemCard extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           Text(model.description),
-          Divider(),
+          const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Status",style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text("Status",style: TextStyle(fontWeight: FontWeight.bold)),
               Container(
-                  padding: EdgeInsets.all(4),
+                  padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
                       color: Colors.green,
                       borderRadius: BorderRadius.circular(4)
                   ),
-                  child: Text("Tersedia",
+                  child: const Text("Tersedia",
                     style: TextStyle(color: Colors.white),)),
             ],
           ),
-          Divider(),
-          Row(
+          const Divider(),
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Detail",style: TextStyle(fontWeight: FontWeight.bold,

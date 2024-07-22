@@ -25,13 +25,13 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
        body: SingleChildScrollView(
          child: Column(
            children: [
-             TextField( decoration: const InputDecoration(labelText: "Name Product")),
-             TextField( decoration: const InputDecoration(labelText: "Code Product")),
-             TextField( decoration: const InputDecoration(labelText: "Category")),
-             TextField( decoration: const InputDecoration(labelText: "Quantity")),
-             TextField( decoration: const InputDecoration(labelText: "Location")),
-             TextField( decoration: const InputDecoration(labelText: "Deskripsi")),
-             SizedBox(height: 100),
+             const TextField( decoration: InputDecoration(labelText: "Name Product")),
+             const TextField( decoration: InputDecoration(labelText: "Code Product")),
+             const TextField( decoration: InputDecoration(labelText: "Category")),
+             const TextField( decoration: InputDecoration(labelText: "Quantity")),
+             const TextField( decoration: InputDecoration(labelText: "Location")),
+             const TextField( decoration: InputDecoration(labelText: "Deskripsi")),
+             const SizedBox(height: 100),
              ElevatedButton(onPressed: () {}, child: const Text('Submit'))
            ],
          ),

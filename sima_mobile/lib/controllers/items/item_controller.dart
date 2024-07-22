@@ -10,7 +10,7 @@ class ItemController with ChangeNotifier {
   bool _isLoading = true;
   bool _isNext = true;
   ItemPaginationParamModel param = 
-    ItemPaginationParamModel (limit: 2, offset: 0);
+    ItemPaginationParamModel (limit: 3, offset: 0);
 // test
   List<ItemPaginationModel> get items => _items;
   bool get isNext => _isNext;

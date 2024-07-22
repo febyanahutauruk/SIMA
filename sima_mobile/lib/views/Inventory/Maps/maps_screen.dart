@@ -4,6 +4,8 @@ import 'package:geocoding/geocoding.dart';
 
 
 class MapScreen extends StatefulWidget {
+  const MapScreen({super.key});
+
   @override
   _MapScreenState createState() => _MapScreenState();
 }
@@ -12,8 +14,8 @@ class _MapScreenState extends State<MapScreen> {
   GoogleMapController? mapController;
   final TextEditingController _searchController = TextEditingController();
 
-  LatLng _initialPosition = LatLng(-6.200000, 106.816666); 
-  LatLng _currentPosition = LatLng(-6.200000, 106.816666);
+  final LatLng _initialPosition = const LatLng(-6.200000, 106.816666); 
+  LatLng _currentPosition = const LatLng(-6.200000, 106.816666);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class _MapScreenState extends State<MapScreen> {
             },
             markers: {
               Marker(
-                markerId: MarkerId('currentLocation'),
+                markerId: const MarkerId('currentLocation'),
                 position: _currentPosition,
               ),
             },
@@ -45,7 +47,7 @@ class _MapScreenState extends State<MapScreen> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
                     blurRadius: 10.0,
@@ -58,9 +60,9 @@ class _MapScreenState extends State<MapScreen> {
                 decoration: InputDecoration(
                   hintText: 'Telusuri di sini',
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(left: 15, top: 15),
+                  contentPadding: const EdgeInsets.only(left: 15, top: 15),
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.search),
+                    icon: const Icon(Icons.search),
                     onPressed: _searchLocation,
                     iconSize: 30,
                   ),

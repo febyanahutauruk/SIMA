@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
-import 'package:sima/views/welcome_screen.dart';
 
 // void main(){
 //   runApp(MaterialApp(
@@ -10,12 +8,14 @@ import 'package:sima/views/welcome_screen.dart';
 // }
 
 class HomeScreenInventory extends StatelessWidget {
+  const HomeScreenInventory({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pushNamed(context, '/WelcomeScreen');
           },
@@ -28,14 +28,14 @@ class HomeScreenInventory extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
+              const Center(
                 child: CircleAvatar(
                   radius: 40,
                   backgroundImage: NetworkImage('https://via.placeholder.com/150'),
                 ),
               ),
-              SizedBox(height: 8),
-              Center(
+              const SizedBox(height: 8),
+              const Center(
                 child: Column(
                   children: [
                     Text(
@@ -53,7 +53,7 @@ class HomeScreenInventory extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -63,24 +63,24 @@ class HomeScreenInventory extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Report Stock',
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: ListTile(
-                          leading: Icon(Icons.home),
-                          title: Text('Warehouse List'),
-                          trailing: Icon(Icons.arrow_drop_down),
+                          leading: const Icon(Icons.home),
+                          title: const Text('Warehouse List'),
+                          trailing: const Icon(Icons.arrow_drop_down),
                           onTap: () {},
                         ),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       _buildStockItem(Icons.arrow_forward, '1520 Item', 'Item In', Colors.teal),
                       _buildStockItem(Icons.warning, '18 Item', 'Low Stock', Colors.orange),
                       _buildStockItem(Icons.arrow_back, '20 Item', 'Item Out', Colors.red),
@@ -88,12 +88,12 @@ class HomeScreenInventory extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 16),
-              Text(
+              const SizedBox(height: 16),
+              const Text(
                 'Features',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -134,7 +134,7 @@ class HomeScreenInventory extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // Navigator.push(context, MaterialPageRoute(builder: (context) => ItemListScreen()));
-        Navigator.pushNamed(context, '$routename');
+        Navigator.pushNamed(context, routename);
       },
       child: Column(
         children: [
@@ -143,7 +143,7 @@ class HomeScreenInventory extends StatelessWidget {
             backgroundColor: Colors.teal,
             child: Icon(icon, color: Colors.white, size: 30),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(label),
         ],
       ),

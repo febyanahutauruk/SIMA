@@ -9,8 +9,8 @@ final String icons;
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 8),
-      padding: EdgeInsets.all(8),
+      margin: const EdgeInsets.only(right: 8),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius:BorderRadius.circular(20),
         color: Colors.teal,
@@ -33,7 +33,7 @@ final String icons;
                       //   },
                       // ),
                       Text(lable,
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                       textAlign: TextAlign.center),
                     ],
                   ),

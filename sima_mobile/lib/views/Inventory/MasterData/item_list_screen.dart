@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sima/controllers/items/item_controller.dart';
-import 'package:sima/models/item/item_pagination_model.dart';
 import 'package:sima/views/widgets/ItemCard.dart';
-import 'package:sima/controllers/items/item_controller.dart';
 
 
 
@@ -55,7 +53,7 @@ class ItemListScreen extends StatefulWidget {
           "Item",
           style: TextStyle(color: Colors.teal),
         ),
-        backgroundColor: Color(0xFFB5D9DA),
+        backgroundColor: const Color(0xFFB5D9DA),
       ),
       body: Consumer<ItemController>(
         builder: (BuildContext context, value, Widget? child) {
@@ -79,7 +77,7 @@ class ItemListScreen extends StatefulWidget {
                   itemP.param =itemP.param.copyWith(limit: 10, offset: 0, name: v);
                   itemP.searchItems();
                 },              
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.search),
                     hintText: "Search....",
                     border: OutlineInputBorder(

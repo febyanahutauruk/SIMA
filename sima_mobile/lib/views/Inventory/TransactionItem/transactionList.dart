@@ -16,16 +16,18 @@ import 'package:flutter/material.dart';
 
 class TransactionList extends StatelessWidget {
   static const String routename = "/ListItem";
+
+  const TransactionList({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Daftar Item',
           style: TextStyle(color: Colors.teal),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {},
         ),
         backgroundColor: Colors.teal[100],
@@ -45,18 +47,18 @@ class TransactionList extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             // Search Bar
             TextField(
               decoration: InputDecoration(
                 hintText: 'Search...',
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             Expanded(
               child: GridView.count(
@@ -130,11 +132,11 @@ class TransactionList extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     price,
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                 ],
               ),
@@ -151,18 +153,18 @@ class DetailScreen extends StatelessWidget {
   final String price;
   final String imagePath;
 
-  DetailScreen({required this.title, required this.price, required this.imagePath});
+  const DetailScreen({super.key, required this.title, required this.price, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Detail',
           style: TextStyle(color: Colors.teal),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -183,11 +185,11 @@ class DetailScreen extends StatelessWidget {
                 Center(
                   child: Image.asset(imagePath, height: 200),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       '09/07/2024',
                       style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
@@ -208,11 +210,11 @@ class DetailScreen extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         IconButton(
-                                          icon: Icon(Icons.remove_circle),
+                                          icon: const Icon(Icons.remove_circle),
                                           onPressed: () {
                                           },
                                         ),
-                                        Container(
+                                        const SizedBox(
                                           width: 60,
                                           child: TextField(
                                             textAlign: TextAlign.center,
@@ -222,17 +224,15 @@ class DetailScreen extends StatelessWidget {
                                           ),
                                         ),
                                         IconButton(
-                                          icon: Icon(Icons.add_circle),
+                                          icon: const Icon(Icons.add_circle),
                                           onPressed: () {
                                           },
                                         ),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(height: 16),
+                                  const SizedBox(height: 16),
                                   ElevatedButton(
-                                    child: Text('Submit',
-                                    style: TextStyle(color:Colors.white)),
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
@@ -242,6 +242,8 @@ class DetailScreen extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                     ),
+                                    child: const Text('Submit',
+                                    style: TextStyle(color:Colors.white)),
                                   ),
                                 ],
                               ),
@@ -249,19 +251,19 @@ class DetailScreen extends StatelessWidget {
                           },
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         'Action',
                         style: TextStyle(color: Colors.teal),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
-                Text(
+                const SizedBox(height: 16),
+                const Text(
                   'Detail',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 _buildDetailRow('Name Product', title),
                 _buildDetailRow('Kode Product', 'LK091827'),
                 _buildDetailRow('Kategori', 'Furniture'),
@@ -284,12 +286,12 @@ class DetailScreen extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
             value,
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
           ),
         ],
       ),

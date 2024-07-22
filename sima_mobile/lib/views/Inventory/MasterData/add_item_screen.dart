@@ -89,14 +89,14 @@ class _InputItemScreenState extends State<InputItemScreen> {
               ),
             ),
             const SizedBox(height: 16.0),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 labelText: "Name Product",
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16.0),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 labelText: "Kode Product",
                 border: OutlineInputBorder(),
@@ -104,7 +104,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
             ),
             const SizedBox(height: 16.0),
             DropdownButtonFormField<String>(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Category",
                 border: OutlineInputBorder(),
               ),
@@ -118,14 +118,14 @@ class _InputItemScreenState extends State<InputItemScreen> {
               onChanged: (_) {},
             ),
             const SizedBox(height: 16.0),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 labelText: "Quantity",
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16.0),
-            TextField(
+            const TextField(
               maxLines: 3,
               decoration: InputDecoration(
                 labelText: "Description",

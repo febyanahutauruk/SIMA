@@ -16,7 +16,7 @@ import 'package:sima/views/widgets/icon_home.dart';
 // }
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+  const WelcomeScreen({super.key});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -24,7 +24,7 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   _gotohome() async {
-  await Future.delayed(Duration(milliseconds: 1500), () {
+  await Future.delayed(const Duration(milliseconds: 1500), () {
       Navigator.pushNamed(context, '/HomeScreen');
   }
     );
@@ -57,7 +57,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           width: 250,
         ),
         const SizedBox(height: 0),
-        Text(
+        const Text(
           'Solusi Inventaris Pintar untuk Bisnis Modern!',
           style: TextStyle(
             fontSize: 16,
@@ -74,12 +74,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(180),
+        preferredSize: const Size.fromHeight(180),
         child: ClipPath(
           clipper: BottomRoundedClipper(),
           child: AppBar(
@@ -92,8 +94,8 @@ class HomeScreen extends StatelessWidget {
                   'assets/image/logo-lg-transparant 2.png',
                   width: 250,
                 ),
-                SizedBox(height: 0),
-                Text(
+                const SizedBox(height: 0),
+                const Text(
                   'Solusi Inventaris Pintar untuk Bisnis Modern!',
                   style: TextStyle(
                     fontSize: 18,
@@ -110,8 +112,8 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
-            Padding(
+            const SizedBox(height: 20),
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
                 'Welcome, Let\'s Start!',
@@ -122,7 +124,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
+              margin: const EdgeInsets.symmetric(vertical: 20),
               child: CarouselSlider(
                 options: CarouselOptions(
                   autoPlay: true,
@@ -132,10 +134,10 @@ class HomeScreen extends StatelessWidget {
                 items: [
                   Container(
                     width: MediaQuery.of(context).size.width * 0.8,
-                    margin: EdgeInsets.all(5.0),
+                    margin: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
-                      image: DecorationImage(
+                      image: const DecorationImage(
                         image: AssetImage('assets/image/pertaminaPTK.jpg'),
                         fit: BoxFit.cover,
                       ),
@@ -143,10 +145,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.8,
-                    margin: EdgeInsets.all(5.0),
+                    margin: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
-                      image: DecorationImage(
+                      image: const DecorationImage(
                         image: AssetImage('assets/image/gudang123.jpg'),
                         fit: BoxFit.cover,
                       ),
@@ -154,10 +156,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.8,
-                    margin: EdgeInsets.all(5.0),
+                    margin: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
-                      image: DecorationImage(
+                      image: const DecorationImage(
                         image: AssetImage('assets/image/gudang PTK.jpg'),
                         fit: BoxFit.cover,
                       ),
@@ -166,8 +168,8 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            Padding(
+            const SizedBox(height: 20),
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
                 'Management Feature',
@@ -177,30 +179,30 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Card(
-              margin: EdgeInsets.symmetric(horizontal: 16.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ListTile(
-                title: Text('Assets Management'),
-                trailing: Icon(Icons.arrow_forward),
+                title: const Text('Assets Management'),
+                trailing: const Icon(Icons.arrow_forward),
                 onTap: () {
                   Navigator.pushNamed(context, '/assets');
                 },
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Card(
-              margin: EdgeInsets.symmetric(horizontal: 16.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ListTile(
-                title: Text('Inventory Management'),
-                trailing: Icon(Icons.arrow_forward),
+                title: const Text('Inventory Management'),
+                trailing: const Icon(Icons.arrow_forward),
                 onTap: () {
                   Navigator.pushNamed(context, '/Inventory');
                 },
               ),
             ),
-            SizedBox(height: 30),
-            Padding(
+            const SizedBox(height: 30),
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Center(
                 child: Text(
@@ -212,8 +214,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 10),
-            SingleChildScrollView(
+            const SizedBox(height: 10),
+            const SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
