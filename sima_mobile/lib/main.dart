@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sima/controllers/items/item_controller.dart';
 import 'package:sima/views/Inventory/History/item_history_screen.dart';
 import 'package:sima/views/Inventory/Maps/maps_screen.dart';
+import 'package:sima/views/Inventory/MasterData/add_item_screen.dart';
 import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
 import 'package:sima/views/Inventory/TransactionItem/transactionList.dart';
 import 'package:sima/views/Inventory/home_screen_inventory.dart';
@@ -35,6 +36,7 @@ class InventoryManagementApp extends StatelessWidget {
       '/History' : (BuildContext context) => new HistoryScreen(),
       '/TransactionList' : (BuildContext context) => new TransactionList(),
       '/Maps' : (BuildContext context) => new MapScreen(),
+      '/InputItemScreen' : (BuildContext context) => new InputItemScreen(),
       // ItemListScreen.routename : (BuildContext context) =>  ItemListScreen(),
 
 
