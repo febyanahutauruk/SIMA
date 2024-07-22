@@ -14,13 +14,7 @@ class HomeScreenInventory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushNamed(context, '/WelcomeScreen');
-          },
-        ),
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xFFB5D9DA),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

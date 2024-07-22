@@ -78,11 +78,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(180),
-        child: ClipPath(
-          clipper: BottomRoundedClipper(),
-          child: AppBar(
+      appBar: AppBar(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
             toolbarHeight: 200,
             backgroundColor: Colors.teal,
             title: Column(
@@ -104,8 +101,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
+      
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,8 +217,8 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(width: 12),
                   IconHomeWidget(routename: '/WelcomeScreen', lable: 'Master Data Asset', icons: 'assets.png'),
                   IconHomeWidget(routename: '/manageAssets', lable: 'Barcode Assets', icons: 'qr.png'),
-                  IconHomeWidget(routename: '/manageCategories', lable: 'Master Data Inventory', icons: 'dataBarang.png'),
-                  IconHomeWidget(routename: '/inventoryHistory', lable: 'History Inventory', icons: 'history.png'),
+                  IconHomeWidget(routename: '/ItemListScreen', lable: 'Master Data Inventory', icons: 'dataBarang.png'),
+                  IconHomeWidget(routename: '/History', lable: 'History Inventory', icons: 'history.png'),
                   // Column(
                   //   children: [
                   //     IconButton(
@@ -265,22 +261,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-class BottomRoundedClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(0, size.height - 30);
-    path.quadraticBezierTo(0, size.height, 30, size.height);
-    path.lineTo(size.width - 30, size.height);
-    path.quadraticBezierTo(size.width, size.height, size.width, size.height - 30);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
-
 
