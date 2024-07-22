@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sima/controllers/history/history_controller.dart';
 import 'package:sima/views/widgets/HistoryCard.dart';
+import 'package:sima/models/history/history_pagination_model.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -44,6 +45,7 @@ class _HistoryListScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
         backgroundColor: const Color(0xFFB5D9DA),
         leading: IconButton(
@@ -64,7 +66,14 @@ class _HistoryListScreenState extends State<HistoryScreen> {
               child: CircularProgressIndicator(),
             );
           } else {
-            print("cek data ${value.items.length}");
+            final Map<String, List<HistoryPaginationModel>> itemsByDate = {};
+            for (final item in value.items) {
+              final date = item.createdDateFormat;
+              if (!itemsByDate.containsKey(date)) {
+                itemsByDate[date] = [];
+              }
+              itemsByDate[date]!.add(item);
+            }
             return SingleChildScrollView(
               controller: _scrollController,
               child: Padding(
@@ -122,6 +131,7 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                                 });
                               },
                               borderRadius: BorderRadius.circular(20),
+                              dropdownColor: Colors.white,
                               items: <String>['All', 'In', 'Out']
                                   .map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
@@ -136,8 +146,30 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                     ),
                     const SizedBox(height: 10),
                     Column(
-                      children: value.items.map((e) {
-                        return HistoryCard(model: e);
+                      children: itemsByDate.entries.map((entry) {
+                        final date = entry.key;
+                        final itemsForDate = entry.value;
+
+                        return Column( // Use a Column instead of Card
+                          crossAxisAlignment: CrossAxisAlignment.start, // Align title to the start
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal:16.0), // Adjust padding as needed
+                              child: Text(
+                                date,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Column(
+                              children: itemsForDate.map((item) {
+                                return HistoryCard(model: item);
+                              }).toList(),
+                            ),
+                          ],
+                        );
                       }).toList(),
                     ),
                     if (value.isNext)
