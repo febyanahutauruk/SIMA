@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sima/main.dart';
 import 'package:sima/models/item/item_pagination_model.dart';
 import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
+import 'package:sima/views/widgets/card_action.dart';
 
 class ItemCard extends StatelessWidget {
   final ItemPaginationModel model;
@@ -34,11 +36,18 @@ class ItemCard extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(4)),
+                  child: InkWell(onTap: (){
+                    Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CardAction()),
+                  ); 
+                  },
                   child: const Icon(
                     Icons.list,
-                    size: 32,
+                    size: 30,
                   ))
-            ],
+              )
+            ],  
+          
           ),
           const Divider(),
           Text(

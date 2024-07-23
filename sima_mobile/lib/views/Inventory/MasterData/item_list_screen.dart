@@ -7,15 +7,12 @@ import 'package:sima/controllers/items/item_controller.dart';
 
 
 
-
-
 class ItemListScreen extends StatefulWidget {
   const ItemListScreen({super.key});
 
   @override
   State<ItemListScreen> createState() => _ItemListScreenState();
 }
-
 
 
  class _ItemListScreenState extends State<ItemListScreen> {
@@ -57,6 +54,13 @@ class ItemListScreen extends StatefulWidget {
         ),
         backgroundColor: Color(0xFFB5D9DA),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Navigator.pushNamed(context, '/InputItemScreen');
+      },
+      backgroundColor: Colors.teal,
+      foregroundColor: Colors.white,
+      child: const Icon(Icons.add)),
+
       body: Consumer<ItemController>(
         builder: (BuildContext context, value, Widget? child) {
           if (value.isLoading) {
