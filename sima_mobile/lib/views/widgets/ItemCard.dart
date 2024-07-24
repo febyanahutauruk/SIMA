@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sima/main.dart';
 import 'package:sima/models/item/item_pagination_model.dart';
-import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
 import 'package:sima/views/widgets/card_action.dart';
 
 class ItemCard extends StatelessWidget {
@@ -36,18 +34,24 @@ class ItemCard extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(4)),
-                  child: InkWell(onTap: (){
-                    Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CardAction()),
-                  ); 
-                  },
-                  child: const Icon(
-                    Icons.list,
-                    size: 30,
-                  ))
+                  child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            child: CardAction(),
+                          );
+                        },
+                      );
+                    },
+                    child: const Icon(
+                      Icons.list,
+                      size: 30,
+                    ),
+                  )
               )
-            ],  
-          
+            ],
           ),
           const Divider(),
           Text(
@@ -69,22 +73,23 @@ class ItemCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Status",style: TextStyle(fontWeight: FontWeight.bold)),
+              Text("Status", style: TextStyle(fontWeight: FontWeight.bold)),
               Container(
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(4)
-                  ),
-                  child: Text("Tersedia",
-                    style: TextStyle(color: Colors.white),)),
+                padding: EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(4)
+                ),
+                child: Text("Tersedia",
+                  style: TextStyle(color: Colors.white),),
+              ),
             ],
           ),
           Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Detail",style: TextStyle(fontWeight: FontWeight.bold,
+              Text("Detail", style: TextStyle(fontWeight: FontWeight.bold,
                   color: Colors.blue)),
               Icon(Icons.arrow_forward_ios, color: Colors.blue,)
             ],

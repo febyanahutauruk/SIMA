@@ -1,43 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:sima/views/Inventory/MasterData/update_data_screen.dart';
-import 'package:sima/views/Inventory/TransactionItem/transactionList.dart';
 
 class CardAction extends StatelessWidget {
   const CardAction({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,  // Agar bottom sheet menyesuaikan tinggi konten
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();  // Tutup bottom sheet saat ikon ditap
-                },
-                child: Icon(Icons.close, color: Colors.grey),
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              icon: Icon(Icons.close, color: Colors.grey),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+          Divider(),
+          GestureDetector(
+            onTap: () {
+              
+            },
+            child: Container(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  height: 60,
+                  padding: EdgeInsets.all(16),              child: Center(
+                child: Text(
+                  'Edit',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16,
+                  ),
+                ),
               ),
-            ],
+            ),
           ),
           Divider(),
-          ListTile(
-            title: Center(child: Text('Edit', style: TextStyle(color: Colors.grey))),
+          GestureDetector(
             onTap: () {
-              Navigator.of(context).pop();  
-              Navigator.pushNamed(context, '/assets');
             },
-          ),
-          Divider(),
-          ListTile(
-            title: Center(child: Text('Delete', style: TextStyle(color: Colors.red))),
-            onTap: () {
-              Navigator.of(context).pop();  
-              Navigator.pushNamed(context, '/assets');
-            },
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 16),
+              child: Center(
+                child: Text(
+                  'Delete',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),

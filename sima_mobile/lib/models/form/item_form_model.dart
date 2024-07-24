@@ -6,7 +6,7 @@ class ItemFormModel {
   String code;
   String? description;
   String? category; 
-  File? fileUploads;
+  List<File>? fileUploads;
   String createdBy;
 
   ItemFormModel({

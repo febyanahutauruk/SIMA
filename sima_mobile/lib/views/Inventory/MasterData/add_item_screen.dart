@@ -12,7 +12,7 @@ class InputItemScreen extends StatefulWidget {
 }
 
 class _InputItemScreenState extends State<InputItemScreen> {
-  File? _imageFile;
+  File? _imageFilesList;
   final ImagePicker _picker = ImagePicker();
   final ItemController _itemController = ItemController();
   
@@ -27,7 +27,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
     final pickedFile = await _picker.pickImage(source: source);
     setState(() {
       if (pickedFile != null) {
-        _imageFile = File(pickedFile.path);
+        _imageFilesList = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
@@ -42,7 +42,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
         category: _selectedCategoryId,
         description: _descriptionController.text,
         createdBy: _usernameController.text, 
-        fileUploads: _imageFile,
+        fileUploads: _imageFilesList != null ? [_imageFilesList!] : [],
       );
 
       await _itemController.addItem(item); 
@@ -53,7 +53,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
       _usernameController.clear();
 
       setState(() {
-        _imageFile = null;
+        _imageFilesList = null;
         _selectedCategoryId = null;
       });
 
@@ -107,14 +107,14 @@ class _InputItemScreenState extends State<InputItemScreen> {
                     },
                   );
                 },
-                child: _imageFile == null
+                child: _imageFilesList == null
                     ? const Icon(
                         Icons.image,
                         size: 200,
                         color: Colors.grey,
                       )
                     : Image.file(
-                        _imageFile!,
+                        _imageFilesList!,
                         height: 200,
                         width: 200,
                         fit: BoxFit.cover,
@@ -143,7 +143,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
                 labelText: "Category",
                 border: OutlineInputBorder(),
               ),
-              items: <String>['1', '2', '3'] // Example categories
+              items: <String>['1', '2', '3'] 
                   .map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,

@@ -24,7 +24,7 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   _gotohome() async {
-  await Future.delayed(Duration(milliseconds: 1500), () {
+  await Future.delayed(Duration(milliseconds: 2500), () {
       Navigator.pushNamed(context, '/HomeScreen');
   }
     );
