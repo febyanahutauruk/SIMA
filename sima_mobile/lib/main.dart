@@ -8,6 +8,7 @@ import 'package:sima/views/Inventory/TransactionItem/transactionList.dart';
 import 'package:sima/views/Inventory/home_screen_inventory.dart';
 import 'package:sima/views/welcome_screen.dart';
 import 'package:sima/controllers/history/history_controller.dart';
+import 'package:sima/controllers/dashboard/dashboard_controller.dart';
 
 
 void main() {
@@ -21,7 +22,8 @@ class InventoryManagementApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create:(_) => ItemController()),
-        ChangeNotifierProvider(create:(_) => HistoryController())
+        ChangeNotifierProvider(create:(_) => HistoryController()),
+        ChangeNotifierProvider(create:(_) => DashboardItemController())
       ],
 
       child: MaterialApp(

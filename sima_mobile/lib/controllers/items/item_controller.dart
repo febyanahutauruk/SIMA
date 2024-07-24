@@ -18,7 +18,7 @@ class ItemController with ChangeNotifier {
 
   Future<void> getPaginationItem() async {
     _isLoading = true;
-    param = ItemPaginationParamModel (limit: 2, offset: 0);
+    param = ItemPaginationParamModel (limit: 3, offset: 0);
     ItemPaginationResponseModels responseModel = await service 
         .getPaginationItem(param);
     
@@ -56,5 +56,20 @@ class ItemController with ChangeNotifier {
 
       notifyListeners();
 
+  }
+
+  Future<void> filterItemsByCategory(String categoryName) async {
+    _isLoading = true;
+
+    param = param.copyWith(categoryName: categoryName);
+
+    ItemPaginationResponseModels responseModel = await service
+        .getPaginationItem(param);
+
+    _items = responseModel.data;
+    _isNext = responseModel.isNext;
+    _isLoading = false;
+
+    notifyListeners();
   }
 }

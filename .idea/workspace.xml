@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11540db0-ab6c-4771-8c5d-4d8371f7faf6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/sima_mobile/lib/controllers/dashboard/dashboard_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sima_mobile/lib/models/dashboard/dashboard_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sima_mobile/lib/models/dashboard/dashboard_param_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sima_mobile/lib/services/dashboard/dashboard_service.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/History/item_history_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/History/item_history_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/widgets/HistoryCard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/widgets/HistoryCard.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/controllers/items/item_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/controllers/items/item_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/MasterData/item_list_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/MasterData/item_list_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/home_screen_inventory.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/home_screen_inventory.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +38,9 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -47,7 +56,6 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
@@ -89,5 +97,15 @@
       <updated>1721185683397</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/sima_mobile/lib/models/history/history_pagination_model.dart</url>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
