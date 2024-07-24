@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sima/controllers/dashboard/dashboard_controller.dart'; // Import your controller
 import 'package:sima/models/dashboard/dashboard_model.dart';
+import 'package:sima/models/dashboard/dashboard_param_model.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenInventory extends StatefulWidget {
@@ -21,17 +22,16 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
   }
 
   Future<void> _fetchData() async {
-    print('Fetching data for filter: $_selectedFilter...');
-    if (_selectedFilter == 'All') {
-      await _controller.getDashboardItem(); // Fetch all items when 'All' is selected
+    print('Fetching data for filter: $_selectedFilter...');if (_selectedFilter == 'All') {
+      _controller.param = DashboardPaginationParamModel(warehouseName: "All"); // Access param through _controller
     } else {
-      await _controller.filterItemsByName(_selectedFilter.toLowerCase()); // Filter items based on selected value
+      _controller.param = DashboardPaginationParamModel(warehouseName: _selectedFilter.toLowerCase()); // Access param through _controller
     }
+    await _controller.getDashboardItem(); // Use getDashboardItem for both cases
     setState(() {
       _dashboardItemData = _controller.dashboardItemData; // Update the state with fetched data
     });
-    print('State updated with data: $_dashboardItemData');
-  }
+    print('State updated with data: $_dashboardItemData');}
 
   @override
   Widget build(BuildContext context) {

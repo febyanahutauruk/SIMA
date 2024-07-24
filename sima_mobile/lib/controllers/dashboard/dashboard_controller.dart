@@ -16,20 +16,14 @@ class DashboardItemController with ChangeNotifier {
 
   Future<void> getDashboardItem() async {
     _isLoading = true;
-    notifyListeners();
+    DashboardItemResponseModel responseModel = await _dashboardItemService.getDashboardItemData(param);
 
-    try {
-      print("Fetching data...");
-      DashboardItemResponseModel responseModel = await _dashboardItemService.getDashboardItemData(param);
-      _dashboardItemData = responseModel.data;
-      print("Data fetched: $_dashboardItemData");
-    } catch (e) {
-      print("Error in controller: ${e.toString()}");
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-      print("State updated with data: $_dashboardItemData");
-    }
+    print(responseModel);
+
+    _dashboardItemData = responseModel.data;
+
+    _isLoading = false;
+    notifyListeners();
   }
 
   void setWarehouseName(String warehouseName) {
