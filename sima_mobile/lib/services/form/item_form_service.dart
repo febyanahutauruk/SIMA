@@ -1,62 +1,35 @@
+  import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
-import 'package:mime/mime.dart';
-import 'package:sima/models/form/item_form_model.dart';
-import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+  import 'package:sima/models/form/item_form_model.dart';
+  import 'dart:convert';
 
-class ItemFormService {
-  final String apiUrl = 'https://apistrive.pertamina-ptk.com/api/Items/Add';
+  class ItemFormService {
+    final String apiUrl = 'https://apistrive.pertamina-ptk.com/api/Items/Add';
 
-  Future<void> addItem(ItemFormModel item) async {
-    validateItem(item);
+    Future<void> addItem(ItemFormModel item,) async {
+      final Map<String, dynamic> itemData = item.toJson();
+        final request = http.MultipartRequest('POST', Uri.parse(apiUrl),);
+        request.fields ['Code'] = item.code;
+        request.fields ['Name'] = item.name;
+        request.fields ['Description'] = item.description ?? '';
+        request.fields ['CategoryId'] = item.category.toString();
+        request.fields ['Username'] = item.createdBy;
 
-    try {
-      var request = http.MultipartRequest('POST', Uri.parse(apiUrl));
-      request.headers.addAll({
-        'Accept': 'application/json',
-      });
-
-      item.toJson().forEach((key, value) {
-        request.fields[key] = value.toString();
-      });
-
-      if (item.fileUploads != null && item.fileUploads!.isNotEmpty) {
-        for (File file in item.fileUploads!) {
-          String? mimeType = lookupMimeType(file.path);
-          if (mimeType != null) {
-            var multipartFile = await http.MultipartFile.fromPath(
-              'fileUploads',
-              file.path,
-              contentType: MediaType.parse(mimeType),
-            );
-            request.files.add(multipartFile);
-          }
+        
+        if (item.fileUploads == null){
+          print('gambar kosong');
         }
-      }
-
-      print('Sending data: ${request.fields}'); // Log data yang dikirim
-
-      final streamedResponse = await request.send();
-      final response = await http.Response.fromStream(streamedResponse);
-
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        print('Item added successfully.');
-      } else {
-        print('Failed to add item: ${response.statusCode} ${response.body}');
-        throw Exception('Failed to add item: ${response.statusCode} ${response.body}');
-      }
-    } catch (e) {
-      print('Error occurred: $e');
-      throw Exception('Error occurred: $e');
-    }
-  }
-
-  void validateItem(ItemFormModel item) {
-    if (item.name == null || item.name.isEmpty) {
-      throw Exception('Name is required');
-    }
+        // File.fromRawPath(item.fileUploads!.first);
+        var tempImage = item.fileUploads.toString();       
+        request.files.add(await http.MultipartFile('FileImage', item.fileUploads!.readAsBytes().asStream(), item.fileUploads!.lengthSync(),));
+        print('Sending data: ${jsonEncode(itemData)}');
+      var response = await request.send();
+            print(await response.stream.bytesToString());
+            if (response.statusCode == 200) {
+              print("success");
+            } else {
+              print("gagal");
+            }       
   }
 }

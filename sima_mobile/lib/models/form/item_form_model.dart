@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 
 class ItemFormModel {
   String name;
   String code;
   String? description;
-  String? category; 
-  List<File>? fileUploads;
+  int? category;
+  File? fileUploads;
   String createdBy;
 
   ItemFormModel({
@@ -32,7 +35,7 @@ class ItemFormModel {
     "code": code,
     "description": description,
     "category": category,
-    "fileUploads": fileUploads,
     "createdBy": createdBy,
   };
 }
+

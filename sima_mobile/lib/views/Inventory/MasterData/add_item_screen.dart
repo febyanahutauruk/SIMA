@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sima/models/form/item_form_model.dart';
 import 'package:sima/controllers/form/item_form_controllers.dart';
+import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
 
 class InputItemScreen extends StatefulWidget {
   const InputItemScreen({super.key});
@@ -12,7 +15,7 @@ class InputItemScreen extends StatefulWidget {
 }
 
 class _InputItemScreenState extends State<InputItemScreen> {
-  File? _imageFilesList;
+  File? _imageFile; // Changed from _imageFilesList to a single File
   final ImagePicker _picker = ImagePicker();
   final ItemController _itemController = ItemController();
   
@@ -21,13 +24,13 @@ class _InputItemScreenState extends State<InputItemScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   
-  String? _selectedCategoryId;
+  int? _selectedCategoryId;
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
     setState(() {
       if (pickedFile != null) {
-        _imageFilesList = File(pickedFile.path);
+        _imageFile = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
@@ -41,11 +44,11 @@ class _InputItemScreenState extends State<InputItemScreen> {
         code: _codeController.text,
         category: _selectedCategoryId,
         description: _descriptionController.text,
-        createdBy: _usernameController.text, 
-        fileUploads: _imageFilesList != null ? [_imageFilesList!] : [],
+        createdBy: _usernameController.text,
+        fileUploads: _imageFile,
       );
 
-      await _itemController.addItem(item); 
+      final response = await _itemController.addItem(item);
 
       _nameController.clear();
       _codeController.clear();
@@ -53,11 +56,14 @@ class _InputItemScreenState extends State<InputItemScreen> {
       _usernameController.clear();
 
       setState(() {
-        _imageFilesList = null;
+        _imageFile = null;
         _selectedCategoryId = null;
       });
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Item added successfully!')));
+      Navigator.pushReplacement(context, 
+        MaterialPageRoute(builder: (context) => ItemListScreen()),
+      );
     } catch (e) {
       print(e); 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to add item: $e')));
@@ -107,14 +113,14 @@ class _InputItemScreenState extends State<InputItemScreen> {
                     },
                   );
                 },
-                child: _imageFilesList == null
+                child: _imageFile == null
                     ? const Icon(
                         Icons.image,
                         size: 200,
                         color: Colors.grey,
                       )
                     : Image.file(
-                        _imageFilesList!,
+                        _imageFile!,
                         height: 200,
                         width: 200,
                         fit: BoxFit.cover,
@@ -138,16 +144,16 @@ class _InputItemScreenState extends State<InputItemScreen> {
               ),
             ),
             const SizedBox(height: 16.0),
-            DropdownButtonFormField<String>(
+            DropdownButtonFormField<int>(
               decoration: InputDecoration(
                 labelText: "Category",
                 border: OutlineInputBorder(),
               ),
-              items: <String>['1', '2', '3'] 
-                  .map((String value) {
-                return DropdownMenuItem<String>(
+              items: <int>[1, 2, 3]
+                  .map((int value) {
+                return DropdownMenuItem<int>(
                   value: value,
-                  child: Text(value),
+                  child: Text(value.toString()),
                 );
               }).toList(),
               onChanged: (value) {

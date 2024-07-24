@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sima/views/welcome_screen.dart';
 
 class CardAction extends StatelessWidget {
   const CardAction({super.key});
@@ -24,7 +25,6 @@ class CardAction extends StatelessWidget {
           Divider(),
           GestureDetector(
             onTap: () {
-              
             },
             child: Container(
                   width: MediaQuery.of(context).size.width * 0.2,
