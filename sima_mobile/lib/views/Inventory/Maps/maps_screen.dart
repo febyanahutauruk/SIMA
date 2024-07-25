@@ -1,100 +1,78 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geocoding/geocoding.dart';
-
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:sima/services/map/map_service.dart';
+import 'package:sima/models/map/map_model.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({super.key});
-
   @override
   _MapScreenState createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<MapScreen> {
-  GoogleMapController? mapController;
-  final TextEditingController _searchController = TextEditingController();
+  late Future<List<Warehouse>> futureWarehouses;
+  late MapController mapController;
 
-  final LatLng _initialPosition = const LatLng(-6.200000, 106.816666); 
-  LatLng _currentPosition = const LatLng(-6.200000, 106.816666);
+  @override
+  void initState() {
+    super.initState();
+    futureWarehouses = ApiService().fetchWarehouses();
+    mapController = MapController();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: _initialPosition,
-              zoom: 14.0,
+      appBar: AppBar(
+        title: Text('Warehouse Map'),
+      ),
+      body: FutureBuilder<List<Warehouse>>(
+        future: futureWarehouses,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No warehouses found'));
+          }
+
+          List<Marker> markers = snapshot.data!
+              .where((warehouse) =>
+          warehouse.longitude != null && warehouse.latitude != null)
+              .map((warehouse) {
+            return Marker(
+              point: LatLng(warehouse.latitude!, warehouse.longitude!),
+              width: 80.0,
+              height: 80.0,
+              child: _warehouseMarker(),
+            );
+          }).toList();
+
+          return FlutterMap(
+            mapController: mapController,
+            options: MapOptions(
+              initialCenter: LatLng(-6.21462, 106.84513), // Coordinates for Indonesia
+              initialZoom: 10.0, // Adjust zoom level as needed
             ),
-            onMapCreated: (controller) {
-              setState(() {
-                mapController = controller;
-              });
-            },
-            markers: {
-              Marker(
-                markerId: const MarkerId('currentLocation'),
-                position: _currentPosition,
+            children: [
+              TileLayer(
+                urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                subdomains: ['a', 'b', 'c'],
               ),
-            },
-          ),
-          Positioned(
-            top: 40,
-            left: 15,
-            right: 15,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 10.0,
-                    spreadRadius: 2.0,
-                  ),
-                ],
-              ),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  hintText: 'Telusuri di sini',
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.only(left: 15, top: 15),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.search),
-                    onPressed: _searchLocation,
-                    iconSize: 30,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+              MarkerLayer(markers: markers),
+            ],
+          );
+        },
       ),
     );
   }
 
-  void _searchLocation() async {
-    String searchAddress = _searchController.text;
-    if (searchAddress.isNotEmpty) {
-      try {
-        List<Location> locations = await locationFromAddress(searchAddress);
-        if (locations.isNotEmpty) {
-          Location location = locations.first;
-          LatLng newPosition = LatLng(location.latitude, location.longitude);
-
-          mapController?.animateCamera(CameraUpdate.newCameraPosition(
-            CameraPosition(target: newPosition, zoom: 14.0),
-          ));
-
-          setState(() {
-            _currentPosition = newPosition;
-          });
-        }
-      } catch (e) {
-        print('Error: $e');
-      }
-    }
+  Widget _warehouseMarker() {
+    return Icon(
+      Icons.location_on,
+      color: Colors.red,
+      size: 40.0,
+    );
   }
 }

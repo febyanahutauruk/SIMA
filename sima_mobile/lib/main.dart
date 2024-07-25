@@ -38,7 +38,7 @@ class InventoryManagementApp extends StatelessWidget {
       '/ItemListScreen' : (BuildContext context) => const ItemListScreen(),
       '/History' : (BuildContext context) => const HistoryScreen(),
       '/TransactionList' : (BuildContext context) => const TransactionList(),
-      '/Maps' : (BuildContext context) => const MapScreen(),
+      '/Maps' : (BuildContext context) =>  MapScreen(),
       // ItemListScreen.routename : (BuildContext context) =>  ItemListScreen(),
 
 
