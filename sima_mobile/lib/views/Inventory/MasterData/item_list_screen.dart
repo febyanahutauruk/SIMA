@@ -145,7 +145,7 @@ class ItemListScreen extends StatefulWidget {
                             if (newValue != 'All') {
                               // Access the HistoryController instance using Provider
                               Provider.of<ItemController>(context, listen: false)
-                                  .filterItemsByCategory(newValue!.toLowerCase());
+                                  .filterItemsBySort(newValue!.toLowerCase());
                             } else {
                               Provider.of<ItemController>(context, listen: false)
                                   .getPaginationItem(); // Fetch all items when 'All' is selected
@@ -154,7 +154,7 @@ class ItemListScreen extends StatefulWidget {
                         },
                         borderRadius: BorderRadius.circular(20),
                         dropdownColor: Colors.white,
-                        items: <String>['All', 'Furnitur', 'Elektronik']
+                        items: <String>['Asc','Desc']
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,

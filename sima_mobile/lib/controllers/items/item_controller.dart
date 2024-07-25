@@ -58,10 +58,10 @@ class ItemController with ChangeNotifier {
 
   }
 
-  Future<void> filterItemsByCategory(String categoryName) async {
+  Future<void> filterItemsBySort(String sortDirection) async {
     _isLoading = true;
 
-    param = param.copyWith(categoryName: categoryName);
+    param = param.copyWith(sortDirection: sortDirection);
 
     ItemPaginationResponseModels responseModel = await service
         .getPaginationItem(param);
