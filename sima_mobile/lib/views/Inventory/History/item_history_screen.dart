@@ -59,7 +59,7 @@ class _HistoryListScreenState extends State<HistoryScreen> {
         title: Text(
             'History',
             textAlign: TextAlign.left,
-            style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold)
+            style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w700)
         ),
       ),
       body: Consumer<HistoryController>(
