@@ -8,6 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/History/item_history_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/History/item_history_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/Maps/maps_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/Maps/maps_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/home_screen_inventory.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/home_screen_inventory.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/welcome_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/welcome_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/widgets/HistoryCard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/widgets/HistoryCard.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

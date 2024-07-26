@@ -54,7 +54,7 @@ class _MapScreenState extends State<MapScreen> {
       appBar: AppBar(
         backgroundColor: Colors.teal,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white,),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white,),
           onPressed: () {
             Navigator.pushNamed(context, '/Inventory');
           },
@@ -122,7 +122,7 @@ class _MapScreenState extends State<MapScreen> {
 
   Widget _warehouseMarker() {
     return Icon(
-      Icons.home,
+      Icons.home_rounded,
       color: Colors.teal,
       size: 40.0,
     );
@@ -133,7 +133,7 @@ class _MapScreenState extends State<MapScreen> {
       color: Colors.white,
       elevation: 8.0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(32.0),
       ),
       child: TextField(
         controller: searchController,
@@ -142,7 +142,7 @@ class _MapScreenState extends State<MapScreen> {
           hintStyle: TextStyle(color: Colors.teal),
           border: InputBorder.none,
           contentPadding: EdgeInsets.all(16.0),
-          prefixIcon: Icon(Icons.search, color: Colors.teal,),
+          prefixIcon: Icon(Icons.search_rounded, color: Colors.teal,),
         ),
       ),
     );

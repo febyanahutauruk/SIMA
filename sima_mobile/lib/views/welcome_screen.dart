@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:sima/views/widgets/icon_home.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 
 // void main() {
 //   runApp(MaterialApp(
@@ -79,26 +79,28 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.blueGrey.shade50,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(180),
         child: ClipPath(
           clipper: BottomRoundedClipper(),
           child: AppBar(
+            automaticallyImplyLeading: false,
             toolbarHeight: 200,
             backgroundColor: Colors.teal,
             title: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image.asset(
                   'assets/image/logo-lg-transparant 2.png',
                   width: 250,
                 ),
                 const SizedBox(height: 0),
-                const Text(
+                Text(
                   'Solusi Inventaris Pintar untuk Bisnis Modern!',
-                  style: TextStyle(
-                    fontSize: 18,
+                  style: GoogleFonts.poppins(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
                     color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
@@ -113,13 +115,13 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
                 'Welcome, Let\'s Start!',
-                style: TextStyle(
+                style: GoogleFonts.poppins(
                   fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
@@ -133,7 +135,10 @@ class HomeScreen extends StatelessWidget {
                 ),
                 items: [
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.8,
                     margin: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
@@ -144,7 +149,10 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.8,
                     margin: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
@@ -155,7 +163,10 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.8,
                     margin: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
@@ -169,22 +180,27 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
                 'Management Feature',
-                style: TextStyle(
+                style: GoogleFonts.poppins(
                   fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
             const SizedBox(height: 10),
             Card(
+              color: Colors.white,
+              elevation: 0,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ListTile(
-                title: const Text('Assets Management'),
-                trailing: const Icon(Icons.arrow_forward),
+                title: Text('Assets Management',
+                  style: GoogleFonts.poppins(fontSize: 14,
+                      color: Colors.teal,
+                      fontWeight: FontWeight.w500),),
+                trailing: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.teal,),
                 onTap: () {
                   Navigator.pushNamed(context, '/assets');
                 },
@@ -192,77 +208,88 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Card(
+              color: Colors.white,
+              elevation: 0,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ListTile(
-                title: const Text('Inventory Management'),
-                trailing: const Icon(Icons.arrow_forward),
+                title: Text('Inventory Management',
+                  style: GoogleFonts.poppins(fontSize: 14,
+                      color: Colors.teal,
+                      fontWeight: FontWeight.w500),),
+                trailing: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.teal,),
                 onTap: () {
                   Navigator.pushNamed(context, '/Inventory');
                 },
               ),
             ),
             const SizedBox(height: 30),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Center(
                 child: Text(
                   'General',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
             const SizedBox(height: 10),
-            const SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SizedBox(width: 12),
-                  IconHomeWidget(routename: '/WelcomeScreen', lable: 'Master Data Asset', icons: 'assets.png'),
-                  IconHomeWidget(routename: '/manageAssets', lable: 'Barcode Assets', icons: 'qr.png'),
-                  IconHomeWidget(routename: '/manageCategories', lable: 'Master Data Inventory', icons: 'dataBarang.png'),
-                  IconHomeWidget(routename: '/inventoryHistory', lable: 'History Inventory', icons: 'history.png'),
-                  // Column(
-                  //   children: [
-                  //     IconButton(
-                  //       icon: Icon(Icons.business),
-                  //       onPressed: () {
-                  //         Navigator.pushNamed(context, '/manageAssets');
-                  //       },
-                  //     ),
-                  //     Text('Barcode Asset'),
-                  //   ],
-                  // ),
-                  // Column(
-                  //   children: [
-                  //     IconButton(
-                  //       icon: Icon(Icons.category),
-                  //       onPressed: () {
-                  //         Navigator.pushNamed(context, '/manageCategories');
-                  //       },
-                  //     ),
-                  //     Text('Master Data Inventory'),
-                  //   ],
-                  // ),
-                  // Column(
-                  //   children: [
-                  //     IconButton(
-                  //       icon: Icon(Icons.history),
-                  //       onPressed: () {
-                  //         Navigator.pushNamed(context, '/inventoryHistory');
-                  //       },
-                  //     ),
-                  //     Text('Inventory History'),
-                  //   ],
-                  // ),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildFeatureItem(Icons.landscape_rounded, 'Master Data Asset', context, ''),
+                _buildFeatureItem(Icons.barcode_reader, 'Barcode Asset', context, ''),
+                _buildFeatureItem(Icons.home_rounded, 'Master Data Inventory', context, ''),
+                _buildFeatureItem(Icons.history_rounded, 'History Inventory', context, ''),
+              ],
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildFeatureItem(IconData icon, String label, BuildContext context,
+      String routename) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, routename);
+      },
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              color: Colors.teal,
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          Column( // Use a Column to position icon and text vertically
+            mainAxisSize: MainAxisSize.min,
+            // To avoid Column taking full height
+            children: [
+              Icon(icon, color: Colors.white, size: 30),
+              const SizedBox(height: 4), // Spacing between icon and text
+              SizedBox(
+                width: 70, // Slightly smaller width for text
+                child: Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -283,6 +310,7 @@ class BottomRoundedClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+
 }
 
 

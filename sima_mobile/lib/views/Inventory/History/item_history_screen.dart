@@ -51,7 +51,7 @@ class _HistoryListScreenState extends State<HistoryScreen> {
         scrolledUnderElevation :0.0,
         backgroundColor: Colors.teal,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white,),
+          icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
           onPressed: () {
             Navigator.pushNamed(context, '/Inventory');
           },
@@ -100,7 +100,7 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                                 itemP.searchItems();
                               },
                               decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.search, color: Colors.teal,),
+                                prefixIcon: Icon(Icons.search_rounded, color: Colors.teal,),
                                 hintText: "Search....",
                                 hintStyle: TextStyle(color: Colors.teal),
                                 border: InputBorder.none,
@@ -122,7 +122,7 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                               value: _selectedFilter,
                               hint: Row(
                                 children: const [
-                                  Icon(Icons.filter_list,color: Colors.teal,),
+                                  Icon(Icons.filter_alt_rounded,color: Colors.teal,),
                                   SizedBox(width: 5),
                                   Text('Filter',
                                   style: TextStyle(color: Colors.teal),),
