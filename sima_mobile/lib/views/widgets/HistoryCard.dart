@@ -1,6 +1,7 @@
 // history_card.dart
 import 'package:sima/models/history/history_pagination_model.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HistoryCard extends StatelessWidget {
   final HistoryPaginationModel model;
@@ -35,30 +36,26 @@ class HistoryCard extends StatelessWidget {
     }
 
     return Card(
-      elevation: 2,
+      elevation: 0,
       margin: const EdgeInsets.all(5),
       color: Colors.white,
       child: ListTile(
         leading: Icon(icon, color: iconColor),
-        title: Text(model.itemName),
+        title: Text(model.itemName, style: GoogleFonts.poppins(fontWeight: FontWeight.w500),),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(model.warehouseName),
-            Text(
-              quantityText,
-              style: TextStyle(
-                  color: quantityColor,
-                  fontWeight: FontWeight.bold),
-            ),
+            Text(model.warehouseName, style: GoogleFonts.poppins(fontSize: 12),),
+
           ],
         ),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(model.status,
-                style: TextStyle(
-                    color: statusColor,
+            Text(quantityText,
+                style: GoogleFonts.poppins(
+                    color: quantityColor,
+                    fontWeight: FontWeight.bold,
                     fontSize: 14)),
           ],
         ),

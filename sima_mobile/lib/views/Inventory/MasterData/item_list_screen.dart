@@ -154,7 +154,7 @@ class ItemListScreen extends StatefulWidget {
                         },
                         borderRadius: BorderRadius.circular(20),
                         dropdownColor: Colors.white,
-                        items: <String>['Asc','Desc']
+                        items: <String>['Asc', 'Desc']
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,

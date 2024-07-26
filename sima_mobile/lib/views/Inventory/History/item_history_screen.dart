@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sima/controllers/history/history_controller.dart';
 import 'package:sima/views/widgets/HistoryCard.dart';
 import 'package:sima/models/history/history_pagination_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -45,18 +46,20 @@ class _HistoryListScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: Colors.blueGrey.shade50,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFB5D9DA),
+        scrolledUnderElevation :0.0,
+        backgroundColor: Colors.teal,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Colors.white,),
           onPressed: () {
             Navigator.pushNamed(context, '/Inventory');
           },
         ),
-        title: const Text(
-          'History',
-          style: TextStyle(color: Colors.teal),
+        title: Text(
+            'History',
+            textAlign: TextAlign.left,
+            style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold)
         ),
       ),
       body: Consumer<HistoryController>(
@@ -83,19 +86,25 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                     Row(
                       children: [
                         Expanded(
-                          child: TextField(
-                            onSubmitted: (v) {
-                              final itemP = context.read<HistoryController>();
-                              itemP.param = itemP.param.copyWith(
-                                  limit: 10, offset: 0, itemName: v);
-                              itemP.searchItems();
-                            },
-                            decoration: const InputDecoration(
-                              prefixIcon: Icon(Icons.search),
-                              hintText: "Search....",
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(20)),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+
+                            ),
+                            child: TextField(
+                              onSubmitted: (v) {
+                                final itemP = context.read<HistoryController>();
+                                itemP.param = itemP.param.copyWith(
+                                    limit: 10, offset: 0, itemName: v);
+                                itemP.searchItems();
+                              },
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.search, color: Colors.teal,),
+                                hintText: "Search....",
+                                hintStyle: TextStyle(color: Colors.teal),
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                               ),
                             ),
                           ),
@@ -103,8 +112,9 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                         const SizedBox(width: 10),
                         Container(
                           decoration: BoxDecoration(
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: Colors.grey),
+
                           ),
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: DropdownButtonHideUnderline(
@@ -112,21 +122,21 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                               value: _selectedFilter,
                               hint: Row(
                                 children: const [
-                                  Icon(Icons.filter_list),
+                                  Icon(Icons.filter_list,color: Colors.teal,),
                                   SizedBox(width: 5),
-                                  Text('Filter'),
+                                  Text('Filter',
+                                  style: TextStyle(color: Colors.teal),),
                                 ],
                               ),
                               onChanged: (String? newValue) {
                                 setState(() {
                                   _selectedFilter = newValue;
                                   if (newValue != 'All') {
-                                    // Access the HistoryController instance using Provider
                                     Provider.of<HistoryController>(context, listen: false)
                                         .filterItemsByStatus(newValue!.toLowerCase());
                                   } else {
                                     Provider.of<HistoryController>(context, listen: false)
-                                        .getPaginationItem(); // Fetch all items when 'All' is selected
+                                        .getPaginationItem();
                                   }
                                 });
                               },
@@ -136,7 +146,7 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                                   .map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
-                                  child: Text(value),
+                                  child: Text(value,style: TextStyle(color: Colors.teal),),
                                 );
                               }).toList(),
                             ),
@@ -150,14 +160,14 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                         final date = entry.key;
                         final itemsForDate = entry.value;
 
-                        return Column( // Use a Column instead of Card
-                          crossAxisAlignment: CrossAxisAlignment.start, // Align title to the start
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal:16.0), // Adjust padding as needed
+                              padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal:16.0),
                               child: Text(
                                 date,
-                                style: const TextStyle(
+                                style: GoogleFonts.poppins(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
