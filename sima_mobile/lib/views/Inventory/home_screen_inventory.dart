@@ -39,7 +39,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey.shade50,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.teal,),
@@ -47,7 +47,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
             Navigator.pushNamed(context, '/WelcomeScreen');
           },
         ),
-        backgroundColor: Colors.blueGrey.shade50,
+        backgroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -85,7 +85,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                   ),
                   const SizedBox(height: 8),
                   Card(
-                    color: Colors.white,
+                    color: Colors.blueGrey.shade50,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16.0),
@@ -174,7 +174,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.blueGrey.shade50,
           borderRadius: BorderRadius.circular(15.0), // Ensure the container also has rounded corners
         ),
         child: ListTile(

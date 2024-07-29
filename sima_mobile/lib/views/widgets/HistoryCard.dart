@@ -35,36 +35,48 @@ class HistoryCard extends StatelessWidget {
       quantityColor = Colors.grey;
     }
 
-    return Card(
-      elevation: 0,
-      margin: const EdgeInsets.all(5),
-      color: Colors.white,
-      child: ListTile(
-        leading: Card(
-          elevation: 0,
-          color: Colors.blueGrey.shade50,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0), // Optional: add padding
-            child: Icon(icon, color: iconColor),
+    return Container(
+      decoration: BoxDecoration(
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.grey.shade300.withOpacity(0.5),
+        //     spreadRadius: 1,
+        //     blurRadius: 4,
+        //     offset: const Offset(0, 1),
+        //   ),
+        // ],
+      ),
+      child: Card(
+        elevation: 0,
+        margin: const EdgeInsets.all(5),
+        color: Colors.blueGrey.shade50,
+        child: ListTile(
+          leading: Card(
+            elevation: 0,
+            color: Colors.white,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0), // Optional: add padding
+              child: Icon(icon, color: iconColor),
+            ),
           ),
-        ),
-        title: Text(model.itemName, style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(model.warehouseName, style: GoogleFonts.poppins(fontSize: 12)),
-          ],
-        ),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(quantityText,
-                style: GoogleFonts.poppins(
-                    color: quantityColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14)),
-          ],
+          title: Text(model.itemName, style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(model.warehouseName, style: GoogleFonts.poppins(fontSize: 12)),
+            ],
+          ),
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(quantityText,
+                  style: GoogleFonts.poppins(
+                      color: quantityColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14)),
+            ],
+          ),
         ),
       ),
     );
