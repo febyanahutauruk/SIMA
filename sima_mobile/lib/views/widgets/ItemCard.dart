@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sima/models/item/item_pagination_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 class ItemCard extends StatelessWidget {
   final ItemPaginationModel model;
   const ItemCard({super.key, required this.model});
@@ -10,9 +11,9 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
           BoxShadow(
             color: Colors.grey.shade200.withOpacity(1),
             spreadRadius: 4,
@@ -30,47 +31,67 @@ class ItemCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   Text(
+                  Text(
                     "Nama Barang",
                     style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
                   ),
-                  Text(model.name, style: GoogleFonts.poppins(color: Colors.grey),),
+                  Text(
+                    model.name,
+                    style: GoogleFonts.poppins(color: Colors.grey),
+                  ),
                 ],
               ),
-
             ],
           ),
           const Divider(),
-           Text(
+          Text(
             "Kode Barang    :",
             style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
           ),
-          Text(model.code,
-              style: GoogleFonts.poppins(color: Colors.grey)),
-          const SizedBox(height: 8.0,),
+          Text(
+            model.code,
+            style: GoogleFonts.poppins(color: Colors.grey),
+          ),
+          const SizedBox(height: 8.0),
           Text(
             "Kategori  :",
             style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
           ),
-          Text(model.categoryName,
-              style: GoogleFonts.poppins(color: Colors.grey)),
-          const SizedBox(height: 8.0,),
-           Text(
+          Text(
+            model.categoryName,
+            style: GoogleFonts.poppins(color: Colors.grey),
+          ),
+          const SizedBox(height: 8.0),
+          Text(
             "Deskripsi   :",
             style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
           ),
-          Text(model.description,
-              style: GoogleFonts.poppins(color: Colors.grey)),
-
+          Text(
+            model.description,
+            style: GoogleFonts.poppins(color: Colors.grey),
+          ),
           const Divider(),
-           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("See Detail",style: GoogleFonts.poppins(
-                  color: Colors.blue)),
-              Icon(Icons.arrow_forward_ios_rounded, color: Colors.blue, size: 16,)
-            ],
-          )
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(
+                context, '/DetailItemScreen'
+              );
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "See Detail",
+                  style: GoogleFonts.poppins(color: Colors.blue),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Colors.blue,
+                  size: 16,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
