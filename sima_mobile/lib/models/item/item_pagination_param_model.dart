@@ -41,7 +41,7 @@ class ItemPaginationParamModel {
         offset: offset ?? this.offset, 
         code: code ?? this.code, 
         name: name ?? this.name, 
-        categoryName: categoryName ?? this.categoryName);
+        sortDirection: sortDirection ?? this.sortDirection);
     }
 
     factory ItemPaginationParamModel.fromJson(Map<String, dynamic> json) => ItemPaginationParamModel(

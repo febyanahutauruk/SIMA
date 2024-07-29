@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sima/controllers/items/item_controller.dart';
-import 'package:sima/models/item/item_pagination_model.dart';
 import 'package:sima/views/widgets/ItemCard.dart';
-import 'package:sima/controllers/items/item_controller.dart';
 
 
 
@@ -20,6 +18,7 @@ class ItemListScreen extends StatefulWidget {
 
  class _ItemListScreenState extends State<ItemListScreen> {
   final ScrollController _scrollController = ScrollController();
+  String? _selectedFilter;
   scrollListener() {
     if (_scrollController.position.pixels == 
         _scrollController.position.maxScrollExtent) {
@@ -56,7 +55,9 @@ class ItemListScreen extends StatefulWidget {
           "Item",
           style: TextStyle(color: Colors.teal),
         ),
-        backgroundColor: Color(0xFFB5D9DA),   
+
+        backgroundColor: const Color(0xFFB5D9DA),
+
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
         Navigator.pushNamed(context, '/InputItemScreen');
@@ -87,7 +88,7 @@ class ItemListScreen extends StatefulWidget {
                   itemP.param =itemP.param.copyWith(limit: 10, offset: 0, name: v);
                   itemP.searchItems();
                 },              
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.search),
                     hintText: "Search....",
                     border: OutlineInputBorder(
@@ -133,16 +134,44 @@ class ItemListScreen extends StatefulWidget {
                   ),
                   const Spacer(),
                   Container(
-                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: const Row(
-                      children: [
-                        Icon(Icons.sensor_window_rounded),
-                        Text("Filter",
-                            style: TextStyle(color: Colors.grey, fontSize: 16)),
-                      ],
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.grey),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: _selectedFilter,
+                        hint: Row(
+                          children: const [
+                            Icon(Icons.filter_list),
+                            SizedBox(width: 5),
+                            Text('Filter'),
+                          ],
+                        ),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedFilter = newValue;
+                            if (newValue != 'All') {
+                              // Access the HistoryController instance using Provider
+                              Provider.of<ItemController>(context, listen: false)
+                                  .filterItemsBySort(newValue!.toLowerCase());
+                            } else {
+                              Provider.of<ItemController>(context, listen: false)
+                                  .getPaginationItem(); // Fetch all items when 'All' is selected
+                            }
+                          });
+                        },
+                        borderRadius: BorderRadius.circular(20),
+                        dropdownColor: Colors.white,
+                        items: <String>['Asc', 'Desc']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
                 ],

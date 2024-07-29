@@ -2,7 +2,6 @@
 //
 //     final itemPaginationModels = itemPaginationModelsFromJson(jsonString);
 
-import 'dart:convert';
 
 
 class ItemPaginationModel {
