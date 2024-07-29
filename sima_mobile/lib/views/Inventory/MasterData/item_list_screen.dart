@@ -48,14 +48,24 @@ class ItemListScreen extends StatefulWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
         title: const Text(
           "Item",
           style: TextStyle(color: Colors.teal),
         ),
+
         backgroundColor: const Color(0xFFB5D9DA),
+
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Navigator.pushNamed(context, '/InputItemScreen');
+      },
+      backgroundColor: Colors.teal,
+      foregroundColor: Colors.white,
+      child: const Icon(Icons.add)),
+
       body: Consumer<ItemController>(
         builder: (BuildContext context, value, Widget? child) {
           if (value.isLoading) {

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sima/controllers/items/item_controller.dart';
 import 'package:sima/views/Inventory/History/item_history_screen.dart';
 import 'package:sima/views/Inventory/Maps/maps_screen.dart';
+import 'package:sima/views/Inventory/MasterData/add_item_screen.dart';
 import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
 import 'package:sima/views/Inventory/TransactionItem/transactionList.dart';
 import 'package:sima/views/Inventory/home_screen_inventory.dart';
@@ -32,13 +33,16 @@ class InventoryManagementApp extends StatelessWidget {
         theme: ThemeData(primarySwatch: Colors.teal),
 
         routes: <String,WidgetBuilder>{
-      '/WelcomeScreen' : (BuildContext context) => const WelcomeScreen(),
-      '/HomeScreen' : (BuildContext context) => const HomeScreen(),
-      '/Inventory' : (BuildContext context) => const HomeScreenInventory(),
-      '/ItemListScreen' : (BuildContext context) => const ItemListScreen(),
-      '/History' : (BuildContext context) => const HistoryScreen(),
-      '/TransactionList' : (BuildContext context) => const TransactionList(),
-      '/Maps' : (BuildContext context) =>  MapScreen(),
+
+      '/WelcomeScreen' : (BuildContext context) => new WelcomeScreen(),
+      '/HomeScreen' : (BuildContext context) => new HomeScreen(),
+      '/Inventory' : (BuildContext context) => new HomeScreenInventory(),
+      '/ItemListScreen' : (BuildContext context) => new ItemListScreen(),
+      '/History' : (BuildContext context) => new HistoryScreen(),
+      '/TransactionList' : (BuildContext context) => new TransactionList(),
+      '/Maps' : (BuildContext context) => new MapScreen(),
+      '/InputItemScreen' : (BuildContext context) => new InputItemScreen(),
+
       // ItemListScreen.routename : (BuildContext context) =>  ItemListScreen(),
 
 
