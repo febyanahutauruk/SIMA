@@ -1,13 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-
-// void main() {
-//   runApp(MaterialApp(
-//     home: InputItemScreen(),
-//     debugShowCheckedModeBanner: false,
-//   ));
-// }
+import 'package:sima/models/form/item_form_model.dart';
+import 'package:sima/controllers/form/item_form_controllers.dart';
+import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
 
 class InputItemScreen extends StatefulWidget {
   const InputItemScreen({super.key});
@@ -18,7 +14,15 @@ class InputItemScreen extends StatefulWidget {
 
 class _InputItemScreenState extends State<InputItemScreen> {
   File? _imageFile;
-  final ImagePicker _picker = ImagePicker(); 
+  final ImagePicker _picker = ImagePicker();
+  final ItemController _itemController = ItemController();
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _codeController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+
+  int? _selectedCategoryId;
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
@@ -31,14 +35,47 @@ class _InputItemScreenState extends State<InputItemScreen> {
     });
   }
 
+  Future<void> _submit() async {
+    try {
+      final item = ItemFormModel(
+        name: _nameController.text,
+        code: _codeController.text,
+        category: _selectedCategoryId,
+        description: _descriptionController.text,
+        createdBy: _usernameController.text,
+        fileUploads: _imageFile,
+      );
+
+      final response = await _itemController.addItem(item);
+
+      _nameController.clear();
+      _codeController.clear();
+      _descriptionController.clear();
+      _usernameController.clear();
+
+      setState(() {
+        _imageFile = null;
+        _selectedCategoryId = null;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Item added successfully!')));
+      Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => ItemListScreen()),
+      );
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to add item: $e')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xFFB5D9DA),
         title: const Text(
           'Add New Item',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.teal),
         ),
       ),
       body: SingleChildScrollView(
@@ -76,56 +113,64 @@ class _InputItemScreenState extends State<InputItemScreen> {
                 },
                 child: _imageFile == null
                     ? const Icon(
-                        Icons.image,
-                        size: 100,
-                        color: Colors.grey,
-                      )
+                  Icons.image,
+                  size: 200,
+                  color: Colors.grey,
+                )
                     : Image.file(
-                        _imageFile!,
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      ),
+                  _imageFile!,
+                  height: 200,
+                  width: 200,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            const SizedBox(height: 16.0),
-            const TextField(
+            const SizedBox(height: 30),
+            TextField(
+              controller: _nameController,
               decoration: InputDecoration(
-                labelText: "Name Product",
+                labelText: "Product Name",
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16.0),
-            const TextField(
+            TextField(
+              controller: _codeController,
               decoration: InputDecoration(
-                labelText: "Kode Product",
+                labelText: "Product Code",
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16.0),
-            DropdownButtonFormField<String>(
-              decoration: const InputDecoration(
+            DropdownButtonFormField<int>(
+              decoration: InputDecoration(
                 labelText: "Category",
                 border: OutlineInputBorder(),
               ),
-              items: <String>['Category 1', 'Category 2', 'Category 3']
-                  .map((String value) {
-                return DropdownMenuItem<String>(
+              items: <int>[1, 2, 3]
+                  .map((int value) {
+                return DropdownMenuItem<int>(
                   value: value,
-                  child: Text(value),
+                  child: Text(value.toString()),
                 );
               }).toList(),
-              onChanged: (_) {},
+              onChanged: (value) {
+                setState(() {
+                  _selectedCategoryId = value;
+                });
+              },
             ),
             const SizedBox(height: 16.0),
-            const TextField(
+            TextField(
+              controller: _usernameController,
               decoration: InputDecoration(
-                labelText: "Quantity",
+                labelText: "Username",
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16.0),
-            const TextField(
+            TextField(
+              controller: _descriptionController,
               maxLines: 3,
               decoration: InputDecoration(
                 labelText: "Description",
@@ -135,12 +180,14 @@ class _InputItemScreenState extends State<InputItemScreen> {
             const SizedBox(height: 24.0),
             Center(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: _submit,
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
                   padding: const EdgeInsets.symmetric(
                       horizontal: 40.0, vertical: 16.0),
                 ),
-                child: const Text('Submit'),
+                child: const Text('Submit',
+                  style: TextStyle(color: Colors.white),),
               ),
             ),
           ],
