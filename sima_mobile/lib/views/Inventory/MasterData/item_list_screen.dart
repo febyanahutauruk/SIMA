@@ -4,6 +4,7 @@ import 'package:sima/controllers/items/item_controller.dart';
 import 'package:sima/views/widgets/ItemCard.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 class ItemListScreen extends StatefulWidget {
   const ItemListScreen({super.key});
 
@@ -59,13 +60,12 @@ class _ItemListScreenState extends State<ItemListScreen> {
         backgroundColor: Colors.teal,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/InputItemScreen');
-        },
-        backgroundColor: Colors.teal,
-        foregroundColor: Colors.white,
-        child: const Icon(Icons.add),
-      ),
+          onPressed: () {
+            Navigator.pushNamed(context, '/InputItemScreen');
+          },
+          backgroundColor: Colors.teal,
+          foregroundColor: Colors.white,
+          child: const Icon(Icons.add)),
       body: Consumer<ItemController>(
         builder: (BuildContext context, value, Widget? child) {
           if (value.isLoading) {
@@ -111,10 +111,12 @@ class _ItemListScreenState extends State<ItemListScreen> {
                               vertical: 12, horizontal: 16),
                         ),
                       ),
+
                     ),
                     const SizedBox(
                       height: 12,
                     ),
+
                     const SizedBox(
                       height: 10,
                     ),
@@ -177,6 +179,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
                                     );
                                   }).toList(),
                             ),
+
                           ),
                         ),
                       ],
@@ -186,12 +189,14 @@ class _ItemListScreenState extends State<ItemListScreen> {
                     ),
                     Column(
                       children: value.items.map((e) {
+
                         return Column(
                           children: [
                             ItemCard(model: e),
                             const SizedBox(height: 16,)
                           ],
                         );
+
                       }).toList(),
                     ),
                     if (value.isNext)

@@ -24,7 +24,9 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   _gotohome() async {
-  await Future.delayed(const Duration(milliseconds: 1500), () {
+
+  await Future.delayed(Duration(milliseconds: 2500), () {
+
       Navigator.pushNamed(context, '/HomeScreen');
   }
     );
@@ -79,13 +81,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(180),
-        child: ClipPath(
-          clipper: BottomRoundedClipper(),
-          child: AppBar(
-            automaticallyImplyLeading: false,
+      backgroundColor: Colors.white,
+
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+
             toolbarHeight: 200,
             backgroundColor: Colors.teal,
             title: Column(
@@ -108,8 +109,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
+      
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -235,6 +235,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -295,6 +296,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+
 class BottomRoundedClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -312,5 +314,6 @@ class BottomRoundedClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 
 }
+
 
 

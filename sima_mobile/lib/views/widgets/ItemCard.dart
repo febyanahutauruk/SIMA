@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:sima/models/form/update_data_model.dart';
 import 'package:sima/models/item/item_pagination_model.dart';
+import 'package:sima/views/widgets/card_action.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 
 
 class ItemCard extends StatelessWidget {
   final ItemPaginationModel model;
-  const ItemCard({super.key, required this.model});
+    const ItemCard({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +48,28 @@ class ItemCard extends StatelessWidget {
               ),
               const Spacer(),
               Container(
-                  // decoration: BoxDecoration(
-                  //     border: Border.all(color: Colors.grey),
-                  //     borderRadius: BorderRadius.circular(4)),
-                  child: const Icon(
-                    Icons.more_vert_rounded,
-                    size: 22,
-                  ))
+
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(4)),
+                  child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            child: CardAction(item: UpdateDataModel(id: null, name: '', code: '', createdBy: '')),
+                          );
+                        },
+                      );
+                    },
+                    child: const Icon(
+                      Icons.more_vert_rounded,
+                      size: 30,
+                    ),
+                  )
+              )
+
             ],
           ),
           const Divider(),
@@ -77,6 +95,7 @@ class ItemCard extends StatelessWidget {
             "Deskripsi   :",
             style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
           ),
+
           Text(
             model.description,
             style: GoogleFonts.poppins(color: Colors.grey.shade400),

@@ -1,43 +1,64 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sima/models/form/item_form_model.dart';
-import 'package:sima/controllers/form/item_form_controllers.dart';
-import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
+import 'package:sima/controllers/form/update_data_controller.dart';
+import 'package:sima/models/form/update_data_model.dart';
 
-class InputItemScreen extends StatefulWidget {
-  const InputItemScreen({super.key});
+class UpdateDataScreen extends StatefulWidget {
+  final UpdateDataModel item;
+
+  UpdateDataScreen({required this.item});
 
   @override
-  _InputItemScreenState createState() => _InputItemScreenState();
+  _UpdateDataScreenState createState() => _UpdateDataScreenState();
 }
 
-class _InputItemScreenState extends State<InputItemScreen> {
+class _UpdateDataScreenState extends State<UpdateDataScreen> {
   File? _imageFile;
   final ImagePicker _picker = ImagePicker();
-  final ItemController _itemController = ItemController();
+  final UpdateDataController _updateDataController = UpdateDataController();
+
+  final TextEditingController _idController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _codeController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
-  
+
   int? _selectedCategoryId;
 
+  @override
+  void initState() {
+    super.initState();
+    _idController.text = widget.item.id?.toString() ?? '';
+    _nameController.text = widget.item.name;
+    _codeController.text = widget.item.code;
+    _descriptionController.text = widget.item.description ?? '';
+    _usernameController.text = widget.item.createdBy;
+    _selectedCategoryId = widget.item.category;
+    if (widget.item.fileUploads != null) {
+      _imageFile = File(widget.item.fileUploads!.path);
+    }
+  }
 
   Future<void> _pickImage(ImageSource source) async {
-    final pickedFile = await _picker.pickImage(source: source);
-    setState(() {
-      if (pickedFile != null) {
-        _imageFile = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    try {
+      final pickedFile = await _picker.pickImage(source: source);
+      setState(() {
+        if (pickedFile != null) {
+          _imageFile = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    } catch (e) {
+      print('Error picking image: $e');
+    }
   }
 
   Future<void> _submit() async {
     try {
-      final item = ItemFormModel(
+      final item = UpdateDataModel(
+        id: int.tryParse(_idController.text) ?? 0, // Ensure ID is an int
         name: _nameController.text,
         code: _codeController.text,
         category: _selectedCategoryId,
@@ -46,36 +67,28 @@ class _InputItemScreenState extends State<InputItemScreen> {
         fileUploads: _imageFile,
       );
 
-      final response = await _itemController.addItem(item);
+      await _updateDataController.updateItem(item);
 
-      _nameController.clear();
-      _codeController.clear();
-      _descriptionController.clear();
-      _usernameController.clear();
-
-      setState(() {
-        _imageFile = null;
-        _selectedCategoryId = null;
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Item added successfully!')));
-      Navigator.pushReplacement(context, 
-        MaterialPageRoute(builder: (context) => ItemListScreen()),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Item updated successfully!')),
       );
+
+      Navigator.of(context).pop();
     } catch (e) {
-      print(e); 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to add item: $e')));
+      print('Error occurred: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to update item: $e')),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFB5D9DA),
         title: const Text(
-          'Add New Item',
+          'Update Item',
           style: TextStyle(fontWeight: FontWeight.w500, color: Colors.teal),
         ),
       ),
@@ -148,8 +161,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
                 labelText: "Category",
                 border: OutlineInputBorder(),
               ),
-              items: <int>[1, 2, 3]
-                  .map((int value) {
+              items: <int>[1, 2, 3].map((int value) {
                 return DropdownMenuItem<int>(
                   value: value,
                   child: Text(value.toString()),
@@ -160,6 +172,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
                   _selectedCategoryId = value;
                 });
               },
+              value: _selectedCategoryId,
             ),
             const SizedBox(height: 16.0),
             TextField(
@@ -187,8 +200,10 @@ class _InputItemScreenState extends State<InputItemScreen> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 40.0, vertical: 16.0),
                 ),
-                child: const Text('Submit',
-                style: TextStyle(color: Colors.white),),
+                child: const Text(
+                  'Update',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],
