@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sima/models/form/update_data_model.dart';
 import 'package:sima/models/item/item_pagination_model.dart';
 import 'package:sima/views/widgets/card_action.dart';
 
 class ItemCard extends StatelessWidget {
   final ItemPaginationModel model;
-  const ItemCard({super.key, required this.model});
+    const ItemCard({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class ItemCard extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return Dialog(
-                            child: CardAction(),
+                            child: CardAction(item: UpdateDataModel(id: null, name: '', code: '', createdBy: '')),
                           );
                         },
                       );

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:sima/views/welcome_screen.dart';
+import 'package:sima/controllers/form/update_data_controller.dart';
+import 'package:sima/models/form/update_data_model.dart';
+import '../Inventory/MasterData/update_data_screen.dart';
 
 class CardAction extends StatelessWidget {
-  const CardAction({super.key});
+  final UpdateDataModel item;
+  final UpdateDataController _updateDataController = UpdateDataController();
+
+  CardAction({required this.item});
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+    return Container(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -22,40 +24,40 @@ class CardAction extends StatelessWidget {
               },
             ),
           ),
-          Divider(),
-          GestureDetector(
+          ListTile(
+            title: Text('Edit', textAlign: TextAlign.center),
             onTap: () {
-            },
-            child: Container(
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  height: 60,
-                  padding: EdgeInsets.all(16),              child: Center(
-                child: Text(
-                  'Edit',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 16,
-                  ),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UpdateDataScreen(item: item),
                 ),
-              ),
-            ),
+              );
+            },
           ),
           Divider(),
-          GestureDetector(
-            onTap: () {
+          ListTile(
+            title: Text('Delete', textAlign: TextAlign.center, style: TextStyle(color: Colors.red)),
+            onTap: () async {
+              if (item.id == null) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Item ID is null')));
+                return;
+              }
+              try {
+                await _updateDataController.deleteItem(item.id);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Item deleted successfully')));
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to delete item: $e')));
+              }
+              Navigator.of(context).pop();
             },
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              child: Center(
-                child: Text(
-                  'Delete',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
+          ),
+          Divider(),
+          ListTile(
+            title: Text('Cancel', textAlign: TextAlign.center),
+            onTap: () {
+              Navigator.of(context).pop();
+            },
           ),
         ],
       ),

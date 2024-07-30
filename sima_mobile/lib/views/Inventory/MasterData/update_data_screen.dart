@@ -1,10 +1,7 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sima/controllers/form/update_data_controller.dart';
-import 'package:sima/models/form/item_form_model.dart';
-import 'package:sima/controllers/form/item_form_controllers.dart';
 import 'package:sima/models/form/update_data_model.dart';
 
 class UpdateDataScreen extends StatefulWidget {
@@ -19,42 +16,49 @@ class UpdateDataScreen extends StatefulWidget {
 class _UpdateDataScreenState extends State<UpdateDataScreen> {
   File? _imageFile;
   final ImagePicker _picker = ImagePicker();
-  final UpdateDataController _UpdateDataController = UpdateDataController();
+  final UpdateDataController _updateDataController = UpdateDataController();
 
+  final TextEditingController _idController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _codeController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
 
-  String? _selectedCategoryId;
+  int? _selectedCategoryId;
 
   @override
   void initState() {
     super.initState();
+    _idController.text = widget.item.id?.toString() ?? '';
     _nameController.text = widget.item.name;
     _codeController.text = widget.item.code;
     _descriptionController.text = widget.item.description ?? '';
     _usernameController.text = widget.item.createdBy;
     _selectedCategoryId = widget.item.category;
-  //   if (widget.item.fileUploads != null) {
-  //     _imageFile = File(widget.item.fileUploads!);
-  //   }
+    if (widget.item.fileUploads != null) {
+      _imageFile = File(widget.item.fileUploads!.path);
+    }
   }
 
   Future<void> _pickImage(ImageSource source) async {
-    final pickedFile = await _picker.pickImage(source: source);
-    setState(() {
-      if (pickedFile != null) {
-        _imageFile = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    try {
+      final pickedFile = await _picker.pickImage(source: source);
+      setState(() {
+        if (pickedFile != null) {
+          _imageFile = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    } catch (e) {
+      print('Error picking image: $e');
+    }
   }
 
   Future<void> _submit() async {
     try {
       final item = UpdateDataModel(
+        id: int.tryParse(_idController.text) ?? 0, // Ensure ID is an int
         name: _nameController.text,
         code: _codeController.text,
         category: _selectedCategoryId,
@@ -63,14 +67,18 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
         fileUploads: _imageFile,
       );
 
-      await _UpdateDataController.updateItem(item);
+      await _updateDataController.updateItem(item);
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Item updated successfully!')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Item updated successfully!')),
+      );
 
       Navigator.of(context).pop();
     } catch (e) {
       print('Error occurred: $e');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update item: $e')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to update item: $e')),
+      );
     }
   }
 
@@ -148,16 +156,15 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
               ),
             ),
             const SizedBox(height: 16.0),
-            DropdownButtonFormField<String>(
+            DropdownButtonFormField<int>(
               decoration: InputDecoration(
                 labelText: "Category",
                 border: OutlineInputBorder(),
               ),
-              items: <String>['1', '2', '3']
-                  .map((String value) {
-                return DropdownMenuItem<String>(
+              items: <int>[1, 2, 3].map((int value) {
+                return DropdownMenuItem<int>(
                   value: value,
-                  child: Text(value),
+                  child: Text(value.toString()),
                 );
               }).toList(),
               onChanged: (value) {

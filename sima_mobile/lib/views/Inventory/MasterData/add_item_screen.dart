@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sima/models/form/item_form_model.dart';
@@ -15,7 +13,7 @@ class InputItemScreen extends StatefulWidget {
 }
 
 class _InputItemScreenState extends State<InputItemScreen> {
-  File? _imageFile; // Changed from _imageFilesList to a single File
+  File? _imageFile;
   final ImagePicker _picker = ImagePicker();
   final ItemController _itemController = ItemController();
   

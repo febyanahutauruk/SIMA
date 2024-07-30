@@ -1,30 +1,39 @@
 import 'dart:io';
 
 class UpdateDataModel {
+  int? id;
   String name;
   String code;
-  String? category;
-  String description;
+  String? description;
+  int? category;
+  File? fileUploads;
   String createdBy;
-  File? fileUploads; 
 
   UpdateDataModel({
+    this.id,
     required this.name,
     required this.code,
+    this.description,
     this.category,
-    required this.description,
-    required this.createdBy,
     this.fileUploads,
+    required this.createdBy,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'code': code,
-      'category': category,
-      'description': description,
-      'createdBy': createdBy,
-      'fileUploads': fileUploads,
-    };
-  }
+  factory UpdateDataModel.fromJson(Map<String, dynamic> json) => UpdateDataModel(
+    id: json["id"],
+    name: json["name"],
+    code: json["code"],
+    description: json["description"],
+    category: json["category"],
+    createdBy: json["createdBy"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "code": code,
+    "description": description,
+    "category": category,
+    "createdBy": createdBy,
+  };
 }
