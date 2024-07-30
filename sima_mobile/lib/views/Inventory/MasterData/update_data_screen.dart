@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sima/controllers/form/update_data_controller.dart';
 import 'package:sima/models/form/update_data_model.dart';
+import 'package:http/http.dart' as http;
 
 class UpdateDataScreen extends StatefulWidget {
   final UpdateDataModel item;
@@ -35,8 +36,32 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
     _descriptionController.text = widget.item.description ?? '';
     _usernameController.text = widget.item.createdBy;
     _selectedCategoryId = widget.item.category;
-    if (widget.item.fileUploads != null) {
-      _imageFile = File(widget.item.fileUploads!.path);
+
+    if (widget.item.id != null) {
+      fetchImage(widget.item.id!, true).then((file) {
+        setState(() {
+          _imageFile = file;
+        });
+      }).catchError((e) {
+        print('Error fetching image: $e');
+      });
+    }
+  }
+
+  Future<File?> fetchImage(int id, bool isStream) async {
+    final url = 'https://apistrive.pertamina-ptk.com/api/Items/$id/Image'; // Replace with your API URL
+    final response = await http.get(
+      Uri.parse('$url?id=$id&isStream=True'),
+    );
+
+    if (response.statusCode == 200) {
+      // Assuming you get the image in the response body
+      final bytes = response.bodyBytes;
+      final file = File('${Directory.systemTemp.path}/image_$id.jpg'); // Temporary file
+      await file.writeAsBytes(bytes);
+      return file;
+    } else {
+      throw Exception('Failed to load image');
     }
   }
 
@@ -127,18 +152,19 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
                 },
                 child: _imageFile == null
                     ? const Icon(
-                        Icons.image,
-                        size: 200,
-                        color: Colors.grey,
-                      )
+                  Icons.image,
+                  size: 200,
+                  color: Colors.grey,
+                )
                     : Image.file(
-                        _imageFile!,
-                        height: 200,
-                        width: 200,
-                        fit: BoxFit.cover,
-                      ),
+                  _imageFile!,
+                  height: 200,
+                  width: 200,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
+            )
+            ,
             const SizedBox(height: 30),
             TextField(
               controller: _nameController,

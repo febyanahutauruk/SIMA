@@ -4,11 +4,9 @@ import 'package:sima/models/item/item_pagination_model.dart';
 import 'package:sima/views/widgets/card_action.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
 class ItemCard extends StatelessWidget {
   final ItemPaginationModel model;
-    const ItemCard({super.key, required this.model});
+  const ItemCard({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +15,6 @@ class ItemCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.grey.shade300, width: 1.0),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.grey.shade200.withOpacity(1),
-        //     spreadRadius: 2,
-        //     blurRadius: 6,
-        //     offset: const Offset(0, 1),
-        //   ),
-        // ],
       ),
       padding: const EdgeInsets.all(8),
       child: Column(
@@ -48,28 +38,36 @@ class ItemCard extends StatelessWidget {
               ),
               const Spacer(),
               Container(
-
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(4)),
-                  child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Dialog(
-                            child: CardAction(item: UpdateDataModel(id: null, name: '', code: '', createdBy: '')),
-                          );
-                        },
-                      );
-                    },
-                    child: const Icon(
-                      Icons.more_vert_rounded,
-                      size: 30,
-                    ),
-                  )
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          child: CardAction(
+                            item: UpdateDataModel(
+                              id: model.id, // Pass the correct ID here
+                              name: model.name,
+                              code: model.code,
+                              description: model.description,
+                              createdBy: model.createdBy,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: const Icon(
+                    Icons.menu_rounded,
+                    color: Colors.grey,
+                    size: 28,
+                  ),
+                ),
               )
-
             ],
           ),
           const Divider(),
@@ -95,7 +93,6 @@ class ItemCard extends StatelessWidget {
             "Deskripsi   :",
             style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
           ),
-
           Text(
             model.description,
             style: GoogleFonts.poppins(color: Colors.grey.shade400),
