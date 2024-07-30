@@ -46,7 +46,7 @@ class InventoryManagementApp extends StatelessWidget {
       '/Inventory' : (BuildContext context) => new HomeScreenInventory(),
       '/ItemListScreen' : (BuildContext context) => new ItemListScreen(),
       '/History' : (BuildContext context) => new HistoryScreen(),
-      '/TransactionList' : (BuildContext context) => new TransactionList(),
+      '/TransactionList' : (BuildContext context) => new TransactionListScreen(),
       '/Maps' : (BuildContext context) => new MapScreen(),
       '/InputItemScreen' : (BuildContext context) => new InputItemScreen(),
       '/ProductDetailScreen': (context) => new ProductDetailScreen(model: ModalRoute.of(context)!.settings.arguments as TransactionPaginationModel),
