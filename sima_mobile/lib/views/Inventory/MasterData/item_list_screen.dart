@@ -85,6 +85,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
                       decoration: BoxDecoration(
                         color: Colors.blueGrey.shade50,
                         borderRadius: BorderRadius.circular(32),
+
                         // boxShadow: [
                         //   BoxShadow(
                         //     color: Colors.grey.shade300.withOpacity(0.5),
@@ -128,7 +129,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
                         Container(
                           decoration: BoxDecoration(
                             color: Colors.blueGrey.shade50,
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(32),
                             // boxShadow: [
                             //   BoxShadow(
                             //     color: Colors.grey.shade300.withOpacity(0.5),
@@ -188,7 +189,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
                         return Column(
                           children: [
                             ItemCard(model: e),
-                            const SizedBox(height: 20,)
+                            const SizedBox(height: 16,)
                           ],
                         );
                       }).toList(),

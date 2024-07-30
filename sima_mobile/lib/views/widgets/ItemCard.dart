@@ -13,19 +13,21 @@ class ItemCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade200.withOpacity(1),
-            spreadRadius: 4,
-            blurRadius: 6,
-            offset: const Offset(2, 3),
-          ),
-        ],
+        border: Border.all(color: Colors.grey.shade300, width: 1.0),
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.grey.shade200.withOpacity(1),
+        //     spreadRadius: 2,
+        //     blurRadius: 6,
+        //     offset: const Offset(0, 1),
+        //   ),
+        // ],
       ),
       padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 8.0),
           Row(
             children: [
               Column(
@@ -37,10 +39,19 @@ class ItemCard extends StatelessWidget {
                   ),
                   Text(
                     model.name,
-                    style: GoogleFonts.poppins(color: Colors.grey),
+                    style: GoogleFonts.poppins(color: Colors.grey.shade400),
                   ),
                 ],
               ),
+              const Spacer(),
+              Container(
+                  // decoration: BoxDecoration(
+                  //     border: Border.all(color: Colors.grey),
+                  //     borderRadius: BorderRadius.circular(4)),
+                  child: const Icon(
+                    Icons.more_vert_rounded,
+                    size: 22,
+                  ))
             ],
           ),
           const Divider(),
@@ -50,7 +61,7 @@ class ItemCard extends StatelessWidget {
           ),
           Text(
             model.code,
-            style: GoogleFonts.poppins(color: Colors.grey),
+            style: GoogleFonts.poppins(color: Colors.grey.shade400),
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -59,7 +70,7 @@ class ItemCard extends StatelessWidget {
           ),
           Text(
             model.categoryName,
-            style: GoogleFonts.poppins(color: Colors.grey),
+            style: GoogleFonts.poppins(color: Colors.grey.shade400),
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -68,30 +79,9 @@ class ItemCard extends StatelessWidget {
           ),
           Text(
             model.description,
-            style: GoogleFonts.poppins(color: Colors.grey),
+            style: GoogleFonts.poppins(color: Colors.grey.shade400),
           ),
-          const Divider(),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(
-                context, '/DetailItemScreen'
-              );
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "See Detail",
-                  style: GoogleFonts.poppins(color: Colors.blue),
-                ),
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: Colors.blue,
-                  size: 16,
-                ),
-              ],
-            ),
-          ),
+          const SizedBox(height: 8.0),
         ],
       ),
     );
