@@ -79,7 +79,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey.shade50,
+      backgroundColor: Colors.grey.shade50,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(180),
         child: ClipPath(
@@ -192,7 +192,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Card(
-              color: Colors.white,
+              color: Colors.blueGrey.shade50,
               elevation: 0,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ListTile(
@@ -200,7 +200,7 @@ class HomeScreen extends StatelessWidget {
                   style: GoogleFonts.poppins(fontSize: 14,
                       color: Colors.teal,
                       fontWeight: FontWeight.w500),),
-                trailing: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.teal,),
+                trailing: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.teal, size: 14,),
                 onTap: () {
                   Navigator.pushNamed(context, '/assets');
                 },
@@ -208,7 +208,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Card(
-              color: Colors.white,
+              color: Colors.blueGrey.shade50,
               elevation: 0,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ListTile(
@@ -216,7 +216,7 @@ class HomeScreen extends StatelessWidget {
                   style: GoogleFonts.poppins(fontSize: 14,
                       color: Colors.teal,
                       fontWeight: FontWeight.w500),),
-                trailing: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.teal,),
+                trailing: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.teal, size: 14,),
                 onTap: () {
                   Navigator.pushNamed(context, '/Inventory');
                 },

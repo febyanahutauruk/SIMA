@@ -46,7 +46,7 @@ class _HistoryListScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey.shade50,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         scrolledUnderElevation :0.0,
         backgroundColor: Colors.teal,
@@ -88,9 +88,16 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                         Expanded(
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-
+                              color: Colors.blueGrey.shade50,
+                              borderRadius: BorderRadius.circular(32),
+                              // boxShadow: [
+                              //   BoxShadow(
+                              //     color: Colors.grey.shade300.withOpacity(0.5),
+                              //     spreadRadius: 4,
+                              //     blurRadius: 6,
+                              //     offset: const Offset(0, 1),
+                              //   ),
+                              // ],
                             ),
                             child: TextField(
                               onSubmitted: (v) {
@@ -112,9 +119,16 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                         const SizedBox(width: 10),
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Colors.blueGrey.shade50,
                             borderRadius: BorderRadius.circular(20),
-
+                            // boxShadow: [
+                            //   BoxShadow(
+                            //     color: Colors.grey.withOpacity(0.5),
+                            //     spreadRadius: 2,
+                            //     blurRadius: 2,
+                            //     offset: const Offset(0, 1),
+                            //   ),
+                            // ],
                           ),
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: DropdownButtonHideUnderline(
