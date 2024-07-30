@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="11540db0-ab6c-4771-8c5d-4d8371f7faf6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/services/form/update_data_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/services/form/update_data_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/MasterData/update_data_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/MasterData/update_data_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

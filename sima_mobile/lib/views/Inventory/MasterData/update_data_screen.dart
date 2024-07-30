@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sima/controllers/form/update_data_controller.dart';
 import 'package:sima/models/form/update_data_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
 
 class UpdateDataScreen extends StatefulWidget {
   final UpdateDataModel item;
@@ -99,6 +100,8 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
       );
 
       Navigator.of(context).pop();
+      Navigator.of(context).pop();
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ItemListScreen()));
     } catch (e) {
       print('Error occurred: $e');
       ScaffoldMessenger.of(context).showSnackBar(
