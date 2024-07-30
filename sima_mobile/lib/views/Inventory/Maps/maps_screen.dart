@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geocoding/geocoding.dart';
-
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:sima/services/map/map_service.dart';
+import 'package:sima/models/map/map_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -9,90 +11,168 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  GoogleMapController? mapController;
-  final TextEditingController _searchController = TextEditingController();
+  late Future<List<Warehouse>> futureWarehouses;
+  late MapController mapController;
+  List<Warehouse> warehouses = [];
+  List<Warehouse> filteredWarehouses = [];
+  TextEditingController searchController = TextEditingController();
 
-  LatLng _initialPosition = LatLng(-6.200000, 106.816666); 
-  LatLng _currentPosition = LatLng(-6.200000, 106.816666);
+  @override
+  void initState() {
+    super.initState();
+    futureWarehouses = ApiService().fetchWarehouses();
+    mapController = MapController();
+    searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    searchController.removeListener(_onSearchChanged);
+    searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    setState(() {
+      filteredWarehouses = warehouses
+          .where((warehouse) => warehouse.name.toLowerCase().contains(searchController.text.toLowerCase()))
+          .toList();
+    });
+  }
+
+  void _onWarehouseSelected(Warehouse warehouse) {
+    mapController.move(LatLng(warehouse.latitude!, warehouse.longitude!), 15.0);
+    searchController.clear(); // Clear the search input after selecting a warehouse
+    setState(() {
+      filteredWarehouses = []; // Clear the suggestions after selecting a warehouse
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: _initialPosition,
-              zoom: 14.0,
-            ),
-            onMapCreated: (controller) {
-              setState(() {
-                mapController = controller;
-              });
-            },
-            markers: {
-              Marker(
-                markerId: MarkerId('currentLocation'),
-                position: _currentPosition,
-              ),
-            },
-          ),
-          Positioned(
-            top: 40,
-            left: 15,
-            right: 15,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 10.0,
-                    spreadRadius: 2.0,
+      appBar: AppBar(
+        backgroundColor: Colors.teal,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white,),
+          onPressed: () {
+            Navigator.pushNamed(context, '/Inventory');
+          },
+        ),
+        title: Text('Warehouse Map',textAlign: TextAlign.center,
+          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w700),),
+      ),
+      body: FutureBuilder<List<Warehouse>>(
+        future: futureWarehouses,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No warehouses found'));
+          }
+
+          warehouses = snapshot.data!;
+          if (searchController.text.isEmpty) {
+            filteredWarehouses = warehouses;
+          }
+
+          List<Marker> markers = warehouses
+              .where((warehouse) =>
+          warehouse.longitude != null && warehouse.latitude != null)
+              .map((warehouse) {
+            return Marker(
+              point: LatLng(warehouse.latitude!, warehouse.longitude!),
+              width: 80.0,
+              height: 80.0,
+              child: _warehouseMarker(),
+            );
+          }).toList();
+
+          return Stack(
+            children: [
+              FlutterMap(
+                mapController: mapController,
+                options: MapOptions(
+                  initialCenter: LatLng(-6.21462, 106.84513), // Coordinates for Indonesia
+                  initialZoom: 10.0, // Adjust zoom level as needed
+                ),
+                children: [
+                  TileLayer(
+                    urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    subdomains: ['a', 'b', 'c'],
                   ),
+                  MarkerLayer(markers: markers),
                 ],
               ),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  hintText: 'Telusuri di sini',
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(left: 15, top: 15),
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: _searchLocation,
-                    iconSize: 30,
-                  ),
-                ),
+              Positioned(
+                top: 16.0,
+                left: 16.0,
+                right: 16.0,
+                child: _buildSearchBar(),
               ),
-            ),
-          ),
-        ],
+              if (searchController.text.isNotEmpty) _buildSearchResults(),
+            ],
+          );
+        },
       ),
     );
   }
 
-  void _searchLocation() async {
-    String searchAddress = _searchController.text;
-    if (searchAddress.isNotEmpty) {
-      try {
-        List<Location> locations = await locationFromAddress(searchAddress);
-        if (locations.isNotEmpty) {
-          Location location = locations.first;
-          LatLng newPosition = LatLng(location.latitude, location.longitude);
+  Widget _warehouseMarker() {
+    return Icon(
+      Icons.home_rounded,
+      color: Colors.teal,
+      size: 40.0,
+    );
+  }
 
-          mapController?.animateCamera(CameraUpdate.newCameraPosition(
-            CameraPosition(target: newPosition, zoom: 14.0),
-          ));
+  Widget _buildSearchBar() {
+    return Card(
+      color: Colors.white,
+      elevation: 8.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(32.0),
+      ),
+      child: TextField(
+        controller: searchController,
+        decoration: InputDecoration(
+          hintText: 'Search for a warehouse...',
+          hintStyle: TextStyle(color: Colors.teal),
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.all(16.0),
+          prefixIcon: Icon(Icons.search_rounded, color: Colors.teal,),
+        ),
+      ),
+    );
+  }
 
-          setState(() {
-            _currentPosition = newPosition;
-          });
-        }
-      } catch (e) {
-        print('Error: $e');
-      }
-    }
+  Widget _buildSearchResults() {
+    return Positioned(
+      top: 72.0,
+      left: 16.0,
+      right: 16.0,
+      child: Card(
+        elevation: 8.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: filteredWarehouses.length,
+          itemBuilder: (context, index) {
+            final warehouse = filteredWarehouses[index];
+            return ListTile(
+              title: Text(warehouse.name),
+              subtitle: Text(warehouse.address),
+              onTap: () {
+                _onWarehouseSelected(warehouse);
+              },
+            );
+          },
+        ),
+      ),
+    );
   }
 }

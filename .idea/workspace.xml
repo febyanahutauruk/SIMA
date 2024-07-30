@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11540db0-ab6c-4771-8c5d-4d8371f7faf6" name="Changes" comment="">
+
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sima_mobile/lib/controllers/form/update_data_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/controllers/form/update_data_controller.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sima_mobile/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/main.dart" afterDir="false" />
@@ -21,6 +22,8 @@
       <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/TransactionItem/form_item.dart" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/TransactionItem/transactionList.dart" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/home_screen_inventory.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/home_screen_inventory.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/MasterData/add_item_screen.dart" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +41,15 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -86,5 +97,15 @@
       <updated>1721185683397</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/sima_mobile/lib/models/history/history_pagination_model.dart</url>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

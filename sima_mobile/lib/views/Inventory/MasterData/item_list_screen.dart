@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sima/controllers/items/item_controller.dart';
 import 'package:sima/views/widgets/ItemCard.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class ItemListScreen extends StatefulWidget {
   const ItemListScreen({super.key});
@@ -12,7 +14,9 @@ class ItemListScreen extends StatefulWidget {
 
 class _ItemListScreenState extends State<ItemListScreen> {
   final ScrollController _scrollController = ScrollController();
-  scrollListener() {
+  String? _selectedFilter;
+
+  void scrollListener() {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       print("...");
@@ -40,13 +44,20 @@ class _ItemListScreenState extends State<ItemListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          "Item",
-          style: TextStyle(color: Colors.teal),
+        scrolledUnderElevation :0.0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
+          onPressed: () {
+            Navigator.pushNamed(context, '/Inventory');
+          },
         ),
-        backgroundColor: Color(0xFFB5D9DA),
+        title:  Text(
+          "Item",
+          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w700),
+        ),
+        backgroundColor: Colors.teal,
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -70,73 +81,105 @@ class _ItemListScreenState extends State<ItemListScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextField(
-                      onSubmitted: (v) {
-                        final itemP = context.read<ItemController>();
-                        itemP.param =
-                            itemP.param.copyWith(limit: 10, offset: 0, name: v);
-                        itemP.searchItems();
-                      },
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blueGrey.shade50,
+                        borderRadius: BorderRadius.circular(32),
+
+                        // boxShadow: [
+                        //   BoxShadow(
+                        //     color: Colors.grey.shade300.withOpacity(0.5),
+                        //     spreadRadius: 2,
+                        //     blurRadius: 4,
+                        //     offset: const Offset(0, 1),
+                        //   ),
+                        // ],
+                      ),
+                      child: TextField(
+                        onSubmitted: (v) {
+                          final itemP = context.read<ItemController>();
+                          itemP.param = itemP.param.copyWith(
+                              limit: 10, offset: 0, name: v);
+                          itemP.searchItems();
+                        },
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.search_rounded, color: Colors.teal,),
                           hintText: "Search....",
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)))),
+                          hintStyle: TextStyle(color: Colors.teal),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
+                        ),
+                      ),
+
                     ),
                     const SizedBox(
                       height: 12,
                     ),
-                    const Text(
-                      "Daftar Item",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                    ),
+
                     const SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: [
-                        const Text(
-                          "Show",
-                          style: TextStyle(color: Colors.grey, fontSize: 16),
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        const SizedBox(
-                          width: 80,
-                          child: TextField(
-                            decoration: InputDecoration(
-                                suffixIcon: Icon(Icons.arrow_drop_up),
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(12, 0, 0, 0),
-                                hintText: "10",
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)))),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        const Text(
-                          "Entries",
-                          style: TextStyle(color: Colors.grey, fontSize: 16),
-                        ),
+                         Text(
+                        "Daftar Item",
+                        style:
+                        GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 24, color: Colors.teal),
+                      ),
                         const Spacer(),
                         Container(
-                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: const Row(
-                            children: [
-                              Icon(Icons.sensor_window_rounded),
-                              Text("Filter",
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 16)),
-                            ],
+                            color: Colors.blueGrey.shade50,
+                            borderRadius: BorderRadius.circular(32),
+                            // boxShadow: [
+                            //   BoxShadow(
+                            //     color: Colors.grey.shade300.withOpacity(0.5),
+                            //     spreadRadius: 2,
+                            //     blurRadius: 4,
+                            //     offset: const Offset(0, 1),
+                            //   ),
+                            // ],
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: _selectedFilter,
+                              hint: Row(
+                                children:  [
+                                  Icon(Icons.filter_alt_rounded, color: Colors.teal, size: 18,),
+                                  SizedBox(width: 5),
+                                  Text('Filter',
+                                  style: GoogleFonts.poppins(color: Colors.teal),),
+                                ],
+                              ),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedFilter = newValue;
+                                  if (newValue != 'All') {
+                                    Provider.of<ItemController>(context,
+                                        listen: false)
+                                        .filterItemsBySort(
+                                        newValue!.toLowerCase());
+                                  } else {
+                                    Provider.of<ItemController>(context,
+                                        listen: false)
+                                        .getPaginationItem();
+                                  }
+                                });
+                              },
+                              borderRadius: BorderRadius.circular(20),
+                              dropdownColor: Colors.white,
+                              items: <String>['Asc', 'Desc']
+                                  .map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                            ),
+
                           ),
                         ),
                       ],
@@ -146,7 +189,14 @@ class _ItemListScreenState extends State<ItemListScreen> {
                     ),
                     Column(
                       children: value.items.map((e) {
-                        return ItemCard(model: e);
+
+                        return Column(
+                          children: [
+                            ItemCard(model: e),
+                            const SizedBox(height: 16,)
+                          ],
+                        );
+
                       }).toList(),
                     ),
                     if (value.isNext)
