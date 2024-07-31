@@ -63,9 +63,10 @@ class UpdateDataService {
 
   Future<void> deleteItem(int id) async {
     final response = await http.delete(
-      Uri.parse('https://apistrive.pertamina-ptk.com/api/Items/Delete/$id'),
+      Uri.parse('https://apistrive.pertamina-ptk.com/api/Items/Delete/$id?deleteby=aufar'),
     );
 
+    print('id: $id');
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
