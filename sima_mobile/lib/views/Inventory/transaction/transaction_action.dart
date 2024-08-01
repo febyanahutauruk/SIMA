@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sima/models/transaction/transaction_pagination_model.dart';
 import 'package:sima/services/transaction/in_out_service.dart';
 import 'package:sima/models/transaction/in_out_model.dart';
+import 'package:sima/views/Inventory/Transaction/transaction_list.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final TransactionPaginationModel model;
@@ -42,62 +43,86 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Confirm Action"),
-        content: const Text("Are you sure you want to submit this action?"),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        title: Row(
+          children: [
+            Icon(Icons.warning, color: Colors.orange),
+            SizedBox(width: 10),
+            Text("Confirm Action"),
+          ],
+        ),
+        content: Text(
+          "Are you sure you want to submit this action?",
+          style: TextStyle(fontSize: 16),
+        ),
         actions: [
           TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.grey,
+            ),
             onPressed: () => Navigator.of(context).pop(),
             child: const Text("Cancel"),
           ),
-          TextButton(
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
             onPressed: () async {
               Navigator.of(context).pop();
               await _submitAction();
             },
-            child: const Text("Confirm"),
+            child: const Text("Confirm",
+            style: TextStyle(color: Colors.white),),
           ),
         ],
       ),
     );
   }
 
- Future<void> _submitAction() async {
-  if (_selectedAction == null) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Please select an action')),
-    );
-    return;
+  Future<void> _submitAction() async {
+    if (_selectedAction == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select an action')),
+      );
+      return;
+    }
+
+    try {
+      final InOutService inOutService = InOutService();
+      final actionType = _selectedAction == 1 ? "IN" : "OUT";
+      var Id = widget.model.id;
+      final itemInOut = InOutParamModel(
+        qtyInOut: _qtyInOut,
+        date: DateTime.now().toIso8601String(),
+        status: actionType.toLowerCase(),
+        warehouseItemId: Id,
+        aktor: "cikiw",
+      );
+
+      await inOutService.addItemInOut(itemInOut);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Action successful!')),
+      );
+
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => TransactionListScreen(),
+        ),
+      );
+    } catch (e) {
+      print("Error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Action failed: $e')),
+      );
+    }
   }
-
-  try {
-    final InOutService inOutService = InOutService();
-    final actionType = _selectedAction == 1 ? "IN" : "OUT";
-    var Id = widget.model.id;
-    final itemInOut = InOutParamModel(
-      qtyInOut: _qtyInOut,
-      date: DateTime.now().toIso8601String(),
-      status: actionType.toLowerCase(), 
-      warehouseItemId: Id,
-      aktor: "cikiw",  
-    );
-
-    await inOutService.addItemInOut(itemInOut);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Action successful!')),
-    );
-
-    setState(() {
-    });
-
-  } catch (e) {
-    print("Error: $e");
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Action failed: $e')),
-    );
-  }
-}
-
 
   void _showBottomSheet() {
     showModalBottomSheet(
@@ -120,64 +145,68 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.remove),
-                            onPressed: () {
-                              setState(() {
-                                if (_qtyInOut > 1) {
-                                  _qtyInOut--;
-                                  _qtyInOutController.text = _qtyInOut.toString();
-                                }
-                              });
-                            },
-                          ),
-                          SizedBox(
-                            width: 200,
-                            child: TextField(
-                              controller: _qtyInOutController,
-                              keyboardType: TextInputType.number,
-                              onChanged: (value) {
+                      Expanded(
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.remove),
+                              onPressed: () {
                                 setState(() {
-                                  _updateQtyInOut(value);
+                                  if (_qtyInOut > 1) {
+                                    _qtyInOut--;
+                                    _qtyInOutController.text =
+                                        _qtyInOut.toString();
+                                  }
                                 });
                               },
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: "Quantity In/Out",
+                            ),
+                            Expanded(
+                              child: TextField(
+                                controller: _qtyInOutController,
+                                keyboardType: TextInputType.number,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _updateQtyInOut(value);
+                                  });
+                                },
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: "Quantity In/Out",
+                                ),
                               ),
                             ),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.add),
-                            onPressed: () {
-                              setState(() {
-                                _qtyInOut++;
-                                _qtyInOutController.text = _qtyInOut.toString();
-                              });
-                            },
-                          ),
-                        ],
+                            IconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                setState(() {
+                                  _qtyInOut++;
+                                  _qtyInOutController.text =
+                                      _qtyInOut.toString();
+                                });
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(width: 10),
-                      PopupMenuButton<int>(
+                      DropdownButton<int>(
+                        value: _selectedAction,
                         icon: const Icon(Icons.arrow_drop_down),
-                        itemBuilder: (context) => [
-                          PopupMenuItem(
+                        items: [
+                          DropdownMenuItem(
                             value: 1,
                             child: const Text("Barang Masuk",
                                 style: TextStyle(fontSize: 16)),
                           ),
-                          PopupMenuItem(
+                          DropdownMenuItem(
                             value: 2,
                             child: const Text("Barang Keluar",
                                 style: TextStyle(fontSize: 16)),
                           ),
                         ],
-                        onSelected: (value) {
+                        onChanged: (value) {
                           setState(() {
-                            _selectedAction = value;
+                            _selectedAction = value!;
                           });
                         },
                       ),
@@ -191,7 +220,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         _showConfirmationDialog(context);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Please select an action')),
+                          const SnackBar(
+                              content: Text('Please select an action')),
                         );
                       }
                     },
@@ -243,7 +273,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            Text("${widget.model.id}",),
+            Text(
+              "${widget.model.id}",
+            ),
             Text(
               "Product Name: ${widget.model.itemName}",
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
