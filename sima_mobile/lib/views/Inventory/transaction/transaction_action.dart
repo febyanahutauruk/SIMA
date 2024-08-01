@@ -265,7 +265,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.pushNamed(context, '/Inventory');
+            Navigator.pushNamed(context, '/TransactionList');
           },
         ),
       ),
@@ -371,6 +371,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   ],
                 ),
+
               ),
             ),
             const SizedBox(height: 0),
