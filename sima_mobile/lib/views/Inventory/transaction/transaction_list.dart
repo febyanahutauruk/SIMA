@@ -38,7 +38,6 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
   Widget _buildCategoryButton(String category, Color color) {
     return GestureDetector(
       onTap: () {
-        // Implement category filter logic here if needed
       },
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -97,6 +96,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
+                          _buildCategoryButton('All', Colors.white),
                           _buildCategoryButton('Furniture', Colors.white),
                           _buildCategoryButton('Alat Tulis', Colors.white),
                           _buildCategoryButton('Elektronik', Colors.white),

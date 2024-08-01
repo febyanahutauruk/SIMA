@@ -11,6 +11,8 @@ class TransactionParamModel {
   int? qty;
   int? minQty;
   String? warehouseName;
+  String? address;
+  String? description;
   int? idFileUploads;
   String? filePath;
   String? fileName;
@@ -28,10 +30,12 @@ class TransactionParamModel {
   dynamic updateBy;
   String? fileUrl; 
   int? qtyInOut;
-  DateTime? date;
   String? status;
   int? warehouseItemId;
   String? aktor;
+  int? code;
+  bool? isSuccess;
+  dynamic errorMsg;
 
   TransactionParamModel({
     required this.limit,
@@ -41,6 +45,8 @@ class TransactionParamModel {
     this.qty,
     this.minQty,
     this.warehouseName,
+    this.address,
+    this.description,
     this.idFileUploads,
     this.filePath,
     this.fileName,
@@ -58,40 +64,43 @@ class TransactionParamModel {
     this.updateBy,
     this.fileUrl,
     this.qtyInOut,
-    this.date,
     this.status,
     this.warehouseItemId,
     this.aktor,
+    this.code,
+    this.isSuccess,
+    this.errorMsg,
   });
 
   factory TransactionParamModel.fromJson(Map<String, dynamic> json) => TransactionParamModel(
-    limit: json["limit"] ?? '',
-    offset: json["offset"] ?? '',
+    limit: json["limit"] ?? 0,
+    offset: json["offset"] ?? 0,
     itemName: json["itemName"],
     itemCategory: json["itemCategory"],
-    qty: json["qty"] ?? '',
-    minQty: json["minQty"]  ?? '',
+    qty: json["qty"] ?? 0,
+    minQty: json["minQty"] ?? 0,
     warehouseName: json["warehouseName"],
-    idFileUploads: json["idFileUploads"] ?? '',
+    address: json["address"],
+    description: json["description"],
+    idFileUploads: json["idFileUploads"] ?? 0,
     filePath: json["filePath"],
     fileName: json["fileName"],
     bucketName: json["bucketName"],
     contentType: json["contentType"],
-    length: json["length"] ?? '',
-    trxId: json["trxId"] ?? '',
+    length: json["length"] ?? 0,
+    trxId: json["trxId"] ?? 0,
     flag: json["flag"],
     remark: json["remark"],
-    id: json["id"] ?? '',
+    id: json["id"] ?? 0,
     createdDate: json["createdDate"] != null ? DateTime.parse(json["createdDate"]) : null,
     createdDateFormat: json["createdDateFormat"],
     createdBy: json["createdBy"],
     updateDate: json["updateDate"] != null ? DateTime.parse(json["updateDate"]) : null,
     updateBy: json["updateBy"],
-    fileUrl: json["fileUrl"],
-    qtyInOut: json["qtyInOut"] ?? '',
-    date: json["date"] != null ? DateTime.parse(json["date"]) : null,
+    fileUrl: json["fileUrl"], 
+    qtyInOut: json["qtyInOut"] ?? 0,
     status: json["status"],
-    warehouseItemId: json["warehouseItemId"] ,
+    warehouseItemId: json["warehouseItemId"],
     aktor: json["aktor"],
   );
 
@@ -103,6 +112,8 @@ class TransactionParamModel {
     "qty": qty,
     "minQty": minQty,
     "warehouseName": warehouseName,
+    "address": address,
+    "description": description,
     "idFileUploads": idFileUploads,
     "filePath": filePath,
     "fileName": fileName,
@@ -120,7 +131,6 @@ class TransactionParamModel {
     "updateBy": updateBy,
     "fileUrl": fileUrl, 
     "qtyInOut": qtyInOut,
-    "date": date?.toIso8601String(),
     "status": status,
     "warehouseItemId": warehouseItemId,
     "aktor": aktor,
@@ -151,7 +161,6 @@ class TransactionParamModel {
     dynamic updateBy,
     String? fileUrl,
     int? qtyInOut,
-    DateTime? date,
     String? status,
     int? warehouseItemId,
     String? aktor,
@@ -179,12 +188,11 @@ class TransactionParamModel {
       createdBy: createdBy ?? this.createdBy,
       updateDate: updateDate ?? this.updateDate,
       updateBy: updateBy ?? this.updateBy,
-      fileUrl: this.fileUrl,
-      qtyInOut: this.qtyInOut,
-      date: this.date,
-      status: this.status,
-      warehouseItemId: this.warehouseItemId,
-      aktor: this.aktor,
+      fileUrl: fileUrl ?? this.fileUrl,
+      qtyInOut: qtyInOut ?? this.qtyInOut,
+      status: status ?? this.status,
+      warehouseItemId: warehouseItemId ?? this.warehouseItemId,
+      aktor: aktor ?? this.aktor,
     );
   }
 }

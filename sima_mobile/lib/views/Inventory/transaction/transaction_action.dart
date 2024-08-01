@@ -1,8 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sima/models/transaction/transaction_pagination_model.dart';
-import 'package:sima/services/transaction/transaction_service.dart';
-import 'package:sima/models/transaction/transaction_param_model.dart';
+import 'package:sima/services/transaction/in_out_service.dart';
+import 'package:sima/models/transaction/in_out_model.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final TransactionPaginationModel model;
@@ -14,27 +13,27 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  int? _selectedAction; // To store selected action
-  int _quantity = 1; // Default quantity
-  final TextEditingController _quantityController = TextEditingController();
+  int? _selectedAction;
+  int _qtyInOut = 1;
+  final TextEditingController _qtyInOutController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _quantityController.text = _quantity.toString(); // Initialize the controller
+    _qtyInOutController.text = _qtyInOut.toString();
   }
 
   @override
   void dispose() {
-    _quantityController.dispose(); 
+    _qtyInOutController.dispose();
     super.dispose();
   }
 
-  void _updateQuantity(String value) {
-    int? quantity = int.tryParse(value);
-    if (quantity != null && quantity > 0) {
+  void _updateQtyInOut(String value) {
+    int? qtyInOut = int.tryParse(value);
+    if (qtyInOut != null && qtyInOut > 0) {
       setState(() {
-        _quantity = quantity;
+        _qtyInOut = qtyInOut;
       });
     }
   }
@@ -44,11 +43,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Confirm Action"),
-        content: Text(
-          _selectedAction == 1
-              ? "Are you sure you want to add $_quantity items?"
-              : "Are you sure you want to remove $_quantity items?",
-        ),
+        content: const Text("Are you sure you want to submit this action?"),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -66,118 +61,156 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     );
   }
 
-  Future<void> _submitAction() async {
-    try {
-      final TransactionService transactionService = TransactionService();
-      final actionType = _selectedAction == 1 ? "IN" : "OUT";
-
-      final itemInOut = TransactionParamModel(
-        limit: 4,
-        offset: 0,
-        id: widget.model.id,
-        itemName: widget.model.itemName,
-        itemCategory: widget.model.itemCategory,
-        status: actionType,
-        qty: _quantity,
-      );
-
-      await transactionService.addItemInOut(itemInOut);
-
-      setState(() {
-        if (_selectedAction == 1) {
-          widget.model.qty += _quantity;
-        } else {
-          widget.model.qty -= _quantity;
-        }
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Action successful!')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Action failed: $e')),
-      );
-    }
+ Future<void> _submitAction() async {
+  if (_selectedAction == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Please select an action')),
+    );
+    return;
   }
+
+  try {
+    final InOutService inOutService = InOutService();
+    final actionType = _selectedAction == 1 ? "IN" : "OUT";
+    var Id = widget.model.id;
+    final itemInOut = InOutParamModel(
+      qtyInOut: _qtyInOut,
+      date: DateTime.now().toIso8601String(),
+      status: actionType.toLowerCase(), 
+      warehouseItemId: Id,
+      aktor: "cikiw",  
+    );
+
+    await inOutService.addItemInOut(itemInOut);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Action successful!')),
+    );
+
+    setState(() {
+    });
+
+  } catch (e) {
+    print("Error: $e");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Action failed: $e')),
+    );
+  }
+}
+
 
   void _showBottomSheet() {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DropdownButtonFormField<int>(
-                decoration: const InputDecoration(
-                  labelText: "Action",
-                  border: OutlineInputBorder(),
-                ),
-                items: const [
-                  DropdownMenuItem(value: 1, child: Text("Barang Masuk")),
-                  DropdownMenuItem(value: 2, child: Text("Barang Keluar")),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    _selectedAction = value;
-                  });
-                },
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Padding(
+              padding: MediaQuery.of(context).viewInsets,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
+                  const SizedBox(height: 25),
+                  const Text(
+                    "Adjust Quantity",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 20),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.remove),
-                        onPressed: () {
-                          if (_quantity > 1) {
-                            setState(() {
-                              _quantity--;
-                              _quantityController.text = _quantity.toString();
-                            });
-                          }
-                        },
-                      ),
-                      SizedBox(
-                        width: 60,
-                        child: TextField(
-                          controller: _quantityController,
-                          keyboardType: TextInputType.number,
-                          onChanged: _updateQuantity,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(vertical: 10),
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.remove),
+                            onPressed: () {
+                              setState(() {
+                                if (_qtyInOut > 1) {
+                                  _qtyInOut--;
+                                  _qtyInOutController.text = _qtyInOut.toString();
+                                }
+                              });
+                            },
                           ),
-                        ),
+                          SizedBox(
+                            width: 200,
+                            child: TextField(
+                              controller: _qtyInOutController,
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                setState(() {
+                                  _updateQtyInOut(value);
+                                });
+                              },
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: "Quantity In/Out",
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.add),
+                            onPressed: () {
+                              setState(() {
+                                _qtyInOut++;
+                                _qtyInOutController.text = _qtyInOut.toString();
+                              });
+                            },
+                          ),
+                        ],
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.add),
-                        onPressed: () {
+                      const SizedBox(width: 10),
+                      PopupMenuButton<int>(
+                        icon: const Icon(Icons.arrow_drop_down),
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            value: 1,
+                            child: const Text("Barang Masuk",
+                                style: TextStyle(fontSize: 16)),
+                          ),
+                          PopupMenuItem(
+                            value: 2,
+                            child: const Text("Barang Keluar",
+                                style: TextStyle(fontSize: 16)),
+                          ),
+                        ],
+                        onSelected: (value) {
                           setState(() {
-                            _quantity++;
-                            _quantityController.text = _quantity.toString();
+                            _selectedAction = value;
                           });
                         },
                       ),
                     ],
                   ),
+                  const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
                       if (_selectedAction != null) {
                         Navigator.of(context).pop();
                         _showConfirmationDialog(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Please select an action')),
+                        );
                       }
                     },
-                    child: const Text("Submit"),
+                    child: const Text(
+                      "Submit",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.teal,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                   ),
+                  const SizedBox(height: 16),
                 ],
               ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
@@ -187,71 +220,67 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.model.itemName),
+        title: const Text("Product Detail"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Image.network(
-                  widget.model.fileUrl ?? 'https://via.placeholder.com/200',
-                  height: 200,
-                  width: 200,
-                  fit: BoxFit.cover,
-                ),
+        child: Column(
+          children: [
+            Center(
+              child: Image.network(
+                'https://apistrive.pertamina-ptk.com/WarehouseItem/${widget.model.id}/Image?isStream=true',
+                height: 300,
+                width: 300,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.network(
+                    'https://via.placeholder.com/100',
+                    height: 300,
+                    width: 300,
+                    fit: BoxFit.cover,
+                  );
+                },
               ),
-              const SizedBox(height: 20),
-              Text(
-                widget.model.itemName,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
+            ),
+            const SizedBox(height: 20),
+            Text("${widget.model.id}",),
+            Text(
+              "Product Name: ${widget.model.itemName}",
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "Product Category: ${widget.model.itemCategory}",
+              style: const TextStyle(fontSize: 16),
+            ),
+            Text(
+              "Quantity: ${widget.model.qty}",
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "Warehouse : ${widget.model.warehouseName}",
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 220),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: _showBottomSheet,
+                  child: const Text(
+                    "Add Action",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.teal,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                widget.model.itemCategory,
-                style: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                'Quantity: ${widget.model.qty}',
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                'Warehouse: ${widget.model.warehouseName}',
-                style: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                'Status: ${widget.model.status}',
-                style: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 20),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Color(0xff),
-        onPressed: _showBottomSheet,
-        label: const Text("Adjust Quantity & Submit"),
-        icon: const Icon(Icons.edit),
       ),
     );
   }
