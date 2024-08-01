@@ -233,7 +233,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
           onPressed: () {
-            Navigator.pushNamed(context, '/Inventory');
+            Navigator.pushNamed(context, '/TransactionList');
           },
         ),
       ),
@@ -266,6 +266,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 // Center the text content vertically
                 children: [
+                  Text('${widget.model.id}'),
                   Text(
                     "Product Name: ",
                     style: const TextStyle(
