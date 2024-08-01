@@ -15,7 +15,7 @@ class ItemPaginationModel {
     int id;
     // DateTime createdDate;
     // String createdDateFormat;
-    // String createdBy;
+    String createdBy;
     // DateTime updateDate;
     // String? updateBy;
 
@@ -28,7 +28,7 @@ class ItemPaginationModel {
         required this.id, 
         // required this.createdDate,
         // required this.createdDateFormat,
-        // required this.createdBy,
+        required this.createdBy,
         // required this.updateDate,
         // required this.updateBy,
     });
@@ -42,7 +42,7 @@ class ItemPaginationModel {
         id: json["id"] ??"",
         // createdDate: DateTime.parse(json["createdDate"]),
         // createdDateFormat: json["createdDateFormat"],
-        // createdBy: json["createdBy"],
+        createdBy: json["createdBy"],
         // updateDate: DateTime.parse(json["updateDate"]),
         // updateBy: json["updateBy"],
     );
@@ -57,7 +57,7 @@ class ItemPaginationModel {
         "id": id,
         // "createdDate": createdDate.toIso8601String(),
         // "createdDateFormat": createdDateFormat,
-        // "createdBy": createdBy,
+        "createdBy": createdBy,
         // "updateDate": updateDate.toIso8601String(),
         // "updateBy": updateBy,
     };

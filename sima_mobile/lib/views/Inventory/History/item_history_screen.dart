@@ -107,9 +107,9 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                                 itemP.searchItems();
                               },
                               decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.search_rounded, color: Colors.teal,),
-                                hintText: "Search....",
-                                hintStyle: TextStyle(color: Colors.teal),
+                                prefixIcon: Icon(Icons.search_rounded, color: Colors.grey,),
+                                hintText: "Search Items....",
+                                hintStyle: TextStyle(color: Colors.grey),
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                               ),
@@ -135,11 +135,11 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                             child: DropdownButton<String>(
                               value: _selectedFilter,
                               hint: Row(
-                                children: const [
-                                  Icon(Icons.filter_alt_rounded,color: Colors.teal,),
+                                children:  [
+                                  Icon(Icons.filter_alt_rounded,color: Colors.grey.shade700, size: 18,),
                                   SizedBox(width: 5),
                                   Text('Filter',
-                                  style: TextStyle(color: Colors.teal),),
+                                  style: GoogleFonts.poppins(color: Colors.grey.shade700),),
                                 ],
                               ),
                               onChanged: (String? newValue) {

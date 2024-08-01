@@ -47,7 +47,7 @@ class HistoryCard extends StatelessWidget {
         // ],
       ),
       child: Card(
-        elevation: 0,
+        elevation: 1,
         margin: const EdgeInsets.all(5),
         color: Colors.blueGrey.shade50,
         child: ListTile(

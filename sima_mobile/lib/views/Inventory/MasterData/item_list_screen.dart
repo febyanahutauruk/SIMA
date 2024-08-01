@@ -103,9 +103,9 @@ class _ItemListScreenState extends State<ItemListScreen> {
                           itemP.searchItems();
                         },
                         decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.search_rounded, color: Colors.teal,),
+                          prefixIcon: Icon(Icons.search_rounded, color: Colors.grey,),
                           hintText: "Search....",
-                          hintStyle: TextStyle(color: Colors.teal),
+                          hintStyle: TextStyle(color: Colors.grey),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 12, horizontal: 16),
@@ -147,10 +147,10 @@ class _ItemListScreenState extends State<ItemListScreen> {
                               value: _selectedFilter,
                               hint: Row(
                                 children:  [
-                                  Icon(Icons.filter_alt_rounded, color: Colors.teal, size: 18,),
+                                  Icon(Icons.filter_alt_rounded, color: Colors.grey.shade700, size: 18,),
                                   SizedBox(width: 5),
                                   Text('Filter',
-                                  style: GoogleFonts.poppins(color: Colors.teal),),
+                                  style: GoogleFonts.poppins(color: Colors.grey.shade700),),
                                 ],
                               ),
                               onChanged: (String? newValue) {
@@ -193,7 +193,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
                         return Column(
                           children: [
                             ItemCard(model: e),
-                            const SizedBox(height: 16,)
+                            const SizedBox(height: 4,)
                           ],
                         );
 

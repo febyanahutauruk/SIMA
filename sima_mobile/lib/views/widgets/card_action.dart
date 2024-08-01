@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sima/controllers/form/update_data_controller.dart';
 import 'package:sima/models/form/update_data_model.dart';
 import '../Inventory/MasterData/update_data_screen.dart';
+import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
 
 class CardAction extends StatelessWidget {
   final UpdateDataModel item;
@@ -12,6 +13,11 @@ class CardAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular((16.0))
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -36,8 +42,7 @@ class CardAction extends StatelessWidget {
             },
           ),
           Divider(),
-          ListTile(
-            title: Text('Delete', textAlign: TextAlign.center, style: TextStyle(color: Colors.red)),
+          ListTile(title: Text('Delete', textAlign: TextAlign.center, style: TextStyle(color: Colors.red)),
             onTap: () async {
               if (item.id == null) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Item ID is null')));
@@ -46,10 +51,12 @@ class CardAction extends StatelessWidget {
               try {
                 await _updateDataController.deleteItem(item.id);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Item deleted successfully')));
+                // Replace the screen after successful deletion
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ItemListScreen()) // Replace ItemListScreen with your actual screen widget
+                );
               } catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to delete item: $e')));
               }
-              Navigator.of(context).pop();
             },
           ),
           Divider(),
