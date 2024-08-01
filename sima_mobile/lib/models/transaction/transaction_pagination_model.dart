@@ -4,6 +4,8 @@ class TransactionPaginationModel {
   int qty;
   int minQty;
   String warehouseName;
+  String address;
+  String description;
   int idFileUploads;
   String filePath;
   String fileName;
@@ -21,7 +23,6 @@ class TransactionPaginationModel {
   dynamic updateBy;
   String fileUrl;
   int qtyInOut;
-  DateTime? date;
   String status;
   int warehouseItemId;
   String aktor;
@@ -37,6 +38,8 @@ class TransactionPaginationModel {
     required this.qty,
     required this.minQty,
     required this.warehouseName,
+    required this.address,
+    required this.description,
     required this.idFileUploads,
     required this.filePath,
     required this.fileName,
@@ -54,7 +57,6 @@ class TransactionPaginationModel {
     required this.updateBy,
     required this.fileUrl,
     required this.qtyInOut,
-    required this.date,
     required this.status,
     required this.warehouseItemId,
     required this.aktor,
@@ -72,6 +74,8 @@ class TransactionPaginationModel {
     qty: json["qty"] ?? 0,
     minQty: json["minQty"] ?? 0,
     warehouseName: json["warehouseName"] ?? '',
+    address: json["address"],
+    description: json["description"],
     idFileUploads: json["idFileUploads"] ?? 0,
     filePath: json["filePath"] ?? '',
     fileName: json["fileName"] ?? '',
@@ -89,7 +93,6 @@ class TransactionPaginationModel {
     updateBy: json["updateBy"] ?? 0,
     fileUrl: json["fileUrl"] ?? '',
     qtyInOut: json["qtyInOut"] ?? 0,
-    date: (json["date"] ?? DateTime.now().toIso8601String()),
     status: json["status"] ?? '',
     warehouseItemId: json["warehouseItemId"] ?? 0,
     aktor: json["aktor"] ?? '',
@@ -108,6 +111,8 @@ class TransactionPaginationModel {
     "qty": qty,
     "minQty": minQty,
     "warehouseName": warehouseName,
+    "address": address,
+    "description": description,
     "idFileUploads": idFileUploads,
     "filePath": filePath,
     "fileName": fileName,
@@ -125,7 +130,6 @@ class TransactionPaginationModel {
     "updateBy": updateBy,
     "fileUrl": fileUrl,
     "qtyInOut": qtyInOut,
-    "date": date,
     "status": status,
     "warehouseItemId": warehouseItemId,
     "aktor": aktor,

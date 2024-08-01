@@ -4,8 +4,7 @@ import 'package:sima/models/transaction/transaction_param_model.dart';
 import 'package:sima/models/transaction/transaction_base_pagination_model.dart';
 
 class TransactionService {
-  Future<TransactionPaginationResponseModel> getPaginationTransaction(
-      TransactionParamModel param) async {
+  Future<TransactionPaginationResponseModel> getPaginationTransaction(TransactionParamModel param) async {
     try {
       var url = Uri.https("apistrive.pertamina-ptk.com", "WarehouseItem/DTMobile");
 
@@ -31,7 +30,7 @@ class TransactionService {
     }
   }
 
-   Future<void> addItemInOut(TransactionParamModel itemInOut) async {
+  Future<void> addItemInOut(TransactionParamModel itemInOut) async {
     final String _baseUrl = "https://apistrive.pertamina-ptk.com/api";
     final response = await http.post(
       Uri.parse("$_baseUrl/ItemInOut/Add"),

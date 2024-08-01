@@ -1,7 +1,4 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
 import 'package:sima/models/transaction/transaction_pagination_model.dart';
 import 'package:sima/views/Inventory/Transaction/transaction_action.dart';
 
@@ -14,37 +11,6 @@ class TransactionCard extends StatefulWidget {
 }
 
 class _TransactionCardState extends State<TransactionCard> {
-  File? _imageFile;
-
-  @override
-
-    void initState() {
-      super.initState();
-      if (widget.model.id != null) {
-        fetchImage(widget.model.id!, true).then((file) {
-          setState(() {
-            _imageFile = file;
-          });
-        }).catchError((e) {
-          print('Error fetching image: $e');
-        });
-      }
-    }
-  Future<File?> fetchImage(int id, bool isStream) async {
-    final url = 'https://apistrive.pertamina-ptk.com/api/Items/$id/Image';
-    final response = await http.get(
-      Uri.parse('$url?id=$id&isStream=True'),
-    );
-
-    if (response.statusCode == 200) {
-      final bytes = response.bodyBytes;
-      final file = File('${Directory.systemTemp.path}/image_$id.jpg');
-      await file.writeAsBytes(bytes);
-      return file;
-    } else {
-      throw Exception('Failed to load image');
-    }
-  }
 
 
   @override

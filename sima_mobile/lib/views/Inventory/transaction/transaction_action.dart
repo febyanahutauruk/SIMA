@@ -82,7 +82,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         status: actionType,
         qty: widget.model.qty, 
         qtyInOut: _qtyInOut,
-        date: widget.model.date, 
         warehouseItemId: widget.model.warehouseItemId,
         aktor: widget.model.aktor,  
         d: widget.model.d,

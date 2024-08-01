@@ -11,6 +11,8 @@ class TransactionParamModel {
   int? qty;
   int? minQty;
   String? warehouseName;
+  String? address;
+  String? description;
   int? idFileUploads;
   String? filePath;
   String? fileName;
@@ -45,6 +47,8 @@ class TransactionParamModel {
     this.qty,
     this.minQty,
     this.warehouseName,
+    this.address,
+    this.description,
     this.idFileUploads,
     this.filePath,
     this.fileName,
@@ -80,6 +84,8 @@ class TransactionParamModel {
     qty: json["qty"] ?? 0,
     minQty: json["minQty"] ?? 0,
     warehouseName: json["warehouseName"],
+    address: json["address"],
+    description: json["description"],
     idFileUploads: json["idFileUploads"] ?? 0,
     filePath: json["filePath"],
     fileName: json["fileName"],
@@ -112,6 +118,8 @@ class TransactionParamModel {
     "qty": qty,
     "minQty": minQty,
     "warehouseName": warehouseName,
+    "address": address,
+    "description": description,
     "idFileUploads": idFileUploads,
     "filePath": filePath,
     "fileName": fileName,
