@@ -7,7 +7,6 @@ import 'package:sima/views/Inventory/History/item_history_screen.dart';
 import 'package:sima/views/Inventory/Maps/maps_screen.dart';
 import 'package:sima/views/Inventory/MasterData/add_item_screen.dart';
 import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
-import 'package:sima/views/Inventory/MasterData/update_data_screen.dart';
 import 'package:sima/views/Inventory/Transaction/transaction_list.dart';
 import 'package:sima/views/Inventory/Transaction/transaction_action.dart';
 import 'package:sima/views/Inventory/home_screen_inventory.dart';

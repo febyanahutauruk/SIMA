@@ -13,7 +13,7 @@ class TransactionPaginationModel {
   int trxId;
   String flag;
   String remark;
-  int id;
+  int? id;
   DateTime createdDate;
   String createdDateFormat;
   String createdBy;
@@ -21,13 +21,15 @@ class TransactionPaginationModel {
   dynamic updateBy;
   String fileUrl;
   int qtyInOut;
-  DateTime date;
+  DateTime? date;
   String status;
   int warehouseItemId;
   String aktor;
   int code;
   bool isSuccess;
   dynamic errorMsg;
+  bool? isStream;
+  String? d; 
 
   TransactionPaginationModel({
     required this.itemName,
@@ -59,6 +61,8 @@ class TransactionPaginationModel {
     required this.code,
     required this.isSuccess,
     this.errorMsg,
+    this.isStream,
+    this.d, // tambahkan field d
   });
 
   factory TransactionPaginationModel.fromJson(Map<String, dynamic> json) {
@@ -85,13 +89,15 @@ class TransactionPaginationModel {
     updateBy: json["updateBy"] ?? 0,
     fileUrl: json["fileUrl"] ?? '',
     qtyInOut: json["qtyInOut"] ?? 0,
-    date: DateTime.parse(json["date"] ?? DateTime.now().toIso8601String()),
+    date: (json["date"] ?? DateTime.now().toIso8601String()),
     status: json["status"] ?? '',
     warehouseItemId: json["warehouseItemId"] ?? 0,
     aktor: json["aktor"] ?? '',
     code: json["code"] ?? 0,
     isSuccess: json["isSuccess"] ?? false,
     errorMsg: json["errorMsg"],
+    d: json["d"],
+
   );
 }
 
@@ -119,7 +125,7 @@ class TransactionPaginationModel {
     "updateBy": updateBy,
     "fileUrl": fileUrl,
     "qtyInOut": qtyInOut,
-    "date": date.toIso8601String(),
+    "date": date,
     "status": status,
     "warehouseItemId": warehouseItemId,
     "aktor": aktor,

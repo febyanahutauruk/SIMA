@@ -32,6 +32,10 @@ class TransactionParamModel {
   String? status;
   int? warehouseItemId;
   String? aktor;
+  int? code;
+  bool? isSuccess;
+  dynamic errorMsg;
+  String? d;
 
   TransactionParamModel({
     required this.limit,
@@ -62,37 +66,42 @@ class TransactionParamModel {
     this.status,
     this.warehouseItemId,
     this.aktor,
+    this.code,
+    this.isSuccess,
+    this.errorMsg,
+    this.d,
   });
 
   factory TransactionParamModel.fromJson(Map<String, dynamic> json) => TransactionParamModel(
-    limit: json["limit"] ?? '',
-    offset: json["offset"] ?? '',
+    limit: json["limit"] ?? 0,
+    offset: json["offset"] ?? 0,
     itemName: json["itemName"],
     itemCategory: json["itemCategory"],
-    qty: json["qty"] ?? '',
-    minQty: json["minQty"]  ?? '',
+    qty: json["qty"] ?? 0,
+    minQty: json["minQty"] ?? 0,
     warehouseName: json["warehouseName"],
-    idFileUploads: json["idFileUploads"] ?? '',
+    idFileUploads: json["idFileUploads"] ?? 0,
     filePath: json["filePath"],
     fileName: json["fileName"],
     bucketName: json["bucketName"],
     contentType: json["contentType"],
-    length: json["length"] ?? '',
-    trxId: json["trxId"] ?? '',
+    length: json["length"] ?? 0,
+    trxId: json["trxId"] ?? 0,
     flag: json["flag"],
     remark: json["remark"],
-    id: json["id"] ?? '',
+    id: json["id"] ?? 0,
     createdDate: json["createdDate"] != null ? DateTime.parse(json["createdDate"]) : null,
     createdDateFormat: json["createdDateFormat"],
     createdBy: json["createdBy"],
     updateDate: json["updateDate"] != null ? DateTime.parse(json["updateDate"]) : null,
     updateBy: json["updateBy"],
-    fileUrl: json["fileUrl"],
-    qtyInOut: json["qtyInOut"] ?? '',
+    fileUrl: json["fileUrl"], 
+    qtyInOut: json["qtyInOut"] ?? 0,
     date: json["date"] != null ? DateTime.parse(json["date"]) : null,
     status: json["status"],
-    warehouseItemId: json["warehouseItemId"] ,
+    warehouseItemId: json["warehouseItemId"],
     aktor: json["aktor"],
+    d: json["d"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -124,6 +133,7 @@ class TransactionParamModel {
     "status": status,
     "warehouseItemId": warehouseItemId,
     "aktor": aktor,
+    "d": d,
   };
 
   TransactionParamModel copyWith({
@@ -155,6 +165,7 @@ class TransactionParamModel {
     String? status,
     int? warehouseItemId,
     String? aktor,
+    String? d,
   }) {
     return TransactionParamModel(
       limit: limit ?? this.limit,
@@ -179,12 +190,13 @@ class TransactionParamModel {
       createdBy: createdBy ?? this.createdBy,
       updateDate: updateDate ?? this.updateDate,
       updateBy: updateBy ?? this.updateBy,
-      fileUrl: this.fileUrl,
-      qtyInOut: this.qtyInOut,
-      date: this.date,
-      status: this.status,
-      warehouseItemId: this.warehouseItemId,
-      aktor: this.aktor,
+      fileUrl: fileUrl ?? this.fileUrl,
+      qtyInOut: qtyInOut ?? this.qtyInOut,
+      date: date ?? this.date,
+      status: status ?? this.status,
+      warehouseItemId: warehouseItemId ?? this.warehouseItemId,
+      aktor: aktor ?? this.aktor,
+      d: d ?? this.d,
     );
   }
 }

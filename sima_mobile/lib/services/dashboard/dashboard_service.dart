@@ -8,7 +8,6 @@ class DashboardItemService {
     try {
       var url = Uri.https("apistrive.pertamina-ptk.com", "api/ItemInOut/Sum");
 
-      // Send the warehouseName as a plain string in the request body
       var body = jsonEncode(params.warehouseName ?? '');
 
       print("Request URL: $url");

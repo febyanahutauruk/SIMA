@@ -1,23 +1,23 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:sima/models/transaction/transaction_pagination_model.dart';
+import 'package:sima/models/transaction/in_out_model.dart';
 
 class InOutService {
-  final String baseUrl = 'https://apistrive.pertamina-ptk.com/api';
+  final String apiUrl = 'https://apistrive.pertamina-ptk.com/api/ItemInOut/Add';
 
-  Future<TransactionPaginationModel?> addItemInOut(TransactionPaginationModel model) async {
+  Future<void> addItemInOut(InOutModel item) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/ItemInOut/Add'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+      Uri.parse(apiUrl),
+      headers: {
+        'Content-Type': 'application/json',
       },
-      body: jsonEncode(model.toJson()),
+      body: jsonEncode(item.toJson()),
     );
 
     if (response.statusCode == 200) {
-      return TransactionPaginationModel.fromJson(jsonDecode(response.body));
+      print("success");
     } else {
-      throw Exception('Failed to add item in/out');
+      print("gagal: ${response.body}");
     }
   }
 }

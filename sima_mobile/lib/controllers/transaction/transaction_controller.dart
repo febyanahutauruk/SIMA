@@ -47,17 +47,17 @@ class TransactionController with ChangeNotifier {
         print('Error loading more transactions: $e');
       } finally {
         _isLoading = false;
-        notifyListeners(); // Notify listeners to update UI
+        notifyListeners(); 
       }
     }
   }
 
   Future<void> searchItems(String itemName) async {
     _isLoading = true;
-    notifyListeners(); // Notify listeners to show loading state
+    notifyListeners(); 
 
     try {
-      param = param.copyWith(itemName: itemName, offset: 0); // Reset offset for search
+      param = param.copyWith(itemName: itemName, offset: 0); 
       TransactionPaginationResponseModel responseModel = await service.getPaginationTransaction(param);
 
       print("Response from searchItems: $responseModel");
@@ -68,7 +68,31 @@ class TransactionController with ChangeNotifier {
       print('Error searching items: $e');
     } finally {
       _isLoading = false;
-      notifyListeners(); // Notify listeners to update UI
+      notifyListeners();
+    }
+  }
+
+
+  Future<void> addItemInOut(TransactionPaginationModel item) async {
+    if (item.qtyInOut <= 0) {
+      throw Exception("qtyInOut must be greater than 0");
+    }
+    try {
+      TransactionParamModel itemInOut = TransactionParamModel(
+        limit: 4,
+        offset: 0,
+        id: item.id,
+        itemName: item.itemName,
+        itemCategory: item.itemCategory,
+        qty: item.qtyInOut,
+        qtyInOut: item.qtyInOut, 
+      );
+
+      await service.addItemInOut(itemInOut);
+    } catch (e) {
+      print('Error adding item in/out: $e');
+      throw e; 
     }
   }
 }
+
