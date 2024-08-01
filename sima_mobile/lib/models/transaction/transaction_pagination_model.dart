@@ -30,7 +30,6 @@ class TransactionPaginationModel {
   bool isSuccess;
   dynamic errorMsg;
   bool? isStream;
-  String? d; 
 
   TransactionPaginationModel({
     required this.itemName,
@@ -64,7 +63,6 @@ class TransactionPaginationModel {
     required this.isSuccess,
     this.errorMsg,
     this.isStream,
-    this.d, // tambahkan field d
   });
 
   factory TransactionPaginationModel.fromJson(Map<String, dynamic> json) {
@@ -99,8 +97,6 @@ class TransactionPaginationModel {
     code: json["code"] ?? 0,
     isSuccess: json["isSuccess"] ?? false,
     errorMsg: json["errorMsg"],
-    d: json["d"],
-
   );
 }
 

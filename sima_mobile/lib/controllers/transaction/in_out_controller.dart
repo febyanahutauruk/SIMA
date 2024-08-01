@@ -4,7 +4,7 @@ import 'package:sima/services/transaction/in_out_service.dart';
 class InOutController {
   final InOutService inOutService = InOutService();
 
-  Future<void> addItemInOut(InOutModel item) async {
+  Future<void> addItemInOut(InOutParamModel item) async {
     await inOutService.addItemInOut(item);
   }
 }

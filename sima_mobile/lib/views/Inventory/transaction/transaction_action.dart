@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sima/models/transaction/transaction_pagination_model.dart';
-import 'package:sima/services/transaction/transaction_service.dart';
-import 'package:sima/models/transaction/transaction_param_model.dart';
+import 'package:sima/services/transaction/in_out_service.dart';
+import 'package:sima/models/transaction/in_out_model.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final TransactionPaginationModel model;
@@ -61,43 +61,43 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     );
   }
 
-  Future<void> _submitAction() async {
-    if (_selectedAction == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select an action')),
-      );
-      return;
-    }
-
-    try {
-      final TransactionService transactionService = TransactionService();
-      final actionType = _selectedAction == 1 ? "IN" : "OUT";
-
-      final itemInOut = TransactionParamModel(
-        limit: 4,
-        offset: 0,
-        id: widget.model.id,
-        itemName: widget.model.itemName,
-        itemCategory: widget.model.itemCategory,
-        status: actionType,
-        qty: widget.model.qty, 
-        qtyInOut: _qtyInOut,
-        warehouseItemId: widget.model.warehouseItemId,
-        aktor: widget.model.aktor,  
-        d: widget.model.d,
-      );
-
-      await transactionService.addItemInOut(itemInOut);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Action successful!')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Action failed: $e')),
-      );
-    }
+ Future<void> _submitAction() async {
+  if (_selectedAction == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Please select an action')),
+    );
+    return;
   }
+
+  try {
+    final InOutService inOutService = InOutService();
+    final actionType = _selectedAction == 1 ? "IN" : "OUT";
+    var Id = widget.model.id;
+    final itemInOut = InOutParamModel(
+      qtyInOut: _qtyInOut,
+      date: DateTime.now().toIso8601String(),
+      status: actionType.toLowerCase(), 
+      warehouseItemId: Id,
+      aktor: "cikiw",  
+    );
+
+    await inOutService.addItemInOut(itemInOut);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Action successful!')),
+    );
+
+    setState(() {
+    });
+
+  } catch (e) {
+    print("Error: $e");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Action failed: $e')),
+    );
+  }
+}
+
 
   void _showBottomSheet() {
     showModalBottomSheet(
@@ -243,6 +243,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             const SizedBox(height: 20),
+            Text("${widget.model.id}",),
             Text(
               "Product Name: ${widget.model.itemName}",
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

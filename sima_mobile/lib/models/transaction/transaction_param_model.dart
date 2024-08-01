@@ -30,14 +30,12 @@ class TransactionParamModel {
   dynamic updateBy;
   String? fileUrl; 
   int? qtyInOut;
-  DateTime? date;
   String? status;
   int? warehouseItemId;
   String? aktor;
   int? code;
   bool? isSuccess;
   dynamic errorMsg;
-  String? d;
 
   TransactionParamModel({
     required this.limit,
@@ -66,14 +64,12 @@ class TransactionParamModel {
     this.updateBy,
     this.fileUrl,
     this.qtyInOut,
-    this.date,
     this.status,
     this.warehouseItemId,
     this.aktor,
     this.code,
     this.isSuccess,
     this.errorMsg,
-    this.d,
   });
 
   factory TransactionParamModel.fromJson(Map<String, dynamic> json) => TransactionParamModel(
@@ -103,11 +99,9 @@ class TransactionParamModel {
     updateBy: json["updateBy"],
     fileUrl: json["fileUrl"], 
     qtyInOut: json["qtyInOut"] ?? 0,
-    date: json["date"] != null ? DateTime.parse(json["date"]) : null,
     status: json["status"],
     warehouseItemId: json["warehouseItemId"],
     aktor: json["aktor"],
-    d: json["d"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -137,11 +131,9 @@ class TransactionParamModel {
     "updateBy": updateBy,
     "fileUrl": fileUrl, 
     "qtyInOut": qtyInOut,
-    "date": date?.toIso8601String(),
     "status": status,
     "warehouseItemId": warehouseItemId,
     "aktor": aktor,
-    "d": d,
   };
 
   TransactionParamModel copyWith({
@@ -169,11 +161,9 @@ class TransactionParamModel {
     dynamic updateBy,
     String? fileUrl,
     int? qtyInOut,
-    DateTime? date,
     String? status,
     int? warehouseItemId,
     String? aktor,
-    String? d,
   }) {
     return TransactionParamModel(
       limit: limit ?? this.limit,
@@ -200,11 +190,9 @@ class TransactionParamModel {
       updateBy: updateBy ?? this.updateBy,
       fileUrl: fileUrl ?? this.fileUrl,
       qtyInOut: qtyInOut ?? this.qtyInOut,
-      date: date ?? this.date,
       status: status ?? this.status,
       warehouseItemId: warehouseItemId ?? this.warehouseItemId,
       aktor: aktor ?? this.aktor,
-      d: d ?? this.d,
     );
   }
 }

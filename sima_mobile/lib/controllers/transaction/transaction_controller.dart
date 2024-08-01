@@ -28,7 +28,7 @@ class TransactionController with ChangeNotifier {
       print('Error fetching transactions: $e');
     } finally {
       _isLoading = false;
-      notifyListeners();
+      notifyListeners(); 
     }
   }
 
@@ -36,7 +36,7 @@ class TransactionController with ChangeNotifier {
     if (_isNext && !_isLoading) {
       _isLoading = true;
       try {
-        param = param.copyWith(offset: _items.length);
+        param = param.copyWith(offset: _items.length); // Use current items length for offset
         TransactionPaginationResponseModel responseModel = await service.getPaginationTransaction(param);
 
         print("Response from loadMore: $responseModel");
@@ -47,17 +47,17 @@ class TransactionController with ChangeNotifier {
         print('Error loading more transactions: $e');
       } finally {
         _isLoading = false;
-        notifyListeners();
+        notifyListeners(); 
       }
     }
   }
 
   Future<void> searchItems(String itemName) async {
     _isLoading = true;
-    notifyListeners();
+    notifyListeners(); 
 
     try {
-      param = param.copyWith(itemName: itemName, offset: 0);
+      param = param.copyWith(itemName: itemName, offset: 0); 
       TransactionPaginationResponseModel responseModel = await service.getPaginationTransaction(param);
 
       print("Response from searchItems: $responseModel");
@@ -72,6 +72,7 @@ class TransactionController with ChangeNotifier {
     }
   }
 
+
   Future<void> addItemInOut(TransactionPaginationModel item) async {
     if (item.qtyInOut <= 0) {
       throw Exception("qtyInOut must be greater than 0");
@@ -84,13 +85,14 @@ class TransactionController with ChangeNotifier {
         itemName: item.itemName,
         itemCategory: item.itemCategory,
         qty: item.qtyInOut,
-        qtyInOut: item.qtyInOut,
+        qtyInOut: item.qtyInOut, 
       );
 
       await service.addItemInOut(itemInOut);
     } catch (e) {
       print('Error adding item in/out: $e');
-      throw e;
+      throw e; 
     }
   }
 }
+

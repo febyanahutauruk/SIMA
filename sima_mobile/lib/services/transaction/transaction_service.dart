@@ -30,19 +30,26 @@ class TransactionService {
     }
   }
 
-  Future<void> addItemInOut(TransactionParamModel itemInOut) async {
+Future<void> addItemInOut(TransactionParamModel itemInOut) async {
     final String _baseUrl = "https://apistrive.pertamina-ptk.com/api";
+    final requestJson = jsonEncode(itemInOut.toJson());
+
+    // Log the request JSON
+    print("Request JSON: $requestJson");
+
     final response = await http.post(
       Uri.parse("$_baseUrl/ItemInOut/Add"),
       headers: {
         "Content-Type": "application/json",
       },
-      body: jsonEncode(itemInOut.toJson()),
+      body: requestJson,
     );
 
     if (response.statusCode != 200) {
-      print("Failed to add item in/out. Error: ${response.body}");
-      throw Exception("Failed to add item in/out. Error: ${response.body}");
+      print("Failed to add item in/out. Status code: ${response.statusCode}, Error: ${response.body}");
+      throw Exception("Failed to add item in/out. Status code: ${response.statusCode}, Error: ${response.body}");
     }
+
+    print("Success: ${response.body}");
   }
 }
