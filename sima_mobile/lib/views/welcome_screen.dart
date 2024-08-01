@@ -24,24 +24,22 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   _gotohome() async {
-
-  await Future.delayed(Duration(milliseconds: 2500), () {
-
+    await Future.delayed(Duration(milliseconds: 2500), () {
       Navigator.pushNamed(context, '/HomeScreen');
+    });
   }
-    );
-  }
+
   @override
   void initState() {
     // TODO: implement initState
     _gotohome();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal,
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, '/HomeScreen');
@@ -49,23 +47,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         backgroundColor: Colors.white,
         child: const Icon(Icons.arrow_right),
       ),
-
       body: Center(
-      child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(
-          'assets/image/logo-lg-transparant 2.png',
-          width: 250,
-        ),
-        const SizedBox(height: 0),
-        const Text(
-          'Solusi Inventaris Pintar untuk Bisnis Modern!',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.white,
-          ),
-          textAlign: TextAlign.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/image/logo-lg-transparant 2.png',
+              width: 250,
+            ),
+            const SizedBox(height: 0),
+            const Text(
+              'Solusi Inventaris Pintar untuk Bisnis Modern!',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
@@ -74,7 +71,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 }
 
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -82,34 +78,45 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
-
-            toolbarHeight: 200,
-            backgroundColor: Colors.teal,
-            title: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+        ),
+        toolbarHeight: 200,
+        backgroundColor: Colors.teal,
+        flexibleSpace: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 85),
+                child: Image.asset(
                   'assets/image/logo-lg-transparant 2.png',
                   width: 250,
                 ),
-                const SizedBox(height: 0),
-                Text(
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 60),
+                child: Text(
                   'Solusi Inventaris Pintar untuk Bisnis Modern!',
                   style: GoogleFonts.poppins(
-                    fontSize: 17,
+                    fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
                 ),
-              ],
+              ),
             ),
-          ),
-      
+          ],
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,10 +142,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 items: [
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.8,
                     margin: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
@@ -149,10 +153,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.8,
                     margin: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
@@ -163,10 +164,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.8,
                     margin: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
@@ -196,11 +194,18 @@ class HomeScreen extends StatelessWidget {
               elevation: 0,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ListTile(
-                title: Text('Assets Management',
-                  style: GoogleFonts.poppins(fontSize: 14,
+                title: Text(
+                  'Assets Management',
+                  style: GoogleFonts.poppins(
+                      fontSize: 14,
                       color: Colors.teal,
-                      fontWeight: FontWeight.w500),),
-                trailing: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.teal, size: 14,),
+                      fontWeight: FontWeight.w500),
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Colors.teal,
+                  size: 14,
+                ),
                 onTap: () {
                   Navigator.pushNamed(context, '/assets');
                 },
@@ -212,11 +217,18 @@ class HomeScreen extends StatelessWidget {
               elevation: 0,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ListTile(
-                title: Text('Inventory Management',
-                  style: GoogleFonts.poppins(fontSize: 14,
+                title: Text(
+                  'Inventory Management',
+                  style: GoogleFonts.poppins(
+                      fontSize: 14,
                       color: Colors.teal,
-                      fontWeight: FontWeight.w500),),
-                trailing: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.teal, size: 14,),
+                      fontWeight: FontWeight.w500),
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Colors.teal,
+                  size: 14,
+                ),
                 onTap: () {
                   Navigator.pushNamed(context, '/Inventory');
                 },
@@ -235,15 +247,18 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildFeatureItem(Icons.landscape_rounded, 'Master Data Asset', context, ''),
-                _buildFeatureItem(Icons.barcode_reader, 'Barcode Asset', context, ''),
-                _buildFeatureItem(Icons.home_rounded, 'Master Data Inventory', context, ''),
-                _buildFeatureItem(Icons.history_rounded, 'History Inventory', context, ''),
+                _buildFeatureItem(
+                    Icons.landscape_rounded, 'Master Data Asset', context, ''),
+                _buildFeatureItem(
+                    Icons.barcode_reader, 'Barcode Asset', context, ''),
+                _buildFeatureItem(
+                    Icons.home_rounded, 'Master Data Inventory', context, ''),
+                _buildFeatureItem(
+                    Icons.history_rounded, 'History Inventory', context, ''),
               ],
             ),
           ],
@@ -252,8 +267,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFeatureItem(IconData icon, String label, BuildContext context,
-      String routename) {
+  Widget _buildFeatureItem(
+      IconData icon, String label, BuildContext context, String routename) {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, routename);
@@ -269,14 +284,13 @@ class HomeScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          Column( // Use a Column to position icon and text vertically
+          Column(
             mainAxisSize: MainAxisSize.min,
-            // To avoid Column taking full height
             children: [
               Icon(icon, color: Colors.white, size: 30),
-              const SizedBox(height: 4), // Spacing between icon and text
+              const SizedBox(height: 4), 
               SizedBox(
-                width: 70, // Slightly smaller width for text
+                width: 70, 
                 child: Text(
                   label,
                   textAlign: TextAlign.center,
@@ -296,7 +310,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
 class BottomRoundedClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -304,7 +317,8 @@ class BottomRoundedClipper extends CustomClipper<Path> {
     path.lineTo(0, size.height - 30);
     path.quadraticBezierTo(0, size.height, 30, size.height);
     path.lineTo(size.width - 30, size.height);
-    path.quadraticBezierTo(size.width, size.height, size.width, size.height - 30);
+    path.quadraticBezierTo(
+        size.width, size.height, size.width, size.height - 30);
     path.lineTo(size.width, 0);
     path.close();
     return path;
@@ -312,8 +326,4 @@ class BottomRoundedClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-
 }
-
-
-

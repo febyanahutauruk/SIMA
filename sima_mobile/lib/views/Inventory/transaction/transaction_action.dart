@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sima/models/transaction/transaction_pagination_model.dart';
 import 'package:sima/services/transaction/in_out_service.dart';
 import 'package:sima/models/transaction/in_out_model.dart';
@@ -42,24 +43,47 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   void _showConfirmationDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) =>
-          AlertDialog(
-            title: const Text("Confirm Action"),
-            content: const Text("Are you sure you want to submit this action?"),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text("Cancel"),
-              ),
-              TextButton(
-                onPressed: () async {
-                  Navigator.of(context).pop();
-                  await _submitAction();
-                },
-                child: const Text("Confirm"),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        title: Row(
+          children: [
+            Icon(Icons.warning, color: Colors.orange),
+            SizedBox(width: 10),
+            Text("Confirm Action"),
+          ],
+        ),
+        content: Text(
+          "Are you sure you want to submit this action?",
+          style: TextStyle(fontSize: 16),
+        ),
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.grey,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text("Cancel"),
           ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () async {
+              Navigator.of(context).pop();
+              await _submitAction();
+            },
+            child: const Text(
+              "Confirm",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -90,8 +114,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       );
 
       Navigator.of(context).pop();
-      Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (context) => const TransactionListScreen()));
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const TransactionListScreen()));
     } catch (e) {
       print("Error: $e");
       ScaffoldMessenger.of(context).showSnackBar(
@@ -99,7 +125,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       );
     }
   }
-
 
   void _showBottomSheet() {
     showModalBottomSheet(
@@ -109,9 +134,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Padding(
-              padding: MediaQuery
-                  .of(context)
-                  .viewInsets,
+              padding: MediaQuery.of(context).viewInsets,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -124,66 +147,68 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.remove),
-                            onPressed: () {
-                              setState(() {
-                                if (_qtyInOut > 1) {
-                                  _qtyInOut--;
-                                  _qtyInOutController.text =
-                                      _qtyInOut.toString();
-                                }
-                              });
-                            },
-                          ),
-                          SizedBox(
-                            width: 200,
-                            child: TextField(
-                              controller: _qtyInOutController,
-                              keyboardType: TextInputType.number,
-                              onChanged: (value) {
+                      Expanded(
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.remove),
+                              onPressed: () {
                                 setState(() {
-                                  _updateQtyInOut(value);
+                                  if (_qtyInOut > 1) {
+                                    _qtyInOut--;
+                                    _qtyInOutController.text =
+                                        _qtyInOut.toString();
+                                  }
                                 });
                               },
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: "Quantity In/Out",
+                            ),
+                            Expanded(
+                              child: TextField(
+                                controller: _qtyInOutController,
+                                keyboardType: TextInputType.number,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _updateQtyInOut(value);
+                                  });
+                                },
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: "Quantity In/Out",
+                                ),
                               ),
                             ),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.add),
-                            onPressed: () {
-                              setState(() {
-                                _qtyInOut++;
-                                _qtyInOutController.text = _qtyInOut.toString();
-                              });
-                            },
-                          ),
-                        ],
+                            IconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                setState(() {
+                                  _qtyInOut++;
+                                  _qtyInOutController.text =
+                                      _qtyInOut.toString();
+                                });
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(width: 10),
-                      PopupMenuButton<int>(
+                      DropdownButton<int>(
+                        value: _selectedAction,
                         icon: const Icon(Icons.arrow_drop_down),
-                        itemBuilder: (context) =>
-                        [
-                          PopupMenuItem(
+                        items: [
+                          DropdownMenuItem(
                             value: 1,
                             child: const Text("Barang Masuk",
                                 style: TextStyle(fontSize: 16)),
                           ),
-                          PopupMenuItem(
+                          DropdownMenuItem(
                             value: 2,
                             child: const Text("Barang Keluar",
                                 style: TextStyle(fontSize: 16)),
                           ),
                         ],
-                        onSelected: (value) {
+                        onChanged: (value) {
                           setState(() {
-                            _selectedAction = value;
+                            _selectedAction = value!;
                           });
                         },
                       ),
@@ -229,9 +254,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.teal,
-        title: Text("Product Detail", style: TextStyle(color: Colors.white)),
+        title: Text(
+          "Transactions",
+          style: GoogleFonts.poppins(
+              color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
+          icon: const Icon(
+            Icons.arrow_back_ios_rounded,
+            color: Colors.white,
+          ),
           onPressed: () {
             Navigator.pushNamed(context, '/Inventory');
           },
@@ -244,8 +276,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           children: [
             Center(
               child: Image.network(
-                'https://apistrive.pertamina-ptk.com/WarehouseItem/${widget
-                    .model.id}/Image?isStream=true',
+                'https://apistrive.pertamina-ptk.com/WarehouseItem/${widget.model.id}/Image?isStream=true',
                 height: 300,
                 width: 300,
                 fit: BoxFit.cover,
@@ -261,88 +292,85 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
             Divider(),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                // Center the text content vertically
-                children: [
-                  Text(
-                    "Product Name: ",
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    "${widget.model.itemName}",
-                    style: const TextStyle(
-                        fontSize: 18),
-                    textAlign: TextAlign.left,
-                  ),
-
-                  Text(
-                    "Product Category: ",
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    "${widget.model.itemCategory}",
-                    style: const TextStyle(fontSize: 18),
-                    textAlign: TextAlign.left,
-                  ),
-
-                  Text(
-                    "Quantity: ",
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    "Quantity: ${widget.model.qty}",
-                    style: const TextStyle(
-                        fontSize: 18),
-                    textAlign: TextAlign.left,
-                  ),
-
-                  Text(
-                    "Warehouse: ",
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-
-                  Text(
-                    "${widget.model.warehouseName}",
-                    style: const TextStyle(
-                        fontSize: 18,),
-                    textAlign: TextAlign.left,
-                  ),
-
-                  Text(
-                    "Address: ",
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    "${widget.model.address}",
-                    style: const TextStyle(
-                        fontSize: 18,),
-                    textAlign: TextAlign.left,
-                  ),
-
-                  Text(
-                    "Description: ",
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    "${widget.model.description}",
-                    style: const TextStyle(
-                        fontSize: 18,),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Product Name: ",
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "${widget.model.itemName}",
+                      style: const TextStyle(fontSize: 18),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "Product Category: ",
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "${widget.model.itemCategory}",
+                      style: const TextStyle(fontSize: 18),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "Quantity: ",
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "Quantity: ${widget.model.qty}",
+                      style: const TextStyle(fontSize: 18),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "Warehouse: ",
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "${widget.model.warehouseName}",
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "Address: ",
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "${widget.model.address}",
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "Description: ",
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "${widget.model.description}",
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 0),
@@ -361,7 +389,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 50,)
+            SizedBox(
+              height: 50,
+            )
           ],
         ),
       ),

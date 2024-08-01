@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sima/models/form/item_form_model.dart';
 import 'package:sima/controllers/form/item_form_controllers.dart';
@@ -73,11 +74,18 @@ class _InputItemScreenState extends State<InputItemScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFB5D9DA),
-        title: const Text(
-          'Add New Item',
-          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.teal),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
+          onPressed: () {
+            Navigator.pushNamed(context, '/ItemListScreen');
+          },
         ),
+        title:  Text(
+          "Add New Item",
+          style: GoogleFonts.poppins(color: Colors.white,
+          fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.teal,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
