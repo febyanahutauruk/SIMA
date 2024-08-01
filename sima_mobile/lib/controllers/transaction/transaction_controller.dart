@@ -94,5 +94,19 @@ class TransactionController with ChangeNotifier {
       throw e; 
     }
   }
+
+  Future<void> filterItemsByCategory(String itemCategory) async {
+    _isLoading = true;
+    notifyListeners();
+
+    param = param.copyWith(itemCategory: itemCategory, offset: 0);
+    TransactionPaginationResponseModel responseModel = await service.getPaginationTransaction(param);
+
+    _items = responseModel.data;
+    _isNext = responseModel.isNext;
+    _isLoading = false;
+
+    notifyListeners();
+  }
 }
 

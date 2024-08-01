@@ -113,11 +113,18 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xFFB5D9DA),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
+          onPressed: () {
+            Navigator.pushNamed(context, '/Inventory');
+          },
+        ),
+        backgroundColor: Colors.teal,
         title: const Text(
           'Update Item',
-          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.teal),
+          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
         ),
       ),
       body: SingleChildScrollView(

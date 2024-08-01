@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sima/models/transaction/transaction_pagination_model.dart';
 import 'package:sima/services/transaction/in_out_service.dart';
 import 'package:sima/models/transaction/in_out_model.dart';
+import 'package:sima/views/Inventory/Transaction/transaction_list.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final TransactionPaginationModel model;
@@ -41,62 +42,63 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   void _showConfirmationDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Confirm Action"),
-        content: const Text("Are you sure you want to submit this action?"),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text("Cancel"),
+      builder: (context) =>
+          AlertDialog(
+            title: const Text("Confirm Action"),
+            content: const Text("Are you sure you want to submit this action?"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text("Cancel"),
+              ),
+              TextButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  await _submitAction();
+                },
+                child: const Text("Confirm"),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () async {
-              Navigator.of(context).pop();
-              await _submitAction();
-            },
-            child: const Text("Confirm"),
-          ),
-        ],
-      ),
     );
   }
 
- Future<void> _submitAction() async {
-  if (_selectedAction == null) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Please select an action')),
-    );
-    return;
+  Future<void> _submitAction() async {
+    if (_selectedAction == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select an action')),
+      );
+      return;
+    }
+
+    try {
+      final InOutService inOutService = InOutService();
+      final actionType = _selectedAction == 1 ? "IN" : "OUT";
+      var Id = widget.model.id;
+      final itemInOut = InOutParamModel(
+        qtyInOut: _qtyInOut,
+        date: DateTime.now().toIso8601String(),
+        status: actionType.toLowerCase(),
+        warehouseItemId: Id,
+        aktor: "cikiw",
+      );
+
+      await inOutService.addItemInOut(itemInOut);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Action successful!')),
+      );
+
+      Navigator.of(context).pop();
+      Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) => const TransactionListScreen()));
+    } catch (e) {
+      print("Error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Action failed: $e')),
+      );
+    }
   }
-
-  try {
-    final InOutService inOutService = InOutService();
-    final actionType = _selectedAction == 1 ? "IN" : "OUT";
-    var Id = widget.model.id;
-    final itemInOut = InOutParamModel(
-      qtyInOut: _qtyInOut,
-      date: DateTime.now().toIso8601String(),
-      status: actionType.toLowerCase(), 
-      warehouseItemId: Id,
-      aktor: "cikiw",  
-    );
-
-    await inOutService.addItemInOut(itemInOut);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Action successful!')),
-    );
-
-    setState(() {
-    });
-
-  } catch (e) {
-    print("Error: $e");
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Action failed: $e')),
-    );
-  }
-}
 
 
   void _showBottomSheet() {
@@ -107,7 +109,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Padding(
-              padding: MediaQuery.of(context).viewInsets,
+              padding: MediaQuery
+                  .of(context)
+                  .viewInsets,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -128,7 +132,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               setState(() {
                                 if (_qtyInOut > 1) {
                                   _qtyInOut--;
-                                  _qtyInOutController.text = _qtyInOut.toString();
+                                  _qtyInOutController.text =
+                                      _qtyInOut.toString();
                                 }
                               });
                             },
@@ -163,7 +168,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       const SizedBox(width: 10),
                       PopupMenuButton<int>(
                         icon: const Icon(Icons.arrow_drop_down),
-                        itemBuilder: (context) => [
+                        itemBuilder: (context) =>
+                        [
                           PopupMenuItem(
                             value: 1,
                             child: const Text("Barang Masuk",
@@ -191,7 +197,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         _showConfirmationDialog(context);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Please select an action')),
+                          const SnackBar(
+                              content: Text('Please select an action')),
                         );
                       }
                     },
@@ -219,16 +226,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Product Detail"),
+        backgroundColor: Colors.teal,
+        title: Text("Product Detail", style: TextStyle(color: Colors.white)),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
+          onPressed: () {
+            Navigator.pushNamed(context, '/Inventory');
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
               child: Image.network(
-                'https://apistrive.pertamina-ptk.com/WarehouseItem/${widget.model.id}/Image?isStream=true',
+                'https://apistrive.pertamina-ptk.com/WarehouseItem/${widget
+                    .model.id}/Image?isStream=true',
                 height: 300,
                 width: 300,
                 fit: BoxFit.cover,
@@ -242,43 +259,109 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 },
               ),
             ),
-            const SizedBox(height: 20),
-            Text("${widget.model.id}",),
-            Text(
-              "Product Name: ${widget.model.itemName}",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              "Product Category: ${widget.model.itemCategory}",
-              style: const TextStyle(fontSize: 16),
-            ),
-            Text(
-              "Quantity: ${widget.model.qty}",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              "Warehouse : ${widget.model.warehouseName}",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 220),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: _showBottomSheet,
-                  child: const Text(
-                    "Add Action",
-                    style: TextStyle(color: Colors.white),
+            Divider(),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                // Center the text content vertically
+                children: [
+                  Text(
+                    "Product Name: ",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
                   ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.teal,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                  Text(
+                    "${widget.model.itemName}",
+                    style: const TextStyle(
+                        fontSize: 18),
+                    textAlign: TextAlign.left,
+                  ),
+
+                  Text(
+                    "Product Category: ",
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
+                  Text(
+                    "${widget.model.itemCategory}",
+                    style: const TextStyle(fontSize: 18),
+                    textAlign: TextAlign.left,
+                  ),
+
+                  Text(
+                    "Quantity: ",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
+                  Text(
+                    "Quantity: ${widget.model.qty}",
+                    style: const TextStyle(
+                        fontSize: 18),
+                    textAlign: TextAlign.left,
+                  ),
+
+                  Text(
+                    "Warehouse: ",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
+
+                  Text(
+                    "${widget.model.warehouseName}",
+                    style: const TextStyle(
+                        fontSize: 18,),
+                    textAlign: TextAlign.left,
+                  ),
+
+                  Text(
+                    "Address: ",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
+                  Text(
+                    "${widget.model.address}",
+                    style: const TextStyle(
+                        fontSize: 18,),
+                    textAlign: TextAlign.left,
+                  ),
+
+                  Text(
+                    "Description: ",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
+                  Text(
+                    "${widget.model.description}",
+                    style: const TextStyle(
+                        fontSize: 18,),
+                    textAlign: TextAlign.left,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 0),
+            Center(
+              child: ElevatedButton(
+                onPressed: _showBottomSheet,
+                child: const Text(
+                  "Add Action",
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-              ],
+              ),
             ),
+            SizedBox(height: 50,)
           ],
         ),
       ),

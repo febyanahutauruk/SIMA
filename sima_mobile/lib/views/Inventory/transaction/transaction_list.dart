@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sima/controllers/transaction/transaction_controller.dart';
 import 'package:sima/views/widgets/transaction/transaction_card.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TransactionListScreen extends StatefulWidget {
   const TransactionListScreen({super.key});
@@ -36,32 +37,49 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
   }
 
   Widget _buildCategoryButton(String category, Color color) {
-    return GestureDetector(
-      onTap: () {
+    return Consumer<TransactionController>(
+      builder: (context, transactionController, child) {
+        return GestureDetector(
+          onTap: () {
+            if (category == 'All') {
+              transactionController.filterItemsByCategory('');
+            } else {
+              transactionController.filterItemsByCategory(category);
+            }
+          },
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.teal),
+            ),
+            child: Text(category),
+          ),
+        );
       },
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        margin: const EdgeInsets.symmetric(horizontal: 4),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.teal),
-        ),
-        child: Text(category),
-      ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
-        title: const Text(
-          "Transactions",
-          style: TextStyle(color: Colors.teal),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
+          onPressed: () {
+            Navigator.pushNamed(context, '/Inventory');
+          },
         ),
-        backgroundColor: const Color(0xFFB5D9DA),
+        title:  Text(
+          "Transactions",
+          style: GoogleFonts.poppins(color: Colors.white,
+          fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.teal,
       ),
       body: Consumer<TransactionController>(
         builder: (context, transactionController, child) {
@@ -77,17 +95,23 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextFormField(
-                      onFieldSubmitted: (v) {
-                        final itemP = context.read<TransactionController>();
-                        itemP.param = itemP.param.copyWith(itemName: v, offset: 0);
-                        itemP.searchItems(v);
-                      },
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        hintText: "Search....",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                    Card(
+                      color: Colors.blueGrey.shade50,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      elevation: 0,
+                      child: TextFormField(
+                        onFieldSubmitted: (v) {
+                          final itemP = context.read<TransactionController>();
+                          itemP.param = itemP.param.copyWith(itemName: v, offset: 0);
+                          itemP.searchItems(v);
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search, color: Colors.grey),
+                          hintText: "Search....",
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                         ),
                       ),
                     ),

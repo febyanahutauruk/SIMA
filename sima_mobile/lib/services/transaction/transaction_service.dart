@@ -52,4 +52,24 @@ Future<void> addItemInOut(TransactionParamModel itemInOut) async {
 
     print("Success: ${response.body}");
   }
+
+  final String _baseUrl = 'https://apistrive.pertamina-ptk.com/WarehouseItem/DTMobile';
+
+  Future<void> fetchTransactions(TransactionParamModel paramModel) async {
+    final response = await http.post(
+      Uri.parse('$_baseUrl/transactions'), // Replace with your API endpoint
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(paramModel.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      // Handle successful response
+      print('Response: ${response.body}');
+    } else {
+      // Handle error response
+      throw Exception('Failed to load transactions');
+    }
+  }
 }
