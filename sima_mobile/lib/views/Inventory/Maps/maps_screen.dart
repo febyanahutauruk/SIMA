@@ -139,10 +139,10 @@ class _MapScreenState extends State<MapScreen> {
         controller: searchController,
         decoration: InputDecoration(
           hintText: 'Search for a warehouse...',
-          hintStyle: TextStyle(color: Colors.teal),
+          hintStyle: TextStyle(color: Colors.grey),
           border: InputBorder.none,
           contentPadding: EdgeInsets.all(16.0),
-          prefixIcon: Icon(Icons.search_rounded, color: Colors.teal,),
+          prefixIcon: Icon(Icons.search_rounded, color: Colors.grey,),
         ),
       ),
     );

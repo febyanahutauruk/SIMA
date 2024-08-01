@@ -10,95 +10,92 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade300, width: 1.0),
-      ),
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 8.0),
-          Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Nama Barang",
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    model.name,
-                    style: GoogleFonts.poppins(color: Colors.grey.shade400),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade300),
-                  borderRadius: BorderRadius.circular(4),
+    return Card(
+      color: Colors.white,
+      elevation: 4,// Use Card widget
+      child: Padding( // Add padding inside the card
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 8.0),
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Nama Barang",
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      model.name,
+                      style: GoogleFonts.poppins(color: Colors.grey.shade400),
+                    ),
+                  ],
                 ),
-                child: InkWell(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                          child: CardAction(
-                            item: UpdateDataModel(
-                              id: model.id, // Pass the correct ID here
-                              name: model.name,
-                              code: model.code,
-                              description: model.description,
-                              createdBy: model.createdBy,
+                const Spacer(),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            child: CardAction(
+                              item: UpdateDataModel(
+                                id: model.id,
+                                name: model.name,
+                                code: model.code,
+                                description: model.description,
+                                createdBy: model.createdBy,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  child: const Icon(
-                    Icons.menu_rounded,
-                    color: Colors.grey,
-                    size: 28,
-                  ),
-                ),
-              )
-            ],
-          ),
-          const Divider(),
-          Text(
-            "Kode Barang    :",
-            style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
-          ),
-          Text(
-            model.code,
-            style: GoogleFonts.poppins(color: Colors.grey.shade400),
-          ),
-          const SizedBox(height: 8.0),
-          Text(
-            "Kategori  :",
-            style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
-          ),
-          Text(
-            model.categoryName,
-            style: GoogleFonts.poppins(color: Colors.grey.shade400),
-          ),
-          const SizedBox(height: 8.0),
-          Text(
-            "Deskripsi   :",
-            style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
-          ),
-          Text(
-            model.description,
-            style: GoogleFonts.poppins(color: Colors.grey.shade400),
-          ),
-          const SizedBox(height: 8.0),
-        ],
+                          );
+                        },
+                      );
+                    },
+                    child: const Icon(
+                      Icons.menu_rounded,
+                      color: Colors.grey,
+                      size: 28,
+                    ),
+                  ),)
+              ],
+            ),
+            const Divider(),
+            Text(
+              "Kode Barang    :",
+              style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+            ),
+            Text(
+              model.code,
+              style: GoogleFonts.poppins(color: Colors.grey.shade400),
+            ),
+            const SizedBox(height: 8.0),
+            Text(
+              "Kategori  :",
+              style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+            ),
+            Text(
+              model.categoryName,
+              style: GoogleFonts.poppins(color: Colors.grey.shade400),
+            ),
+            const SizedBox(height: 8.0),
+            Text(
+              "Deskripsi   :",
+              style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+            ),
+            Text(
+              model.description,
+              style: GoogleFonts.poppins(color: Colors.grey.shade400),
+            ),
+            const SizedBox(height: 8.0),
+          ],
+        ),
       ),
     );
   }

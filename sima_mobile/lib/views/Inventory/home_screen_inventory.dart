@@ -82,7 +82,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Report Stock',
+                    'Monthly Report Stock',
                     style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),

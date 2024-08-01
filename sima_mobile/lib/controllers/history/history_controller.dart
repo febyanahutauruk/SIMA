@@ -10,7 +10,7 @@ class HistoryController with ChangeNotifier {
   bool _isLoading = true;
   bool _isNext = true;
   HistoryPaginationParamModel param =
-  HistoryPaginationParamModel (limit: 8, offset: 0);
+  HistoryPaginationParamModel (limit: 9, offset: 0);
 // test
   List<HistoryPaginationModel> get items => _items;
   bool get isNext => _isNext;
@@ -18,7 +18,7 @@ class HistoryController with ChangeNotifier {
 
   Future<void> getPaginationItem() async {
     _isLoading = true;
-    param = HistoryPaginationParamModel (limit: 8, offset: 0);
+    param = HistoryPaginationParamModel (limit: 9, offset: 0);
     HistoryPaginationResponseModels responseModel = await service
         .getPaginationItem(param);
 
