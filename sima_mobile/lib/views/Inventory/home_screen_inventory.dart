@@ -4,6 +4,7 @@ import 'package:sima/models/dashboard/dashboard_model.dart';
 import 'package:sima/models/dashboard/dashboard_param_model.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sima/services/dashboard/dashboard_service.dart';
 
 class HomeScreenInventory extends StatefulWidget {
   const HomeScreenInventory({super.key});
@@ -14,12 +15,27 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
   late DashboardItemController _controller;
   DashboardItemData? _dashboardItemData;
   String _selectedFilter = 'All'; // Default value
+  late Future<List<String>> _warehouseListFuture;
 
   @override
   void initState() {
     super.initState();
     _controller = Provider.of<DashboardItemController>(context, listen: false);
+    _warehouseListFuture = _fetchWarehouseList(); // Initialize the future for fetching warehouses
     _fetchData(); // Fetch data when the widget initializes
+  }
+
+  Future<List<String>> _fetchWarehouseList() async {
+    try {
+      List<String> warehouseList = await DashboardItemService().fetchWarehouseList();
+      if (!warehouseList.contains('All')) {
+        warehouseList.insert(0, 'All');
+      }
+      return warehouseList;
+    } catch (e) {
+      print('Failed to fetch warehouse list: $e');
+      return ['All'];
+    }
   }
 
   Future<void> _fetchData() async {
@@ -41,7 +57,6 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.teal,),
           onPressed: () {
@@ -49,7 +64,6 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
           },
         ),
         backgroundColor: Colors.white,
-
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -62,7 +76,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                 children: [
                   Text(
                     'Welcome',
-                    style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color:Colors.teal),
+                    style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.teal),
                   ),
                   Text(
                     'Mobina Sadat',
@@ -86,53 +100,66 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                     style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  Card(
-                    color: Colors.blueGrey.shade50,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          isExpanded: true,
-                          value: _selectedFilter, // Set the selected value
-                          hint: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Padding(padding: EdgeInsets.all(8.0)),
-                                Icon(Icons.home),
-                                Text('    Warehouse List', style: GoogleFonts.poppins(color: Colors.black),),
-                                SizedBox(width: 8),
-                              ],
+                  FutureBuilder<List<String>>(
+                    future: _warehouseListFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Failed to load warehouses'));
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return Center(child: Text('No warehouses available'));
+                      } else {
+                        return Card(
+                          color: Colors.blueGrey.shade50,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                isExpanded: true,
+                                value: _selectedFilter,
+                                hint: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Padding(padding: EdgeInsets.all(8.0)),
+                                      Icon(Icons.home),
+                                      Text('    Warehouse List', style: GoogleFonts.poppins(color: Colors.black),),
+                                      SizedBox(width: 8),
+                                    ],
+                                  ),
+                                ),
+                                onChanged: (String? newValue) {
+                                  if (newValue != null) {
+                                    setState(() {
+                                      _selectedFilter = newValue;
+                                      _fetchData(); // Fetch data for the new selection
+                                    });
+                                  }
+                                },
+                                borderRadius: BorderRadius.circular(20),
+                                dropdownColor: Colors.white,
+                                items: snapshot.data!
+                                    .map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                      child: Text(value),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
                             ),
                           ),
-                          onChanged: (String? newValue) {
-                            if (newValue != null) {
-                              setState(() {
-                                _selectedFilter = newValue; // Update the selected value
-                                _fetchData(); // Fetch data for the new selection
-                              });
-                            }
-                          },
-                          borderRadius: BorderRadius.circular(20),
-                          dropdownColor: Colors.white,
-                          items: <String>['All', 'Gedung Barat', 'Gudang Timur']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                child: Text(value),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ),
+                        );
+                      }
+                    },
                   ),
                   const SizedBox(height: 16),
                   if (_dashboardItemData == null) ...[
@@ -146,7 +173,6 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
               ),
             ),
             const SizedBox(height: 16),
-
             const Spacer(),
             const Text(
               'Features',
@@ -190,7 +216,6 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
       ),
     );
   }
-
 
   Widget _buildFeatureItem(IconData icon, String label, BuildContext context, String routename) {
     return GestureDetector(
