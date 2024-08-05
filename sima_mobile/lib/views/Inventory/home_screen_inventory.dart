@@ -45,7 +45,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.teal,),
           onPressed: () {
-            Navigator.pushNamed(context, '/WelcomeScreen');
+            Navigator.pop(context, '/HomeScreen');
           },
         ),
         backgroundColor: Colors.white,
