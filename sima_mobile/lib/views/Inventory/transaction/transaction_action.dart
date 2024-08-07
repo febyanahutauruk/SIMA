@@ -326,7 +326,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       textAlign: TextAlign.left,
                     ),
                     Text(
-                      "Quantity: ${widget.model.qty}",
+                      "${widget.model.qty}",
                       style: const TextStyle(fontSize: 18),
                       textAlign: TextAlign.left,
                     ),

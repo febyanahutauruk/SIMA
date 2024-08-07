@@ -118,7 +118,7 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
           onPressed: () {
-            Navigator.pushNamed(context, '/Inventory');
+            Navigator.pushNamed(context, '/ItemListScreen');
           },
         ),
         backgroundColor: Colors.teal,

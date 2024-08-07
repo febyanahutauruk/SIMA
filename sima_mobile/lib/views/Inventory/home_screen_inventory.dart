@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sima/controllers/dashboard/dashboard_controller.dart'; // Import your controller
+import 'package:sima/controllers/dashboard/dashboard_controller.dart'; 
 import 'package:sima/models/dashboard/dashboard_model.dart';
 import 'package:sima/models/dashboard/dashboard_param_model.dart';
 import 'package:provider/provider.dart';
@@ -13,25 +13,25 @@ class HomeScreenInventory extends StatefulWidget {
 class _HomeScreenInventoryState extends State<HomeScreenInventory> {
   late DashboardItemController _controller;
   DashboardItemData? _dashboardItemData;
-  String _selectedFilter = 'All'; // Default value
+  String _selectedFilter = 'All'; 
 
   @override
   void initState() {
     super.initState();
     _controller = Provider.of<DashboardItemController>(context, listen: false);
-    _fetchData(); // Fetch data when the widget initializes
+    _fetchData(); 
   }
 
   Future<void> _fetchData() async {
     print('Fetching data for filter: $_selectedFilter...');
     if (_selectedFilter == 'All') {
-      _controller.param = DashboardPaginationParamModel(warehouseName: "All"); // Access param through _controller
+      _controller.param = DashboardPaginationParamModel(warehouseName: "All"); 
     } else {
-      _controller.param = DashboardPaginationParamModel(warehouseName: _selectedFilter.toLowerCase()); // Access param through _controller
+      _controller.param = DashboardPaginationParamModel(warehouseName: _selectedFilter.toLowerCase()); 
     }
-    await _controller.getDashboardItem(); // Use getDashboardItem for both cases
+    await _controller.getDashboardItem(); 
     setState(() {
-      _dashboardItemData = _controller.dashboardItemData; // Update the state with fetched data
+      _dashboardItemData = _controller.dashboardItemData; 
     });
     print('State updated with data: $_dashboardItemData');
   }
@@ -45,7 +45,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.teal,),
           onPressed: () {
-            Navigator.pushNamed(context, '/WelcomeScreen');
+            Navigator.pushNamed(context, '/HomeScreen');
           },
         ),
         backgroundColor: Colors.white,

@@ -15,7 +15,8 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
   final ScrollController _scrollController = ScrollController();
 
   void scrollListener() {
-    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
       final transactionController = context.read<TransactionController>();
       if (transactionController.isNext && !transactionController.isLoading) {
         transactionController.loadMore();
@@ -62,28 +63,38 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
+          icon: const Icon(
+            Icons.arrow_back_ios_rounded,
+            color: Colors.white,
+          ),
           onPressed: () {
             Navigator.pushNamed(context, '/Inventory');
           },
         ),
-        title:  Text(
+        title: Text(
           "Transactions",
-          style: GoogleFonts.poppins(color: Colors.white,
-          fontWeight: FontWeight.bold),
+          style: GoogleFonts.poppins(
+              color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.teal,
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/InputTransactionItemScreen');
+          },
+          backgroundColor: Colors.teal,
+          foregroundColor: Colors.white,
+          child: const Icon(Icons.add)),
       body: Consumer<TransactionController>(
         builder: (context, transactionController, child) {
-          if (transactionController.isLoading && transactionController.items.isEmpty) {
+          if (transactionController.isLoading &&
+              transactionController.items.isEmpty) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -104,14 +115,16 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                       child: TextFormField(
                         onFieldSubmitted: (v) {
                           final itemP = context.read<TransactionController>();
-                          itemP.param = itemP.param.copyWith(itemName: v, offset: 0);
+                          itemP.param =
+                              itemP.param.copyWith(itemName: v, offset: 0);
                           itemP.searchItems(v);
                         },
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.search, color: Colors.grey),
                           hintText: "Search....",
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
                         ),
                       ),
                     ),
@@ -131,13 +144,15 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                     const SizedBox(height: 12),
                     const Text(
                       "Daftar Transactions",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     ),
                     const SizedBox(height: 10),
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: (transactionController.items.length / 2).ceil(),
+                      itemCount:
+                          (transactionController.items.length / 2).ceil(),
                       itemBuilder: (context, index) {
                         int firstIndex = index * 2;
                         int secondIndex = firstIndex + 1;
@@ -145,11 +160,16 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                         return Row(
                           children: [
                             Expanded(
-                              child: TransactionCard(model: transactionController.items[firstIndex]),
+                              child: TransactionCard(
+                                  model:
+                                      transactionController.items[firstIndex]),
                             ),
                             Expanded(
-                              child: secondIndex < transactionController.items.length
-                                  ? TransactionCard(model: transactionController.items[secondIndex])
+                              child: secondIndex <
+                                      transactionController.items.length
+                                  ? TransactionCard(
+                                      model: transactionController
+                                          .items[secondIndex])
                                   : Container(),
                             ),
                           ],
