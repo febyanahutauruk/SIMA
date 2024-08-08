@@ -5,6 +5,7 @@ import 'package:sima/controllers/form/update_data_controller.dart';
 import 'package:sima/models/form/update_data_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
+import 'package:sima/services/item/item_service.dart';
 
 class UpdateDataScreen extends StatefulWidget {
   final UpdateDataModel item;
@@ -25,8 +26,9 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
   final TextEditingController _codeController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+  late Future<List<Category>> _categoryListFuture;
 
-  int? _selectedCategoryId;
+  Category? _selectedCategory;
 
   @override
   void initState() {
@@ -36,7 +38,7 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
     _codeController.text = widget.item.code;
     _descriptionController.text = widget.item.description ?? '';
     _usernameController.text = widget.item.createdBy;
-    _selectedCategoryId = widget.item.category;
+    _categoryListFuture = ItemService().fetchCategoryList();
 
     if (widget.item.id != null) {
       fetchImage(widget.item.id!, true).then((file) {
@@ -87,7 +89,7 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
         id: int.tryParse(_idController.text) ?? 0, // Ensure ID is an int
         name: _nameController.text,
         code: _codeController.text,
-        category: _selectedCategoryId,
+        category: _selectedCategory?.id,
         description: _descriptionController.text,
         createdBy: _usernameController.text,
         fileUploads: _imageFile,
@@ -118,7 +120,7 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
           onPressed: () {
-            Navigator.pushNamed(context, '/Inventory');
+            Navigator.pop(context, '/Inventory');
           },
         ),
         backgroundColor: Colors.teal,
@@ -192,24 +194,42 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
               ),
             ),
             const SizedBox(height: 16.0),
-            DropdownButtonFormField<int>(
-              decoration: InputDecoration(
-                labelText: "Category",
-                border: OutlineInputBorder(),
-              ),
-              items: <int>[1, 2, 3].map((int value) {
-                return DropdownMenuItem<int>(
-                  value: value,
-                  child: Text(value.toString()),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedCategoryId = value;
-                });
+            FutureBuilder<List<Category>>(
+              future: _categoryListFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Failed to load categories'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(child: Text('No categories available'));
+                } else {
+                  return DropdownButtonFormField<Category>(
+                    dropdownColor: Colors.white,
+                    decoration: InputDecoration(labelText: 'Category',border: OutlineInputBorder()),
+                    value: _selectedCategory,
+                    onChanged: (Category? newValue) {
+                      setState(() {
+                        _selectedCategory = newValue;
+                      });
+                    },
+                    items: snapshot.data!.map((Category category) {
+                      return DropdownMenuItem<Category>(
+                        value: category,
+                        child: Text(category.name),
+                      );
+                    }).toList(),
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Please select a category';
+                      }
+                      return null;
+                    },
+                  );
+                }
               },
-              value: _selectedCategoryId,
             ),
+
             const SizedBox(height: 16.0),
             TextField(
               controller: _usernameController,

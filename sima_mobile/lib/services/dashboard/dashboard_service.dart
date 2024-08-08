@@ -34,4 +34,15 @@ class DashboardItemService {
       throw Exception("Error: ${e.toString()}");
     }
   }
+
+  Future<List<String>> fetchWarehouseList() async {
+    final response = await http.get(Uri.parse('https://apistrive.pertamina-ptk.com/Warehouses'));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body)['data'];
+      return List<String>.from(data.map((item) => item['name']));
+    } else {
+      throw Exception('Failed to load warehouses');
+    }
+  }
 }
