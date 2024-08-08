@@ -89,7 +89,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -99,7 +99,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                     'Monthly Report Stock',
                     style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 20),
                   FutureBuilder<List<String>>(
                     future: _warehouseListFuture,
                     builder: (context, snapshot) {
@@ -129,7 +129,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                                     children: [
                                       Padding(padding: EdgeInsets.all(8.0)),
                                       Icon(Icons.home),
-                                      Text('    Warehouse List', style: GoogleFonts.poppins(color: Colors.black),),
+                                      Text('    Warehouse List', style: GoogleFonts.poppins(color: Colors.white),),
                                       SizedBox(width: 8),
                                     ],
                                   ),
@@ -169,24 +169,33 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                     _buildStockItem(Icons.warning_rounded, 'Item', 'Low Stock', Colors.orange, _dashboardItemData!.underMinQty),
                     _buildStockItem(Icons.arrow_back_rounded, 'Item', 'Item Out', Colors.red, _dashboardItemData!.itemOut),
                   ],
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Features',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buildFeatureItem(Icons.warehouse_rounded, 'Transaction', context, '/TransactionList'),
+                      _buildFeatureItem(Icons.map_rounded, 'Maps', context, '/Maps'),
+                      _buildFeatureItem(Icons.history_rounded, 'History', context, '/History'),
+                      _buildFeatureItem(Icons.save_rounded, 'Item', context, '/ItemListScreen'),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Image.asset('assets/image/Logo_PTK.png',
+                        width: 160,
+                        height: 170,)
+                    ],
+
+                  ),
                 ],
               ),
-            ),
-            const SizedBox(height: 16),
-            const Spacer(),
-            const Text(
-              'Features',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildFeatureItem(Icons.warehouse_rounded, 'Transaction', context, '/TransactionList'),
-                _buildFeatureItem(Icons.map_rounded, 'Maps', context, '/Maps'),
-                _buildFeatureItem(Icons.history_rounded, 'History', context, '/History'),
-                _buildFeatureItem(Icons.save_rounded, 'Item', context, '/ItemListScreen'),
-              ],
             ),
           ],
         ),
@@ -225,7 +234,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
       child: Column(
         children: [
           CircleAvatar(
-            radius: 30,
+            radius: 35,
             backgroundColor: Colors.teal,
             child: Icon(icon, color: Colors.white, size: 30),
           ),

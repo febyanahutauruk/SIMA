@@ -63,7 +63,7 @@ class _MapScreenState extends State<MapScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white,),
           onPressed: () {
-            Navigator.pushNamed(context, '/Inventory');
+            Navigator.pop(context, '/Inventory');
           },
         ),
         title: Text('Warehouse Map',textAlign: TextAlign.center,

@@ -50,7 +50,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
           onPressed: () {
-            Navigator.pushNamed(context, '/Inventory');
+            Navigator.pop(context, '/Inventory');
           },
         ),
         title:  Text(
