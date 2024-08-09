@@ -31,6 +31,7 @@ class _InputTransactionItemScreenState
 
   Items? _selectedItems;
   Warehouses? _selectedWarehouses;
+  String? _selectedOwnership;
 
   int? _qty = 0;
   int? _minQty = 0;
@@ -74,16 +75,29 @@ class _InputTransactionItemScreenState
   }
 
   Future<void> _submit() async {
+    // Validate the input fields
+    if (_selectedWarehouses == null ||
+        _selectedItems == null ||
+        _selectedOwnership == null) {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please complete all fields before submitting.')),
+      );
+      return; // Do not proceed if validation fails
+    }
+
     try {
       final item = AddTransactionItemModel(
         warehouseId: _selectedWarehouses?.id,
         itemId: _selectedItems?.id,
-        aktor: _aktorController.text,
+        aktor: "feby",
         qty: int.parse(_qtyController.text),
         minQty: int.parse(_minQtyController.text),
+        ownership: _selectedOwnership,
       );
       final response = await _addTransactionItemFormControllers.addItem(item);
 
+      // Clear input fields after successful submission
       _aktorController.clear();
       _qtyController.clear();
       _minQtyController.clear();
@@ -96,10 +110,12 @@ class _InputTransactionItemScreenState
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Item added successfully!')),
       );
+      Navigator.of(context).pop();
       Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => TransactionListScreen()),
-      );
+          context,
+          MaterialPageRoute(
+              builder: (context) => const TransactionListScreen()));
+
     } catch (e) {
       print(e);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -107,6 +123,7 @@ class _InputTransactionItemScreenState
       );
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +133,7 @@ class _InputTransactionItemScreenState
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context, '/ItemListScreen');
+            Navigator.pop(context, '/TransactionList');
           },
         ),
         title: Text(
@@ -242,7 +259,40 @@ class _InputTransactionItemScreenState
                 labelText: "Minimal Quantity",
               ),
             ),
-            const SizedBox(height: 350),
+            const SizedBox(height: 24.0),
+            InputDecorator(
+              decoration: InputDecoration(
+                labelStyle: GoogleFonts.poppins(),
+                labelText: 'Ownership',
+                border: OutlineInputBorder(),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: _selectedOwnership,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedOwnership = newValue;
+                    });
+                  },
+                  borderRadius: BorderRadius.circular(20),
+                  dropdownColor: Colors.white,
+                  hint: Text(
+                    "Ownership",
+                    style: GoogleFonts.poppins(),
+                  ),
+                  items: <String>['Milik', 'Sewa'].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(color: Colors.teal),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+            const SizedBox(height: 50),
             Center(
               child: ElevatedButton(
                 onPressed: _submit,

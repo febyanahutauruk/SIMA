@@ -17,9 +17,9 @@ class _TransactionCardState extends State<TransactionCard> {
   @override
   Widget build(BuildContext context) {
     Color statusColor;
-    if (widget.model.qty > widget.model.minQty) {
+    if (widget.model.status == 'Available') {
       statusColor = Colors.green;
-    } else if (widget.model.qty < widget.model.minQty) {
+    } else if (widget.model.status == 'Unavailable') {
       statusColor = Colors.red;
     } else {
       statusColor = Colors.yellow.shade800;
@@ -110,17 +110,39 @@ class _TransactionCardState extends State<TransactionCard> {
                       color: statusColor,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Text(
-                      widget.model.qty > widget.model.minQty ? 'Available' : 'Low stock',
-                      style: GoogleFonts.poppins(color: Colors.white),
-                    ),
+                    child: _buildStatusText(widget.model.status),
                   ),
                 ],
-              ),
+              )
+
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+Widget _buildStatusText(String status) {
+  if (status == 'Available') {
+    return Text(
+      "Available",
+      style: GoogleFonts.poppins(color: Colors.white),
+    );
+  } else if (status == 'Under Minimum Stock') {
+    return Text(
+      "Low Stock",
+      style: GoogleFonts.poppins(color: Colors.white),
+    );
+  } else if (status == 'Unavailable') {
+    return Text(
+      "Unavailable",
+      style: GoogleFonts.poppins(color: Colors.white),
+    );
+  } else {
+    return Text(
+      "Unknown status",
+      style: GoogleFonts.poppins(color: Colors.white),
     );
   }
 }

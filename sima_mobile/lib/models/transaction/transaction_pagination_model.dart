@@ -23,13 +23,15 @@ class TransactionPaginationModel {
   dynamic updateBy;
   String fileUrl;
   int qtyInOut;
-  String status;
   int warehouseItemId;
   String aktor;
   int code;
   bool isSuccess;
   dynamic errorMsg;
   bool? isStream;
+  String status;
+  String? ownership;
+
 
   TransactionPaginationModel({
     required this.itemName,
@@ -63,6 +65,7 @@ class TransactionPaginationModel {
     required this.isSuccess,
     this.errorMsg,
     this.isStream,
+    this.ownership,
   });
 
   factory TransactionPaginationModel.fromJson(Map<String, dynamic> json) {
@@ -92,6 +95,7 @@ class TransactionPaginationModel {
     fileUrl: json["fileUrl"] ?? '',
     qtyInOut: json["qtyInOut"] ?? 0,
     status: json["status"] ?? '',
+    ownership: json["ownership"] ?? '',
     warehouseItemId: json["warehouseItemId"] ?? 0,
     aktor: json["aktor"] ?? '',
     code: json["code"] ?? 0,
@@ -127,6 +131,7 @@ class TransactionPaginationModel {
     "fileUrl": fileUrl,
     "qtyInOut": qtyInOut,
     "status": status,
+    "ownership": ownership,
     "warehouseItemId": warehouseItemId,
     "aktor": aktor,
     "code": code,

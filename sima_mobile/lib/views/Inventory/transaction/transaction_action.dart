@@ -259,7 +259,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.teal,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(24),
                       ),
                     ),
                   ),
@@ -275,6 +275,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color statusColor;
+    if (widget.model.status == 'Available') {
+      statusColor = Colors.green;
+    } else if (widget.model.status == 'Unavailable') {
+      statusColor = Colors.red;
+    } else {
+      statusColor = Colors.yellow.shade800;
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -290,7 +298,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.pushNamed(context, '/TransactionList');
+            Navigator.pop(context, '/TransactionList');
           },
         ),
       ),
@@ -338,6 +346,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                         ],
                       ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${widget.model.status}",
+                            style: GoogleFonts.poppins(fontSize: 14, color: statusColor, fontWeight: FontWeight.w700),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                   Divider(),
@@ -348,6 +365,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   Text(
                     "${widget.model.qty}",
+                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Min Quantity :",
+                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${widget.model.minQty}",
                     style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                   ),
                   SizedBox(height: 8),
@@ -379,6 +405,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   SizedBox(height: 8),
                   Text(
+                    "Ownership :",
+                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${widget.model.ownership}",
+                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
                     "Description :",
                     style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
@@ -400,7 +435,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(24),
                   ),
                 ),
               ),
