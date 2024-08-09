@@ -76,7 +76,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.pushNamed(context, '/Inventory');
+            Navigator.pop(context, '/Inventory');
           },
         ),
         title: Text(

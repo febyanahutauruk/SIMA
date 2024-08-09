@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+// Import your map_service and map_model
 import 'package:sima/services/map/map_service.dart';
 import 'package:sima/models/map/map_model.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,26 +38,32 @@ class _MapScreenState extends State<MapScreen> {
       filteredWarehouses = warehouses
           .where((warehouse) => warehouse.name.toLowerCase().contains(searchController.text.toLowerCase()))
           .toList();
+      if (filteredWarehouses.isNotEmpty &&
+          filteredWarehouses[0].latitude != null &&
+          filteredWarehouses[0].longitude != null &&
+          searchController.text.isNotEmpty) {
+        mapController.move(LatLng(filteredWarehouses[0].latitude!, filteredWarehouses[0].longitude!), 15.0);
+      }
     });
   }
 
   void _onWarehouseSelected(Warehouse warehouse) {
     mapController.move(LatLng(warehouse.latitude!, warehouse.longitude!), 15.0);
-    searchController.clear(); // Clear the search input after selecting a warehouse
+    searchController.clear();
     setState(() {
-      filteredWarehouses = []; // Clear the suggestions after selecting a warehouse
+      filteredWarehouses = [];
     });
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContextcontext) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.teal,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white,),
           onPressed: () {
-            Navigator.pushNamed(context, '/Inventory');
+            Navigator.pop(context, '/Inventory');
           },
         ),
         title: Text('Warehouse Map',textAlign: TextAlign.center,
@@ -78,32 +85,70 @@ class _MapScreenState extends State<MapScreen> {
             filteredWarehouses = warehouses;
           }
 
-          List<Marker> markers = warehouses
-              .where((warehouse) =>
-          warehouse.longitude != null && warehouse.latitude != null)
-              .map((warehouse) {
-            return Marker(
-              point: LatLng(warehouse.latitude!, warehouse.longitude!),
-              width: 80.0,
-              height: 80.0,
-              child: _warehouseMarker(),
-            );
-          }).toList();
-
           return Stack(
             children: [
               FlutterMap(
                 mapController: mapController,
                 options: MapOptions(
-                  initialCenter: LatLng(-6.21462, 106.84513), // Coordinates for Indonesia
-                  initialZoom: 10.0, // Adjust zoom level as needed
+                  initialCenter: LatLng(-6.21462, 106.84513),
+                  initialZoom: 4.5,
                 ),
                 children: [
                   TileLayer(
                     urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     subdomains: ['a', 'b', 'c'],
                   ),
-                  MarkerLayer(markers: markers),
+                  MarkerLayer(
+                    markers: warehouses
+                        .where((warehouse) => warehouse.longitude != null && warehouse.latitude != null)
+                        .map((warehouse) {
+                      return Marker(
+                        point: LatLng(warehouse.latitude!, warehouse.longitude!),
+                        width: 80.0,height: 80.0,
+                        child: GestureDetector(
+                          onTap: () {
+                            mapController.move(LatLng(warehouse.latitude!, warehouse.longitude!), 15.0);
+                            showModalBottomSheet(
+                              backgroundColor: Colors.white,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  height: 200, // Adjust height as needed
+                                  padding: EdgeInsets.all(16),
+                                  child: Column(
+                                    children: [
+                                      Row( // Add this Row
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.remove, size: 40, color: Colors.grey), // Example line icon
+                                        ],
+                                      ),
+                                      SizedBox(height: 16), // Add spacing between the icon and the text
+                                      Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            warehouse.name,
+                                            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                                          ),
+                                          SizedBox(height: 8),
+                                          Text(
+                                            warehouse.address,
+                                            style: TextStyle(fontSize: 16),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: _warehouseMarker(),
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ],
               ),
               Positioned(

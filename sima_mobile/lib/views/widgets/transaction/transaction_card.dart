@@ -22,7 +22,7 @@ class _TransactionCardState extends State<TransactionCard> {
     } else if (widget.model.qty < widget.model.minQty) {
       statusColor = Colors.red;
     } else {
-      statusColor = Colors.grey;
+      statusColor = Colors.yellow.shade800;
     }
 
     return GestureDetector(
