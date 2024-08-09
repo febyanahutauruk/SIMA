@@ -13,7 +13,7 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   _gotohome() async {
     await Future.delayed(Duration(milliseconds: 2500), () {
-      Navigator.pushNamed(context, '/HomeScreen');
+      Navigator.pushReplacementNamed(context, '/HomeScreen');
     });
   }
 
@@ -27,13 +27,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/HomeScreen');
-        },
-        backgroundColor: Colors.white,
-        child: const Icon(Icons.arrow_right),
-      ),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -246,20 +240,4 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-  class BottomRoundedClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(0, size.height - 30);
-    path.quadraticBezierTo(0, size.height, 30, size.height);
-    path.lineTo(size.width - 30, size.height);
-    path.quadraticBezierTo(
-        size.width, size.height, size.width, size.height - 30);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
 
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
