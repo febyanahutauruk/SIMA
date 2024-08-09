@@ -97,7 +97,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
                           isExpanded: true,
-                          value: _selectedFilter, // Set the selected value
+                          value: _selectedFilter, 
                           hint: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Row(
@@ -113,8 +113,8 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                           onChanged: (String? newValue) {
                             if (newValue != null) {
                               setState(() {
-                                _selectedFilter = newValue; // Update the selected value
-                                _fetchData(); // Fetch data for the new selection
+                                _selectedFilter = newValue; 
+                                _fetchData(); 
                               });
                             }
                           },
@@ -136,7 +136,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                   ),
                   const SizedBox(height: 16),
                   if (_dashboardItemData == null) ...[
-                    const Center(child: CircularProgressIndicator()) // Show loading indicator
+                    const Center(child: CircularProgressIndicator()) 
                   ] else ...[
                     _buildStockItem(Icons.arrow_forward_outlined, 'Item', 'Item In', Colors.teal, _dashboardItemData!.itemIn),
                     _buildStockItem(Icons.warning_rounded, 'Item', 'Low Stock', Colors.orange, _dashboardItemData!.underMinQty),
@@ -172,12 +172,12 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0), // Increase the border radius for more rounded corners
+        borderRadius: BorderRadius.circular(15.0),  
       ),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.blueGrey.shade50,
-          borderRadius: BorderRadius.circular(15.0), // Ensure the container also has rounded corners
+          borderRadius: BorderRadius.circular(15.0), 
         ),
         child: ListTile(
           leading: Icon(icon, color: color),

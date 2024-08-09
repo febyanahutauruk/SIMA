@@ -16,10 +16,12 @@ class InputTransactionItemScreen extends StatefulWidget {
       _InputTransactionItemScreenState();
 }
 
-class _InputTransactionItemScreenState extends State<InputTransactionItemScreen> {
+class _InputTransactionItemScreenState
+    extends State<InputTransactionItemScreen> {
   File? _imageFile;
   final ImagePicker _picker = ImagePicker();
-  final AddTransactionItemFormControllers _addTransactionItemFormControllers = AddTransactionItemFormControllers();
+  final AddTransactionItemFormControllers _addTransactionItemFormControllers =
+      AddTransactionItemFormControllers();
   final TextEditingController _aktorController = TextEditingController();
   final TextEditingController _qtyController = TextEditingController();
   final TextEditingController _minQtyController = TextEditingController();
@@ -145,6 +147,7 @@ class _InputTransactionItemScreenState extends State<InputTransactionItemScreen>
                   return DropdownButtonFormField<Items>(
                     dropdownColor: Colors.white,
                     decoration: InputDecoration(
+                      labelStyle: GoogleFonts.poppins(),
                       labelText: 'Items',
                       border: OutlineInputBorder(),
                     ),
@@ -157,7 +160,8 @@ class _InputTransactionItemScreenState extends State<InputTransactionItemScreen>
                     items: snapshot.data!.map((Items item) {
                       return DropdownMenuItem<Items>(
                         value: item,
-                        child: Text(item.name),
+                        child: Text(item.name, 
+                          style: GoogleFonts.poppins()),
                       );
                     }).toList(),
                     validator: (value) {
@@ -184,6 +188,7 @@ class _InputTransactionItemScreenState extends State<InputTransactionItemScreen>
                   return DropdownButtonFormField<Warehouses>(
                     dropdownColor: Colors.white,
                     decoration: InputDecoration(
+                      labelStyle: GoogleFonts.poppins(),
                       labelText: 'Warehouse',
                       border: OutlineInputBorder(),
                     ),
@@ -196,7 +201,9 @@ class _InputTransactionItemScreenState extends State<InputTransactionItemScreen>
                     items: snapshot.data!.map((Warehouses warehouse) {
                       return DropdownMenuItem<Warehouses>(
                         value: warehouse,
-                        child: Text(warehouse.name),
+                        child:
+                            Text(warehouse.name, 
+                            style: GoogleFonts.poppins()),
                       );
                     }).toList(),
                     validator: (value) {
@@ -216,8 +223,9 @@ class _InputTransactionItemScreenState extends State<InputTransactionItemScreen>
               onChanged: (value) {
                 _updateQty(value);
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
+                labelStyle: GoogleFonts.poppins(),
                 labelText: "Quantity",
               ),
             ),
@@ -228,23 +236,24 @@ class _InputTransactionItemScreenState extends State<InputTransactionItemScreen>
               onChanged: (value) {
                 _updateMinQty(value);
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
+                labelStyle: GoogleFonts.poppins(),
                 labelText: "Minimal Quantity",
               ),
             ),
-            const SizedBox(height: 24.0),
+            const SizedBox(height: 350),
             Center(
               child: ElevatedButton(
                 onPressed: _submit,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal,
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 16.0),
+                      horizontal: 40.0, vertical: 16.0),
                 ),
-                child: const Text(
+                child: Text(
                   'Submit',
-                  style: TextStyle(color: Colors.white),
+                  style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w700),
                 ),
               ),
             ),

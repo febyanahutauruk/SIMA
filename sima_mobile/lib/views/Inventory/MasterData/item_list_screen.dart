@@ -123,7 +123,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
                     Row(
                       children: [
                          Text(
-                        "Daftar Item",
+                        "Item List",
                         style:
                         GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 24, color: Colors.teal),
                       ),

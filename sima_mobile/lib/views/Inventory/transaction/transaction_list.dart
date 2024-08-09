@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sima/controllers/transaction/transaction_controller.dart';
 import 'package:sima/views/widgets/transaction/transaction_card.dart';
@@ -56,7 +57,8 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: Colors.teal),
             ),
-            child: Text(category),
+            child: Text(category,
+            style: GoogleFonts.poppins(color: Colors.teal),),
           ),
         );
       },
@@ -135,18 +137,17 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                         children: [
                           _buildCategoryButton('All', Colors.white),
                           _buildCategoryButton('Furniture', Colors.white),
-                          _buildCategoryButton('Alat Tulis', Colors.white),
+                          _buildCategoryButton('Office Stationery', Colors.white),
                           _buildCategoryButton('Elektronik', Colors.white),
-                          _buildCategoryButton('Perkapalan', Colors.white),
+                          _buildCategoryButton('Shipping Equipment', Colors.white),
                         ],
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Text(
-                      "Daftar Transactions",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                    ),
+                    Text(
+                      "Transaction List",
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 24, color :Colors.teal)
+                      ),
                     const SizedBox(height: 10),
                     ListView.builder(
                       shrinkWrap: true,
