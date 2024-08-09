@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="11540db0-ab6c-4771-8c5d-4d8371f7faf6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/models/transaction/add_transaction_list_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/models/transaction/add_transaction_list_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/models/transaction/transaction_pagination_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/models/transaction/transaction_pagination_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/transaction/transaction_action.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/transaction/transaction_action.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/widgets/transaction/transaction_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/widgets/transaction/transaction_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/services/transaction/add_transaction_item_form_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/services/transaction/add_transaction_item_form_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/services/transaction/transaction_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/services/transaction/transaction_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/transaction/transaction_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/transaction/transaction_list.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

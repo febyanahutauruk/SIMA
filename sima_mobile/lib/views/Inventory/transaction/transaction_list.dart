@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sima/controllers/transaction/transaction_controller.dart';
+import 'package:sima/services/transaction/transaction_service.dart';
 import 'package:sima/views/widgets/transaction/transaction_card.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sima/services/transaction/add_transaction_item_form_service.dart';
+
+import '../../../services/transaction/add_transaction_item_form_service.dart';
 
 class TransactionListScreen extends StatefulWidget {
   const TransactionListScreen({super.key});
@@ -14,6 +18,8 @@ class TransactionListScreen extends StatefulWidget {
 
 class _TransactionListScreenState extends State<TransactionListScreen> {
   final ScrollController _scrollController = ScrollController();
+  late Future<List<Category>> _futureCategoryList;
+  final TransactionService _transactionService = TransactionService();
 
   void scrollListener() {
     if (_scrollController.position.pixels ==
@@ -30,10 +36,12 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
     super.initState();
     context.read<TransactionController>().getPaginationTransaction();
     _scrollController.addListener(scrollListener);
+    _futureCategoryList = _transactionService.fetchCategoryList();
   }
 
   @override
   void dispose() {
+    _scrollController.removeListener(scrollListener);
     _scrollController.dispose();
     super.dispose();
   }
@@ -57,8 +65,10 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: Colors.teal),
             ),
-            child: Text(category,
-            style: GoogleFonts.poppins(color: Colors.teal),),
+            child: Text(
+              category,
+              style: GoogleFonts.poppins(color: Colors.teal),
+            ),
           ),
         );
       },
@@ -122,38 +132,54 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                           itemP.searchItems(v);
                         },
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search, color: Colors.grey),
+                          prefixIcon:
+                          const Icon(Icons.search, color: Colors.grey),
                           hintText: "Search....",
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: 12, horizontal: 16),
                         ),
                       ),
                     ),
                     const SizedBox(height: 12),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          _buildCategoryButton('All', Colors.white),
-                          _buildCategoryButton('Furniture', Colors.white),
-                          _buildCategoryButton('Office Stationery', Colors.white),
-                          _buildCategoryButton('Elektronik', Colors.white),
-                          _buildCategoryButton('Shipping Equipment', Colors.white),
-                        ],
-                      ),
+                    FutureBuilder<List<Category>>(
+                      future: _futureCategoryList,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return const Center(child: Text('Failed to load categories'));
+                        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                          return const Center(child: Text('No categories found'));
+                        } else {
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                // Hardcoded "All" button
+                                _buildCategoryButton('All', Colors.white),
+                                // Dynamically generated category buttons
+                                ...snapshot.data!.map((category) {
+                                  return _buildCategoryButton(category.name, Colors.white);
+                                }).toList(),
+                              ],
+                            ),
+                          );
+                        }
+                      },
                     ),
                     const SizedBox(height: 12),
-                    Text(
-                      "Transaction List",
-                      style: GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 24, color :Colors.teal)
-                      ),
+                    Text("Transaction List",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 24,
+                            color: Colors.teal)),
                     const SizedBox(height: 10),
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount:
-                          (transactionController.items.length / 2).ceil(),
+                      (transactionController.items.length / 2).ceil(),
                       itemBuilder: (context, index) {
                         int firstIndex = index * 2;
                         int secondIndex = firstIndex + 1;
@@ -163,14 +189,14 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                             Expanded(
                               child: TransactionCard(
                                   model:
-                                      transactionController.items[firstIndex]),
+                                  transactionController.items[firstIndex]),
                             ),
                             Expanded(
                               child: secondIndex <
-                                      transactionController.items.length
+                                  transactionController.items.length
                                   ? TransactionCard(
-                                      model: transactionController
-                                          .items[secondIndex])
+                                  model: transactionController
+                                      .items[secondIndex])
                                   : Container(),
                             ),
                           ],
