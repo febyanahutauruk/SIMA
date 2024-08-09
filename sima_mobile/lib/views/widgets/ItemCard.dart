@@ -12,8 +12,8 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
-      elevation: 4,// Use Card widget
-      child: Padding( // Add padding inside the card
+      elevation: 4,
+      child: Padding( 
         padding: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +24,7 @@ class ItemCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Nama Barang",
+                    Text("Product Name",
                       style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
                     ),
                     Text(
@@ -68,7 +68,7 @@ class ItemCard extends StatelessWidget {
             ),
             const Divider(),
             Text(
-              "Kode Barang    :",
+              "Product Code   :",
               style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
             ),
             Text(
@@ -77,7 +77,7 @@ class ItemCard extends StatelessWidget {
             ),
             const SizedBox(height: 8.0),
             Text(
-              "Kategori  :",
+              "Category   :",
               style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
             ),
             Text(
@@ -86,7 +86,7 @@ class ItemCard extends StatelessWidget {
             ),
             const SizedBox(height: 8.0),
             Text(
-              "Deskripsi   :",
+              "Description   :",
               style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
             ),
             Text(

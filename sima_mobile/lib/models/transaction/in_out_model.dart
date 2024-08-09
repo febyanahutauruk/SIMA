@@ -2,7 +2,7 @@ class InOutParamModel {
   int qtyInOut;
   String date;
   String status;
-  int ?warehouseItemId;
+  int? warehouseItemId;
   String aktor;
 
   InOutParamModel({

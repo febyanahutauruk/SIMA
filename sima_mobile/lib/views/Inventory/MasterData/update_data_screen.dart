@@ -52,15 +52,14 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
   }
 
   Future<File?> fetchImage(int id, bool isStream) async {
-    final url = 'https://apistrive.pertamina-ptk.com/api/Items/$id/Image'; // Replace with your API URL
+    final url = 'https://apistrive.pertamina-ptk.com/api/Items/$id/Image'; 
     final response = await http.get(
       Uri.parse('$url?id=$id&isStream=True'),
     );
 
     if (response.statusCode == 200) {
-      // Assuming you get the image in the response body
       final bytes = response.bodyBytes;
-      final file = File('${Directory.systemTemp.path}/image_$id.jpg'); // Temporary file
+      final file = File('${Directory.systemTemp.path}/image_$id.jpg'); 
       await file.writeAsBytes(bytes);
       return file;
     } else {
@@ -86,7 +85,7 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
   Future<void> _submit() async {
     try {
       final item = UpdateDataModel(
-        id: int.tryParse(_idController.text) ?? 0, // Ensure ID is an int
+        id: int.tryParse(_idController.text) ?? 0, 
         name: _nameController.text,
         code: _codeController.text,
         category: _selectedCategory?.id,
@@ -120,7 +119,7 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
           onPressed: () {
-            Navigator.pop(context, '/Inventory');
+            Navigator.pushNamed(context, '/ItemListScreen');
           },
         ),
         backgroundColor: Colors.teal,

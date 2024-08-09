@@ -44,6 +44,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -51,12 +52,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           children: [
             Icon(Icons.warning, color: Colors.orange),
             SizedBox(width: 10),
-            Text("Confirm Action"),
+            Text(
+              "Confirm Action",
+              style: GoogleFonts.poppins(
+                color: Colors.black, fontWeight: FontWeight.w500
+              ),
+            ),
           ],
         ),
         content: Text(
           "Are you sure you want to submit this action?",
-          style: TextStyle(fontSize: 16),
+          style: GoogleFonts.poppins(fontSize: 16),
         ),
         actions: [
           TextButton(
@@ -64,7 +70,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               foregroundColor: Colors.grey,
             ),
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text("Cancel"),
+            child: Text("Cancel",
+            style: GoogleFonts.poppins(),
+            ),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -77,9 +85,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               Navigator.of(context).pop();
               await _submitAction();
             },
-            child: const Text(
+            child: Text(
               "Confirm",
-              style: TextStyle(color: Colors.white),
+              style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -129,6 +137,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   void _showBottomSheet() {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.white,
       isScrollControlled: true,
       builder: (context) {
         return StatefulBuilder(
@@ -139,9 +148,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 25),
-                  const Text(
+                  Text(
                     "Adjust Quantity",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
                   Row(
@@ -191,26 +200,42 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      DropdownButton<int>(
-                        value: _selectedAction,
-                        icon: const Icon(Icons.arrow_drop_down),
-                        items: [
-                          DropdownMenuItem(
-                            value: 1,
-                            child: const Text("Barang Masuk",
-                                style: TextStyle(fontSize: 16)),
+                      Expanded(
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: DropdownButtonFormField<int>(
+                            dropdownColor: Colors.white,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Action',
+                              hintText: 'Choose action',
+                            ),
+                            hint: const Text('Choose action'),
+                            value: _selectedAction,
+                            icon: const Icon(Icons.arrow_drop_down),
+                            items: [
+                              DropdownMenuItem(
+                                value: 1,
+                                child: Text(
+                                  "Item In",
+                                  style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: 2,
+                                child: Text(
+                                  "Item Out",
+                                  style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedAction = value!;
+                              });
+                            },
                           ),
-                          DropdownMenuItem(
-                            value: 2,
-                            child: const Text("Barang Keluar",
-                                style: TextStyle(fontSize: 16)),
-                          ),
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedAction = value!;
-                          });
-                        },
+                        ),
                       ),
                     ],
                   ),
@@ -227,9 +252,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         );
                       }
                     },
-                    child: const Text(
+                    child: Text(
                       "Submit",
-                      style: TextStyle(color: Colors.white),
+                      style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w500),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.teal,
@@ -278,13 +303,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: Image.network(
                 'https://apistrive.pertamina-ptk.com/WarehouseItem/${widget.model.id}/Image?isStream=true',
                 height: 300,
-                width: 300,
+                width: MediaQuery.of(context).size.width,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.network(
                     'https://via.placeholder.com/100',
                     height: 300,
-                    width: 300,
+                    width: MediaQuery.of(context).size.width,
                     fit: BoxFit.cover,
                   );
                 },
@@ -293,94 +318,84 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Divider(),
             Expanded(
               child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Product Name: ",
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "${widget.model.itemName}",
-                      style: const TextStyle(fontSize: 18),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "Product Category: ",
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "${widget.model.itemCategory}",
-                      style: const TextStyle(fontSize: 18),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "Quantity: ",
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "Quantity: ${widget.model.qty}",
-                      style: const TextStyle(fontSize: 18),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "Warehouse: ",
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "${widget.model.warehouseName}",
-                      style: const TextStyle(
-                        fontSize: 18,
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Product Name",
+                            style: GoogleFonts.poppins(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "${widget.model.itemName}",
+                            style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                          ),
+                        ],
                       ),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "Address: ",
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "${widget.model.address}",
-                      style: const TextStyle(
-                        fontSize: 18,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "Description: ",
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "${widget.model.description}",
-                      style: const TextStyle(
-                        fontSize: 18,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ],
-                ),
-
-              ),
+                    ],
+                  ),
+                  Divider(),
+                  SizedBox(height: 8),
+                  Text(
+                    "Quantity :",
+                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${widget.model.qty}",
+                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Category :",
+                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${widget.model.itemCategory}",
+                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Warehouse :",
+                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${widget.model.warehouseName}",
+                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Address :",
+                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${widget.model.address}",
+                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Description :",
+                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${widget.model.description}",
+                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                  ),
+                ],
+              )),
             ),
             const SizedBox(height: 0),
             Center(
               child: ElevatedButton(
                 onPressed: _showBottomSheet,
-                child: const Text(
+                child: Text(
                   "Add Action",
-                  style: TextStyle(color: Colors.white),
+                  style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w500),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal,
@@ -391,7 +406,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             SizedBox(
-              height: 50,
+              height: 30,
             )
           ],
         ),

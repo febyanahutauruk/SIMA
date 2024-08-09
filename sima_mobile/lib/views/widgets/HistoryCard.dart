@@ -1,4 +1,3 @@
-// history_card.dart
 import 'package:sima/models/history/history_pagination_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,10 +27,10 @@ class HistoryCard extends StatelessWidget {
       quantityText = 'Qty: -${model.qtyInOut}';
       quantityColor = Colors.red;
     } else {
-      icon = Icons.help_outline_rounded; // Default icon for unknown status
+      icon = Icons.help_outline_rounded; 
       iconColor = Colors.grey;
       statusColor = Colors.grey;
-      quantityText = '${model.qtyInOut}'; // No prefix for unknown status
+      quantityText = '${model.qtyInOut}'; 
       quantityColor = Colors.grey;
     }
 
@@ -56,7 +55,7 @@ class HistoryCard extends StatelessWidget {
             color: Colors.white,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
             child: Padding(
-              padding: const EdgeInsets.all(8.0), // Optional: add padding
+              padding: const EdgeInsets.all(8.0), 
               child: Icon(icon, color: iconColor),
             ),
           ),

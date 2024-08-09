@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sima/controllers/dashboard/dashboard_controller.dart'; // Import your controller
+import 'package:sima/controllers/dashboard/dashboard_controller.dart'; 
 import 'package:sima/models/dashboard/dashboard_model.dart';
 import 'package:sima/models/dashboard/dashboard_param_model.dart';
 import 'package:provider/provider.dart';
@@ -14,8 +14,10 @@ class HomeScreenInventory extends StatefulWidget {
 class _HomeScreenInventoryState extends State<HomeScreenInventory> {
   late DashboardItemController _controller;
   DashboardItemData? _dashboardItemData;
-  String _selectedFilter = 'All'; // Default value
+
+  String _selectedFilter = 'All';
   late Future<List<String>> _warehouseListFuture;
+
 
   @override
   void initState() {
@@ -41,13 +43,13 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
   Future<void> _fetchData() async {
     print('Fetching data for filter: $_selectedFilter...');
     if (_selectedFilter == 'All') {
-      _controller.param = DashboardPaginationParamModel(warehouseName: "All"); // Access param through _controller
+      _controller.param = DashboardPaginationParamModel(warehouseName: "All"); 
     } else {
-      _controller.param = DashboardPaginationParamModel(warehouseName: _selectedFilter.toLowerCase()); // Access param through _controller
+      _controller.param = DashboardPaginationParamModel(warehouseName: _selectedFilter.toLowerCase()); 
     }
-    await _controller.getDashboardItem(); // Use getDashboardItem for both cases
+    await _controller.getDashboardItem(); 
     setState(() {
-      _dashboardItemData = _controller.dashboardItemData; // Update the state with fetched data
+      _dashboardItemData = _controller.dashboardItemData; 
     });
     print('State updated with data: $_dashboardItemData');
   }
@@ -99,6 +101,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                     'Monthly Report Stock',
                     style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
+                  
                   const SizedBox(height: 20),
                   FutureBuilder<List<String>>(
                     future: _warehouseListFuture,
@@ -163,7 +166,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                   ),
                   const SizedBox(height: 16),
                   if (_dashboardItemData == null) ...[
-                    const Center(child: CircularProgressIndicator()) // Show loading indicator
+                    const Center(child: CircularProgressIndicator()) 
                   ] else ...[
                     _buildStockItem(Icons.arrow_forward_outlined, 'Item', 'Item In', Colors.teal, _dashboardItemData!.itemIn),
                     _buildStockItem(Icons.warning_rounded, 'Item', 'Low Stock', Colors.orange, _dashboardItemData!.underMinQty),
@@ -207,12 +210,12 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0), // Increase the border radius for more rounded corners
+        borderRadius: BorderRadius.circular(15.0),  
       ),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.blueGrey.shade50,
-          borderRadius: BorderRadius.circular(15.0), // Ensure the container also has rounded corners
+          borderRadius: BorderRadius.circular(15.0), 
         ),
         child: ListTile(
           leading: Icon(icon, color: color),

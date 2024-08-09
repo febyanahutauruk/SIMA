@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sima/models/transaction/transaction_pagination_model.dart';
 import 'package:sima/views/Inventory/Transaction/transaction_action.dart';
 
@@ -73,7 +74,7 @@ class _TransactionCardState extends State<TransactionCard> {
               const SizedBox(height: 10),
               Text(
                 widget.model.itemName,
-                style: const TextStyle(
+                style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -81,21 +82,21 @@ class _TransactionCardState extends State<TransactionCard> {
               const SizedBox(height: 5),
               Text(
                 widget.model.itemCategory,
-                style: const TextStyle(
+                style: GoogleFonts.poppins(
                   color: Colors.grey,
                 ),
               ),
               const SizedBox(height: 5),
               Text(
                 'Quantity: ${widget.model.qty}',
-                style: const TextStyle(
+                style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 5),
               Text(
                 'Warehouse: ${widget.model.warehouseName}',
-                style: const TextStyle(
+                style: GoogleFonts.poppins(
                   color: Colors.grey,
                 ),
               ),
@@ -110,8 +111,8 @@ class _TransactionCardState extends State<TransactionCard> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      widget.model.qty > widget.model.minQty ? 'Tersedia' : 'Tidak Tersedia',
-                      style: const TextStyle(color: Colors.white),
+                      widget.model.qty > widget.model.minQty ? 'Available' : 'Low stock',
+                      style: GoogleFonts.poppins(color: Colors.white),
                     ),
                   ),
                 ],
