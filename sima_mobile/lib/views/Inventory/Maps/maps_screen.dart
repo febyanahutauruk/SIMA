@@ -60,6 +60,7 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.teal,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white,),
@@ -67,7 +68,7 @@ class _MapScreenState extends State<MapScreen> {
             Navigator.pop(context, '/Inventory');
           },
         ),
-        title: Text('Warehouse Map',textAlign: TextAlign.center,
+        title: Text('Maps',textAlign: TextAlign.center,
           style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w700),),
       ),
       body: FutureBuilder<List<Warehouse>>(

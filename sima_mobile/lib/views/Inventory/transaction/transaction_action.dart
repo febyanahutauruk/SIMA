@@ -286,6 +286,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.teal,
         title: Text(
           "Transactions",
@@ -410,6 +411,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   Text(
                     "${widget.model.ownership}",
+                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Information :",
+                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${widget.model.information}",
                     style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                   ),
                   SizedBox(height: 8),

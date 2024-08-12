@@ -83,6 +83,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
           onPressed: () {
@@ -148,6 +149,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
               controller: _nameController,
               decoration: InputDecoration(
                 labelText: "Product Name",
+                labelStyle: GoogleFonts.poppins(),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -156,6 +158,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
               controller: _codeController,
               decoration: InputDecoration(
                 labelText: "Product Code",
+                labelStyle: GoogleFonts.poppins(),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -172,7 +175,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
                 } else {
                   return DropdownButtonFormField<Category>(
                     dropdownColor: Colors.white,
-                    decoration: InputDecoration(labelText: 'Category',border: OutlineInputBorder()),
+                    decoration: InputDecoration(labelText: 'Category',border: OutlineInputBorder(),labelStyle: GoogleFonts.poppins(),),
                     value: _selectedCategory,
                     onChanged: (Category? newValue) {
                       setState(() {
@@ -182,7 +185,8 @@ class _InputItemScreenState extends State<InputItemScreen> {
                     items: snapshot.data!.map((Category category) {
                       return DropdownMenuItem<Category>(
                         value: category,
-                        child: Text(category.name),
+                        child: Text(category.name,
+                            style: GoogleFonts.poppins())
                       );
                     }).toList(),
                     validator: (value) {
@@ -202,6 +206,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
               maxLines: 3,
               decoration: InputDecoration(
                 labelText: "Description",
+                labelStyle: GoogleFonts.poppins(),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -214,8 +219,8 @@ class _InputItemScreenState extends State<InputItemScreen> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 40.0, vertical: 16.0),
                 ),
-                child: const Text('Submit',
-                  style: TextStyle(color: Colors.white),),
+                child:  Text('Submit',
+                  style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold)),
               ),
             ),
           ],

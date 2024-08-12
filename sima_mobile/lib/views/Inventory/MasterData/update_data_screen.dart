@@ -6,6 +6,7 @@ import 'package:sima/models/form/update_data_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
 import 'package:sima/services/item/item_service.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UpdateDataScreen extends StatefulWidget {
   final UpdateDataModel item;
@@ -116,16 +117,17 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
           onPressed: () {
-            Navigator.pushNamed(context, '/ItemListScreen');
+            Navigator.of(context).pop();
           },
         ),
         backgroundColor: Colors.teal,
-        title: const Text(
+        title: Text(
           'Update Item',
-          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          style: GoogleFonts.poppins(fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
       body: SingleChildScrollView(
@@ -181,6 +183,7 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
               controller: _nameController,
               decoration: InputDecoration(
                 labelText: "Product Name",
+                labelStyle: GoogleFonts.poppins(),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -189,6 +192,7 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
               controller: _codeController,
               decoration: InputDecoration(
                 labelText: "Product Code",
+                labelStyle: GoogleFonts.poppins(),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -205,7 +209,7 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
                 } else {
                   return DropdownButtonFormField<Category>(
                     dropdownColor: Colors.white,
-                    decoration: InputDecoration(labelText: 'Category',border: OutlineInputBorder()),
+                    decoration: InputDecoration(labelText: 'Category',border: OutlineInputBorder(),labelStyle: GoogleFonts.poppins(),),
                     value: _selectedCategory,
                     onChanged: (Category? newValue) {
                       setState(() {
@@ -215,8 +219,9 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
                     items: snapshot.data!.map((Category category) {
                       return DropdownMenuItem<Category>(
                         value: category,
-                        child: Text(category.name),
-                      );
+                        child: Text(category.name,
+                            style: GoogleFonts.poppins()),
+                        );
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
@@ -234,6 +239,7 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
               controller: _usernameController,
               decoration: InputDecoration(
                 labelText: "Username",
+                labelStyle: GoogleFonts.poppins(),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -243,6 +249,7 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
               maxLines: 3,
               decoration: InputDecoration(
                 labelText: "Description",
+                labelStyle: GoogleFonts.poppins(),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -255,9 +262,9 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 40.0, vertical: 16.0),
                 ),
-                child: const Text(
+                child: Text(
                   'Update',
-                  style: TextStyle(color: Colors.white),
+                  style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold,),
                 ),
               ),
             ),

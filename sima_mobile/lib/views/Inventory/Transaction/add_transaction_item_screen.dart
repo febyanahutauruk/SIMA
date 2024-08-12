@@ -25,6 +25,7 @@ class _InputTransactionItemScreenState
   final TextEditingController _aktorController = TextEditingController();
   final TextEditingController _qtyController = TextEditingController();
   final TextEditingController _minQtyController = TextEditingController();
+  final TextEditingController _informationController = TextEditingController();
 
   late Future<List<Items>> _itemListFuture;
   late Future<List<Warehouses>> _warehouseListFuture;
@@ -94,6 +95,7 @@ class _InputTransactionItemScreenState
         qty: int.parse(_qtyController.text),
         minQty: int.parse(_minQtyController.text),
         ownership: _selectedOwnership,
+        information: _informationController.text,
       );
       final response = await _addTransactionItemFormControllers.addItem(item);
 
@@ -101,6 +103,7 @@ class _InputTransactionItemScreenState
       _aktorController.clear();
       _qtyController.clear();
       _minQtyController.clear();
+      _informationController.clear();
 
       setState(() {
         _selectedWarehouses = null;
@@ -130,6 +133,7 @@ class _InputTransactionItemScreenState
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
           onPressed: () {
@@ -137,7 +141,7 @@ class _InputTransactionItemScreenState
           },
         ),
         title: Text(
-          "Add New Item",
+          "Transaction",
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -290,6 +294,17 @@ class _InputTransactionItemScreenState
                     );
                   }).toList(),
                 ),
+              ),
+            ),
+            const SizedBox(height: 24.0),
+            TextField(
+              controller: _informationController,
+              keyboardType: TextInputType.text,
+              maxLines: 3,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelStyle: GoogleFonts.poppins(),
+                labelText: "Information",
               ),
             ),
             const SizedBox(height: 50),

@@ -46,6 +46,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
+        centerTitle: true,
         scrolledUnderElevation :0.0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white,),
@@ -54,7 +55,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
           },
         ),
         title:  Text(
-          "Item",
+          "Items",
           style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w700),
         ),
         backgroundColor: Colors.teal,

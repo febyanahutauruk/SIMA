@@ -10,7 +10,7 @@ class ItemController with ChangeNotifier {
   bool _isLoading = true;
   bool _isNext = true;
   ItemPaginationParamModel param = 
-    ItemPaginationParamModel (limit: 3, offset: 0);
+    ItemPaginationParamModel (limit: 4, offset: 0);
 // test
   List<ItemPaginationModel> get items => _items;
   bool get isNext => _isNext;
@@ -18,7 +18,7 @@ class ItemController with ChangeNotifier {
 
   Future<void> getPaginationItem() async {
     _isLoading = true;
-    param = ItemPaginationParamModel (limit: 3, offset: 0);
+    param = ItemPaginationParamModel (limit: 4, offset: 0);
     ItemPaginationResponseModels responseModel = await service 
         .getPaginationItem(param);
     

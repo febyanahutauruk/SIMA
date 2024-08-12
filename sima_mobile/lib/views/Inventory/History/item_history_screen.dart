@@ -48,6 +48,7 @@ class _HistoryListScreenState extends State<HistoryScreen> {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
+        centerTitle: true,
         scrolledUnderElevation :0.0,
         backgroundColor: Colors.teal,
         leading: IconButton(

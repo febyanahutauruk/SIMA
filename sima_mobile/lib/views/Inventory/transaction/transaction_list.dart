@@ -80,6 +80,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_rounded,
@@ -92,7 +93,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
         title: Text(
           "Transactions",
           style: GoogleFonts.poppins(
-              color: Colors.white, fontWeight: FontWeight.bold),
+              color: Colors.white, fontWeight: FontWeight.w700,),
         ),
         backgroundColor: Colors.teal,
       ),

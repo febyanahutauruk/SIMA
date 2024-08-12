@@ -31,6 +31,7 @@ class TransactionPaginationModel {
   bool? isStream;
   String status;
   String? ownership;
+  String? information;
 
 
   TransactionPaginationModel({
@@ -66,6 +67,7 @@ class TransactionPaginationModel {
     this.errorMsg,
     this.isStream,
     this.ownership,
+    this.information,
   });
 
   factory TransactionPaginationModel.fromJson(Map<String, dynamic> json) {
@@ -96,6 +98,7 @@ class TransactionPaginationModel {
     qtyInOut: json["qtyInOut"] ?? 0,
     status: json["status"] ?? '',
     ownership: json["ownership"] ?? '',
+    information: json["information"] ?? '',
     warehouseItemId: json["warehouseItemId"] ?? 0,
     aktor: json["aktor"] ?? '',
     code: json["code"] ?? 0,
@@ -132,6 +135,7 @@ class TransactionPaginationModel {
     "qtyInOut": qtyInOut,
     "status": status,
     "ownership": ownership,
+    "information": information,
     "warehouseItemId": warehouseItemId,
     "aktor": aktor,
     "code": code,
