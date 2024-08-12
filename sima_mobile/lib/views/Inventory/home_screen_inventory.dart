@@ -23,8 +23,8 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
   void initState() {
     super.initState();
     _controller = Provider.of<DashboardItemController>(context, listen: false);
-    _warehouseListFuture = _fetchWarehouseList(); // Initialize the future for fetching warehouses
-    _fetchData(); // Fetch data when the widget initializes
+    _warehouseListFuture = _fetchWarehouseList(); 
+    _fetchData(); 
   }
 
   Future<List<String>> _fetchWarehouseList() async {
@@ -67,7 +67,8 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+      child : Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +142,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
                                   if (newValue != null) {
                                     setState(() {
                                       _selectedFilter = newValue;
-                                      _fetchData(); // Fetch data for the new selection
+                                      _fetchData(); 
                                     });
                                   }
                                 },
@@ -203,6 +204,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
           ],
         ),
       ),
+    ),
     );
   }
 
