@@ -50,7 +50,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
         code: _codeController.text,
         category: _selectedCategory?.id,
         description: _descriptionController.text,
-        createdBy: _usernameController.text,
+        createdBy: "aufar",
         fileUploads: _imageFile,
       );
 
@@ -67,9 +67,11 @@ class _InputItemScreenState extends State<InputItemScreen> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Item added successfully!')));
-      Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => ItemListScreen()),
-      );
+      Navigator.of(context).pop();
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const ItemListScreen()));
     } catch (e) {
       print(e);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to add item: $e')));
@@ -143,7 +145,6 @@ class _InputItemScreenState extends State<InputItemScreen> {
             ),
             const SizedBox(height: 30),
             TextField(
-              obscureText: true,
               controller: _nameController,
               decoration: InputDecoration(
                 labelText: "Product Name",
@@ -194,14 +195,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
                 }
               },
             ),
-            const SizedBox(height: 16.0),
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(
-                labelText: "Username",
-                border: OutlineInputBorder(),
-              ),
-            ),
+
             const SizedBox(height: 16.0),
             TextField(
               controller: _descriptionController,

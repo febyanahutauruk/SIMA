@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11540db0-ab6c-4771-8c5d-4d8371f7faf6" name="Changes" comment="" />
+    <list default="true" id="11540db0-ab6c-4771-8c5d-4d8371f7faf6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/Maps/maps_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/Maps/maps_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/MasterData/add_item_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/MasterData/add_item_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/home_screen_inventory.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/Inventory/home_screen_inventory.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sima_mobile/lib/views/widgets/card_action.dart" beforeDir="false" afterPath="$PROJECT_DIR$/sima_mobile/lib/views/widgets/card_action.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

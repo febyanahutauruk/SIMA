@@ -59,6 +59,7 @@ class _HomeScreenInventoryState extends State<HomeScreenInventory> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation :0.0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.teal,),
           onPressed: () {

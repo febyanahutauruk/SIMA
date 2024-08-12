@@ -51,8 +51,11 @@ class CardAction extends StatelessWidget {
               try {
                 await _updateDataController.deleteItem(item.id);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Item deleted successfully')));
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ItemListScreen()) 
-                );
+                Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ItemListScreen()));
               } catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to delete item: $e')));
               }

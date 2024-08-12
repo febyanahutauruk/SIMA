@@ -42,13 +42,13 @@ class _MapScreenState extends State<MapScreen> {
           filteredWarehouses[0].latitude != null &&
           filteredWarehouses[0].longitude != null &&
           searchController.text.isNotEmpty) {
-        mapController.move(LatLng(filteredWarehouses[0].latitude!, filteredWarehouses[0].longitude!), 15.0);
+        mapController.move(LatLng(filteredWarehouses[0].latitude!, filteredWarehouses[0].longitude!), 10.0);
       }
     });
   }
 
   void _onWarehouseSelected(Warehouse warehouse) {
-    mapController.move(LatLng(warehouse.latitude!, warehouse.longitude!), 15.0);
+    mapController.move(LatLng(warehouse.latitude!, warehouse.longitude!), 10.0);
     searchController.clear();
     setState(() {
       filteredWarehouses = [];
@@ -199,6 +199,7 @@ class _MapScreenState extends State<MapScreen> {
       left: 16.0,
       right: 16.0,
       child: Card(
+        color: Colors.white,
         elevation: 8.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
