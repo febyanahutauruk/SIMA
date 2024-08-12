@@ -48,11 +48,11 @@ class HistoryCard extends StatelessWidget {
       child: Card(
         elevation: 1,
         margin: const EdgeInsets.all(5),
-        color: Colors.blueGrey.shade50,
+        color: Colors.white,
         child: ListTile(
           leading: Card(
             elevation: 0,
-            color: Colors.white,
+            color: Colors.grey.shade50,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
             child: Padding(
               padding: const EdgeInsets.all(8.0), 

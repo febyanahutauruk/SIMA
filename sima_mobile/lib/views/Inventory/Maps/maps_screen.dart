@@ -58,6 +58,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContextcontext) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.teal,
         leading: IconButton(

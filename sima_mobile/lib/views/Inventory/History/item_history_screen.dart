@@ -46,7 +46,7 @@ class _HistoryListScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
         scrolledUnderElevation :0.0,
         backgroundColor: Colors.teal,
@@ -182,7 +182,7 @@ class _HistoryListScreenState extends State<HistoryScreen> {
                               child: Text(
                                 date,
                                 style: GoogleFonts.poppins(
-                                  fontSize: 18,
+                                  fontSize:  14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
