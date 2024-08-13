@@ -33,6 +33,7 @@ class _InputTransactionItemScreenState
   Items? _selectedItems;
   Warehouses? _selectedWarehouses;
   String? _selectedOwnership;
+  String? _selectedCondition;
 
   int? _qty = 0;
   int? _minQty = 0;
@@ -79,7 +80,8 @@ class _InputTransactionItemScreenState
     // Validate the input fields
     if (_selectedWarehouses == null ||
         _selectedItems == null ||
-        _selectedOwnership == null) {
+        _selectedOwnership == null ||
+        _selectedCondition == null) {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please complete all fields before submitting.')),
@@ -96,6 +98,7 @@ class _InputTransactionItemScreenState
         minQty: int.parse(_minQtyController.text),
         ownership: _selectedOwnership,
         information: _informationController.text,
+        condition: _selectedCondition
       );
       final response = await _addTransactionItemFormControllers.addItem(item);
 
@@ -285,6 +288,39 @@ class _InputTransactionItemScreenState
                     style: GoogleFonts.poppins(),
                   ),
                   items: <String>['Milik', 'Sewa'].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(color: Colors.teal),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+            const SizedBox(height: 24.0),
+            InputDecorator(
+              decoration: InputDecoration(
+                labelStyle: GoogleFonts.poppins(),
+                labelText: 'Condition',
+                border: OutlineInputBorder(),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: _selectedCondition,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedCondition = newValue;
+                    });
+                  },
+                  borderRadius: BorderRadius.circular(20),
+                  dropdownColor: Colors.white,
+                  hint: Text(
+                    "Condition",
+                    style: GoogleFonts.poppins(),
+                  ),
+                  items: <String>['Baik', 'Rusak'].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(

@@ -388,6 +388,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   SizedBox(height: 8),
                   Text(
+                    "Condition :",
+                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${widget.model.condition}",
+                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
                     "Warehouse :",
                     style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
                   ),

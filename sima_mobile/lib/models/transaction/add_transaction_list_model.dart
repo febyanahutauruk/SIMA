@@ -8,6 +8,7 @@ class AddTransactionItemModel {
   int minQty;
   String? ownership;
   String? information;
+  String? condition;
 
 
   AddTransactionItemModel({
@@ -17,7 +18,8 @@ class AddTransactionItemModel {
   required this.qty,
   required this.minQty,
   required this.ownership,
-  required this.information,
+    this.information,
+    this.condition,
   });
 
   factory AddTransactionItemModel.fromJson(Map<String, dynamic> json) => AddTransactionItemModel(
@@ -28,6 +30,7 @@ class AddTransactionItemModel {
     minQty: json["minQty"],
     ownership: json["ownership"],
     information: json["information"],
+    condition: json["condition"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -38,5 +41,6 @@ class AddTransactionItemModel {
     "minQty": minQty,
     "ownership": ownership,
     "information": information,
+    "condition": condition,
   };
 }

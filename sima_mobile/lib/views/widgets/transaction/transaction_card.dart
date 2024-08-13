@@ -76,7 +76,7 @@ class _TransactionCardState extends State<TransactionCard> {
                 widget.model.itemName,
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: 14,
                 ),
               ),
               const SizedBox(height: 5),
@@ -84,6 +84,7 @@ class _TransactionCardState extends State<TransactionCard> {
                 widget.model.itemCategory,
                 style: GoogleFonts.poppins(
                   color: Colors.grey,
+                  fontSize: 12,
                 ),
               ),
               const SizedBox(height: 5),
@@ -91,6 +92,7 @@ class _TransactionCardState extends State<TransactionCard> {
                 'Quantity: ${widget.model.qty}',
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
+                  fontSize: 12,
                 ),
               ),
               const SizedBox(height: 5),
@@ -98,6 +100,7 @@ class _TransactionCardState extends State<TransactionCard> {
                 'Warehouse: ${widget.model.warehouseName}',
                 style: GoogleFonts.poppins(
                   color: Colors.grey,
+                  fontSize: 12,
                 ),
               ),
               const Divider(),
