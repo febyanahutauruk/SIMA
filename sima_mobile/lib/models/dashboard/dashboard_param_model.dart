@@ -1,5 +1,4 @@
-// To parse this JSON data, do
-//
+
 //     final itemPaginationParamModel = itemPaginationParamModelFromJson(jsonString);
 
 import 'dart:convert';

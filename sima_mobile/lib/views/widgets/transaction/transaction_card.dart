@@ -97,7 +97,15 @@ class _TransactionCardState extends State<TransactionCard> {
               ),
               const SizedBox(height: 5),
               Text(
-                'Warehouse: ${widget.model.warehouseName}',
+                'Condition: ${widget.model.condition}',
+                style: GoogleFonts.poppins(
+                  color: Colors.grey,
+                  fontSize: 12,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                '${widget.model.warehouseName}',
                 style: GoogleFonts.poppins(
                   color: Colors.grey,
                   fontSize: 12,

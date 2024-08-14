@@ -12,19 +12,19 @@ class UpdateDataService {
 
     final url = Uri.parse('https://apistrive.pertamina-ptk.com/api/Items/Update/${item.id}');
     final request = http.MultipartRequest(
-      'PUT', // Use PUT method
+      'PUT',
       url,
     );
 
-    // Add fields
+
     request.fields['Code'] = item.code;
     request.fields['Name'] = item.name;
     request.fields['Description'] = item.description ?? '';
     request.fields['CategoryId'] = item.category?.toString() ?? '0';
-    request.fields['Id'] = ''; // Based on the curl example
+    request.fields['Id'] = '';
     request.fields['Username'] = item.createdBy;
 
-    // Add file if it exists
+
     if (item.fileUploads != null) {
       var filePath = item.fileUploads!.path;
       var fileName = filePath.split('/').last;
@@ -32,7 +32,7 @@ class UpdateDataService {
 
       request.files.add(
         await http.MultipartFile.fromPath(
-          'FileImage', // Ensure this matches the API field name
+          'FileImage',
           filePath,
           contentType: MediaType.parse(mimeType),
           filename: fileName,
@@ -42,7 +42,7 @@ class UpdateDataService {
       print('No image to upload.');
     }
 
-    // Debug information
+
     print('Update data: ${jsonEncode(item.toJson())}');
     print('Request URL: ${url}');
     print('Request Fields: ${request.fields}');

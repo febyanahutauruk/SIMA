@@ -86,7 +86,7 @@ class _InputTransactionItemScreenState
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please complete all fields before submitting.')),
       );
-      return; // Do not proceed if validation fails
+      return;
     }
 
     try {
@@ -102,7 +102,6 @@ class _InputTransactionItemScreenState
       );
       final response = await _addTransactionItemFormControllers.addItem(item);
 
-      // Clear input fields after successful submission
       _aktorController.clear();
       _qtyController.clear();
       _minQtyController.clear();
@@ -169,6 +168,7 @@ class _InputTransactionItemScreenState
                   return Center(child: Text('No items available'));
                 } else {
                   return DropdownButtonFormField<Items>(
+                    borderRadius: BorderRadius.circular(20),
                     dropdownColor: Colors.white,
                     decoration: InputDecoration(
                       labelStyle: GoogleFonts.poppins(),
@@ -210,6 +210,7 @@ class _InputTransactionItemScreenState
                   return Center(child: Text('No warehouses available'));
                 } else {
                   return DropdownButtonFormField<Warehouses>(
+                    borderRadius: BorderRadius.circular(20),
                     dropdownColor: Colors.white,
                     decoration: InputDecoration(
                       labelStyle: GoogleFonts.poppins(),
@@ -320,7 +321,7 @@ class _InputTransactionItemScreenState
                     "Condition",
                     style: GoogleFonts.poppins(),
                   ),
-                  items: <String>['Baik', 'Rusak'].map<DropdownMenuItem<String>>((String value) {
+                  items: <String>['Bagus','Rusak'].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(
