@@ -32,25 +32,17 @@ class TransactionController with ChangeNotifier {
     }
   }
 
-  Future<void> loadMore() async {
-    if (_isNext && !_isLoading) {
-      _isLoading = true;
-      try {
-        param = param.copyWith(offset: _items.length); // Use current items length for offset
-        TransactionPaginationResponseModel responseModel = await service.getPaginationTransaction(param);
+  Future <void> loadMore() async {
+    print("limit ${param.limit}");
+    //param = param.copyWith(limit = 2, offset = _items.length);
+    TransactionPaginationResponseModel responseModel =
+    await service.getPaginationTransaction(param);
 
-        print("Response from loadMore: $responseModel");
+    _items = [..._items, ...responseModel.data];
+    _isNext = responseModel.isNext;
 
-        _items = [..._items, ...responseModel.data];
-        _isNext = responseModel.isNext;
-      } catch (e) {
-        print('Error loading more transactions: $e');
-      } finally {
-        _isLoading = false;
-        notifyListeners(); 
-      }
+    notifyListeners();
     }
-  }
 
   Future<void> searchItems(String itemName) async {
     _isLoading = true;

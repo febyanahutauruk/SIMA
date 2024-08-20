@@ -24,10 +24,12 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
   void scrollListener() {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
-      final transactionController = context.read<TransactionController>();
-      if (transactionController.isNext && !transactionController.isLoading) {
-        transactionController.loadMore();
-      }
+      print("...");
+      final itemP = context.read<TransactionController>();
+      itemP.param = itemP.param.copyWith(
+        offset: itemP.items.length,
+      );
+      itemP.loadMore();
     }
   }
 
@@ -36,6 +38,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
     super.initState();
     context.read<TransactionController>().getPaginationTransaction();
     _scrollController.addListener(scrollListener);
+    super.initState();
     _futureCategoryList = _transactionService.fetchCategoryList();
   }
 
@@ -93,7 +96,9 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
         title: Text(
           "Transactions",
           style: GoogleFonts.poppins(
-              color: Colors.white, fontWeight: FontWeight.w700,),
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
         ),
         backgroundColor: Colors.teal,
       ),
@@ -134,7 +139,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                         },
                         decoration: InputDecoration(
                           prefixIcon:
-                          const Icon(Icons.search, color: Colors.grey),
+                              const Icon(Icons.search, color: Colors.grey),
                           hintText: "Search....",
                           border: InputBorder.none,
                           contentPadding: const EdgeInsets.symmetric(
@@ -146,22 +151,26 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                     FutureBuilder<List<Category>>(
                       future: _futureCategoryList,
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const Center(child: CircularProgressIndicator());
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
                         } else if (snapshot.hasError) {
-                          return const Center(child: Text('Failed to load categories'));
-                        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                          return const Center(child: Text('No categories found'));
+                          return const Center(
+                              child: Text('Failed to load categories'));
+                        } else if (!snapshot.hasData ||
+                            snapshot.data!.isEmpty) {
+                          return const Center(
+                              child: Text('No categories found'));
                         } else {
                           return SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: [
-                                // Hardcoded "All" button
                                 _buildCategoryButton('All', Colors.white),
-                                // Dynamically generated category buttons
                                 ...snapshot.data!.map((category) {
-                                  return _buildCategoryButton(category.name, Colors.white);
+                                  return _buildCategoryButton(
+                                      category.name, Colors.white);
                                 }).toList(),
                               ],
                             ),
@@ -180,7 +189,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount:
-                      (transactionController.items.length / 2).ceil(),
+                          (transactionController.items.length / 2).ceil(),
                       itemBuilder: (context, index) {
                         int firstIndex = index * 2;
                         int secondIndex = firstIndex + 1;
@@ -190,20 +199,24 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                             Expanded(
                               child: TransactionCard(
                                   model:
-                                  transactionController.items[firstIndex]),
+                                      transactionController.items[firstIndex]),
                             ),
                             Expanded(
                               child: secondIndex <
-                                  transactionController.items.length
+                                      transactionController.items.length
                                   ? TransactionCard(
-                                  model: transactionController
-                                      .items[secondIndex])
+                                      model: transactionController
+                                          .items[secondIndex])
                                   : Container(),
                             ),
                           ],
                         );
                       },
                     ),
+                    if (transactionController.isNext)
+                      const Center(
+                        child: CircularProgressIndicator(),
+                      )
                   ],
                 ),
               ),

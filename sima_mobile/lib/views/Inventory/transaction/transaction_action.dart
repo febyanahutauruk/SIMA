@@ -55,8 +55,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Text(
               "Confirm Action",
               style: GoogleFonts.poppins(
-                color: Colors.black, fontWeight: FontWeight.w500
-              ),
+                  color: Colors.black, fontWeight: FontWeight.w500),
             ),
           ],
         ),
@@ -70,8 +69,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               foregroundColor: Colors.grey,
             ),
             onPressed: () => Navigator.of(context).pop(),
-            child: Text("Cancel",
-            style: GoogleFonts.poppins(),
+            child: Text(
+              "Cancel",
+              style: GoogleFonts.poppins(),
             ),
           ),
           ElevatedButton(
@@ -87,7 +87,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             },
             child: Text(
               "Confirm",
-              style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600),
+              style: GoogleFonts.poppins(
+                  color: Colors.white, fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -150,7 +151,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   const SizedBox(height: 25),
                   Text(
                     "Adjust Quantity",
-                    style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(
+                        fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
                   Row(
@@ -202,9 +204,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       const SizedBox(width: 10),
                       Expanded(
                         child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: DropdownButtonFormField<int>(
                             dropdownColor: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Action',
@@ -216,18 +219,25 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             items: [
                               DropdownMenuItem(
                                 value: 1,
+                                child: Center(
                                 child: Text(
                                   "Item In",
-                                  style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w500),
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),                                ),
                                 ),
                               ),
                               DropdownMenuItem(
                                 value: 2,
+                                child: Center(
                                 child: Text(
                                   "Item Out",
-                                  style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w500),
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
+                            ),
                             ],
                             onChanged: (value) {
                               setState(() {
@@ -254,7 +264,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     },
                     child: Text(
                       "Submit",
-                      style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w500),
+                      style: GoogleFonts.poppins(
+                          color: Colors.white, fontWeight: FontWeight.w500),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.teal,
@@ -333,28 +344,32 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(child:
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Product Name",
-                            style: GoogleFonts.poppins(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "${widget.model.itemName}",
-                            style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
-                          ),
-                        ],
-                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Product Name",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "${widget.model.itemName}",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14, color: Colors.grey),
+                            ),
+                          ],
+                        ),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             "${widget.model.status}",
-                            style: GoogleFonts.poppins(fontSize: 14, color: statusColor, fontWeight: FontWeight.w700),
+                            style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: statusColor,
+                                fontWeight: FontWeight.w700),
                           ),
                         ],
                       ),
@@ -364,83 +379,101 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   SizedBox(height: 8),
                   Text(
                     "Quantity :",
-                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "${widget.model.qty}",
-                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                    style:
+                        GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                   ),
                   SizedBox(height: 8),
                   Text(
                     "Min Quantity :",
-                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "${widget.model.minQty}",
-                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                    style:
+                        GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                   ),
                   SizedBox(height: 8),
                   Text(
                     "Category :",
-                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "${widget.model.itemCategory}",
-                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                    style:
+                        GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                   ),
                   SizedBox(height: 8),
                   Text(
                     "Condition :",
-                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "${widget.model.condition}",
-                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                    style:
+                        GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                   ),
                   SizedBox(height: 8),
                   Text(
                     "Warehouse :",
-                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "${widget.model.warehouseName}",
-                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                    style:
+                        GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                   ),
                   SizedBox(height: 8),
                   Text(
                     "Address :",
-                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "${widget.model.address}",
-                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                    style:
+                        GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                   ),
                   SizedBox(height: 8),
                   Text(
                     "Ownership :",
-                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "${widget.model.ownership}",
-                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                    style:
+                        GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                   ),
                   SizedBox(height: 8),
                   Text(
                     "Information :",
-                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "${widget.model.information}",
-                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                    style:
+                        GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                   ),
                   SizedBox(height: 8),
                   Text(
                     "Description :",
-                    style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "${widget.model.description}",
-                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
+                    style:
+                        GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                   ),
                 ],
               )),
@@ -451,7 +484,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 onPressed: _showBottomSheet,
                 child: Text(
                   "Add Action",
-                  style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w500),
+                  style: GoogleFonts.poppins(
+                      color: Colors.white, fontWeight: FontWeight.w500),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal,

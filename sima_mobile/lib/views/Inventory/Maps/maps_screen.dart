@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-// Import your map_service and map_model
 import 'package:sima/services/map/map_service.dart';
 import 'package:sima/models/map/map_model.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,13 +35,18 @@ class _MapScreenState extends State<MapScreen> {
   void _onSearchChanged() {
     setState(() {
       filteredWarehouses = warehouses
-          .where((warehouse) => warehouse.name.toLowerCase().contains(searchController.text.toLowerCase()))
+          .where((warehouse) => warehouse.name
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase()))
           .toList();
       if (filteredWarehouses.isNotEmpty &&
           filteredWarehouses[0].latitude != null &&
           filteredWarehouses[0].longitude != null &&
           searchController.text.isNotEmpty) {
-        mapController.move(LatLng(filteredWarehouses[0].latitude!, filteredWarehouses[0].longitude!), 10.0);
+        mapController.move(
+            LatLng(filteredWarehouses[0].latitude!,
+                filteredWarehouses[0].longitude!),
+            10.0);
       }
     });
   }
@@ -63,13 +67,20 @@ class _MapScreenState extends State<MapScreen> {
         centerTitle: true,
         backgroundColor: Colors.teal,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white,),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.white,
+          ),
           onPressed: () {
             Navigator.pop(context, '/Inventory');
           },
         ),
-        title: Text('Maps',textAlign: TextAlign.center,
-          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w700),),
+        title: Text(
+          'Maps',
+          textAlign: TextAlign.center,
+          style: GoogleFonts.poppins(
+              color: Colors.white, fontWeight: FontWeight.w700),
+        ),
       ),
       body: FutureBuilder<List<Warehouse>>(
         future: futureWarehouses,
@@ -97,50 +108,66 @@ class _MapScreenState extends State<MapScreen> {
                 ),
                 children: [
                   TileLayer(
-                    urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    urlTemplate:
+                        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     subdomains: ['a', 'b', 'c'],
                   ),
                   MarkerLayer(
                     markers: warehouses
-                        .where((warehouse) => warehouse.longitude != null && warehouse.latitude != null)
+                        .where((warehouse) =>
+                            warehouse.longitude != null &&
+                            warehouse.latitude != null)
                         .map((warehouse) {
                       return Marker(
-                        point: LatLng(warehouse.latitude!, warehouse.longitude!),
-                        width: 80.0,height: 80.0,
+                        point:
+                            LatLng(warehouse.latitude!, warehouse.longitude!),
+                        width: 80.0,
+                        height: 80.0,
                         child: GestureDetector(
                           onTap: () {
-                            mapController.move(LatLng(warehouse.latitude!, warehouse.longitude!), 15.0);
+                            mapController.move(
+                                LatLng(
+                                    warehouse.latitude!, warehouse.longitude!),
+                                15.0);
                             showModalBottomSheet(
                               backgroundColor: Colors.white,
                               context: context,
                               builder: (BuildContext context) {
                                 return Container(
-                                  height: 200, // Adjust height as needed
-                                  padding: EdgeInsets.all(16),
-                                  child: Column(
-                                    children: [
-                                      Row( // Add this Row
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.remove, size: 40, color: Colors.grey), // Example line icon
-                                        ],
-                                      ),
-                                      SizedBox(height: 16), // Add spacing between the icon and the text
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            warehouse.name,
-                                            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(height: 8),
-                                          Text(
-                                            warehouse.address,
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                  height: 200,
+                                  padding: EdgeInsets.all(10),
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.remove,
+                                                size: 40, color: Colors.grey),
+                                          ],
+                                        ),
+                                        SizedBox(height: 8),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              warehouse.name,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            SizedBox(height: 18),
+                                            Text(
+                                              warehouse.address,
+                                              style: GoogleFonts.poppins(fontSize: 16),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
@@ -186,10 +213,13 @@ class _MapScreenState extends State<MapScreen> {
         controller: searchController,
         decoration: InputDecoration(
           hintText: 'Search for a warehouse...',
-          hintStyle: TextStyle(color: Colors.grey),
+          hintStyle: GoogleFonts.poppins(color: Colors.grey),
           border: InputBorder.none,
           contentPadding: EdgeInsets.all(16.0),
-          prefixIcon: Icon(Icons.search_rounded, color: Colors.grey,),
+          prefixIcon: Icon(
+            Icons.search_rounded,
+            color: Colors.grey,
+          ),
         ),
       ),
     );
