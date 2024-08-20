@@ -179,19 +179,23 @@ class _InputTransactionItemScreenState
                     onChanged: (Items? newValue) {
                       setState(() {
                         _selectedItems = newValue;
-                      });
-                    },
+                      });},
                     items: snapshot.data!.map((Items item) {
                       return DropdownMenuItem<Items>(
                         value: item,
-                        child: Text(item.name, 
-                          style: GoogleFonts.poppins()),
+                        child: SizedBox(
+                          width: 300, // Set your desired width
+                          child: Text(
+                            item.name,
+                            style: GoogleFonts.poppins(),
+                            overflow: TextOverflow.ellipsis, // Add ellipsis for long text
+                          ),
+                        ),
                       );
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
-                        return 'Please select an item';
-                      }
+                        return 'Please select an item';}
                       return null;
                     },
                   );

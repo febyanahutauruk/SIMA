@@ -19,52 +19,57 @@ class ItemCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 8.0),
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Product Name",
-                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      model.name,
-                      style: GoogleFonts.poppins(color: Colors.grey.shade400),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300),
-                    borderRadius: BorderRadius.circular(4),
+          Row(
+            children: [
+              Expanded(
+                flex: 4,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,children: [
+                  Text(
+                    "Product Name",
+                    style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
                   ),
-                  child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Dialog(
-                            child: CardAction(
-                              item: UpdateDataModel(
-                                id: model.id,
-                                name: model.name,
-                                code: model.code,
-                                description: model.description,
-                                createdBy: model.createdBy,
-                              ),
+                  Text(
+                    model.name,
+                    style: GoogleFonts.poppins(color: Colors.grey.shade400),overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+                ),
+              ),
+              const Spacer(),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          child: CardAction(
+                            item: UpdateDataModel(
+                              id: model.id,
+                              name:model.name,
+                              code: model.code,
+                              description: model.description,
+                              createdBy: model.createdBy,
                             ),
-                          );
-                        },
-                      );
-                    },
-                    child: const Icon(
-                      Icons.menu_rounded,
-                      color: Colors.grey,
-                      size: 28,
-                    ),
-                  ),)
-              ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: const Icon(
+                    Icons.menu_rounded,
+                    color: Colors.grey,
+                    size: 28,
+                  ),
+                ),
+              )
+            ],
+
             ),
             const Divider(),
             Text(

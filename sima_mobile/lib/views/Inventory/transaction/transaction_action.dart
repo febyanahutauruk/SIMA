@@ -333,6 +333,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Expanded(child:
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -346,6 +347,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                           ),
                         ],
+                      ),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
