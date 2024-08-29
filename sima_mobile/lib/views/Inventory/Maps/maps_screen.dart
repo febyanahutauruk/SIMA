@@ -144,8 +144,8 @@ class _MapScreenState extends State<MapScreen> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Icon(Icons.remove,
-                                                size: 40, color: Colors.grey),
+                                            // Icon(Icons.remove,
+                                            //     size: 40, color: Colors.grey),
                                           ],
                                         ),
                                         SizedBox(height: 8),

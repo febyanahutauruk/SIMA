@@ -3,6 +3,7 @@ import 'package:sima/controllers/form/update_data_controller.dart';
 import 'package:sima/models/form/update_data_model.dart';
 import '../Inventory/MasterData/update_data_screen.dart';
 import 'package:sima/views/Inventory/MasterData/item_list_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CardAction extends StatelessWidget {
   final UpdateDataModel item;
@@ -49,13 +50,63 @@ class CardAction extends StatelessWidget {
                 return;
               }
               try {
-                await _updateDataController.deleteItem(item.id);
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Item deleted successfully')));
-                Navigator.of(context).pop();
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ItemListScreen()));
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    title: Row(
+                      children: [
+                        Icon(Icons.warning, color: Colors.red),
+                        SizedBox(width: 10),
+                        Text(
+                          "Confirm Action",
+                          style: GoogleFonts.poppins(
+                              color: Colors.black, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                    content: Text(
+                      "Are you sure you want to submit this action?",
+                      style: GoogleFonts.poppins(fontSize: 16),
+                    ),
+                    actions: [
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.grey,
+                        ),
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text(
+                          "Cancel",
+                          style: GoogleFonts.poppins(),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.teal,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ItemListScreen()));
+                          await _updateDataController.deleteItem(item.id);
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Item deleted successfully')));
+
+                        },
+                        child: Text(
+                          "Confirm",
+                          style: GoogleFonts.poppins(
+                              color: Colors.white, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               } catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to delete item: $e')));
               }

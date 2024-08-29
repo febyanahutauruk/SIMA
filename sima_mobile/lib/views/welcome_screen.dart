@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   size: 14,
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, '/assets');
+                  Navigator.pushNamed(context,'/assets');
                 },
               ),
             ),

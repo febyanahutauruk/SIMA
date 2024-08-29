@@ -42,6 +42,62 @@ class _InputItemScreenState extends State<InputItemScreen> {
       }
     });
   }
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        title: Row(
+          children: [
+            Icon(Icons.warning, color: Colors.orange),
+            SizedBox(width: 10),
+            Text(
+              "Confirm Action",
+              style: GoogleFonts.poppins(
+                  color: Colors.black, fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+        content: Text(
+          "Are you sure you want to submit this action?",
+          style: GoogleFonts.poppins(fontSize: 16),
+        ),
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.grey,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              "Cancel",
+              style: GoogleFonts.poppins(),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () async {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+              await _submit();
+            },
+            child: Text(
+              "Confirm",
+              style: GoogleFonts.poppins(
+                  color: Colors.white, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Future<void> _submit() async {
     try {
@@ -67,7 +123,6 @@ class _InputItemScreenState extends State<InputItemScreen> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Item added successfully!')));
-      Navigator.of(context).pop();
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -109,6 +164,7 @@ class _InputItemScreenState extends State<InputItemScreen> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
+                        backgroundColor: Colors.white,
                         title: const Text('Select Image Source'),
                         actions: <Widget>[
                           TextButton(
@@ -213,7 +269,18 @@ class _InputItemScreenState extends State<InputItemScreen> {
             const SizedBox(height: 24.0),
             Center(
               child: ElevatedButton(
-                onPressed: _submit,
+                onPressed: (){
+                  if (_nameController.text.trim().isEmpty ||
+                      _codeController.text.trim().isEmpty ||
+                      _selectedCategory == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(
+                          'Please complete all fields before submitting.')),
+                    );
+                  } else {
+                    _showConfirmationDialog(context);
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal,
                   padding: const EdgeInsets.symmetric(

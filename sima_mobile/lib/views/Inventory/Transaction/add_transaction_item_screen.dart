@@ -64,7 +64,61 @@ class _InputTransactionItemScreenState
       });
     }
   }
-
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        title: Row(
+          children: [
+            Icon(Icons.warning, color: Colors.orange),
+            SizedBox(width: 10),
+            Text(
+              "Confirm Action",
+              style: GoogleFonts.poppins(
+                  color: Colors.black, fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+        content: Text(
+          "Are you sure you want to submit this action?",
+          style: GoogleFonts.poppins(fontSize: 16),
+        ),
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.grey,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              "Cancel",
+              style: GoogleFonts.poppins(),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () async {
+              Navigator.of(context).pop();
+              await _submit();
+            },
+            child: Text(
+              "Confirm",
+              style: GoogleFonts.poppins(
+                  color: Colors.white, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
     setState(() {
@@ -78,16 +132,6 @@ class _InputTransactionItemScreenState
 
   Future<void> _submit() async {
     // Validate the input fields
-    if (_selectedWarehouses == null ||
-        _selectedItems == null ||
-        _selectedOwnership == null ||
-        _selectedCondition == null) {
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please complete all fields before submitting.')),
-      );
-      return;
-    }
 
     try {
       final item = AddTransactionItemModel(
@@ -351,7 +395,20 @@ class _InputTransactionItemScreenState
             const SizedBox(height: 50),
             Center(
               child: ElevatedButton(
-                onPressed: _submit,
+                onPressed: () {
+                  if (_selectedWarehouses == null ||
+                      _selectedItems == null ||
+                      _selectedOwnership == null ||
+                      _selectedCondition == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(
+                          'Please complete all fields before submitting.')),
+                    );
+                  } else {
+                    _showConfirmationDialog(context);
+                  }
+                }
+                  ,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal,
                   padding: const EdgeInsets.symmetric(
